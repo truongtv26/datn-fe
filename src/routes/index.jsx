@@ -4,24 +4,31 @@ import HomePage from '../pages/HomePage'
 import ProductDetailPage from '../pages/ProductDetailPage'
 import PageNotFound from '../components/errors/PageNotFound'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Login from '../pages/auth/Login'
+import Register from '../pages/auth/Register'
+import AppProvider from '../provider/AppProvider'
 const Routers = () => {
-  return (
-    <>
-        <BrowserRouter>
-            <Routes>
-                <Route path='/' element={<BaseLayout/>}>
-                    <Route index element={<HomePage/>}/>
+    return (
+        <>
+            <BrowserRouter>
+                <AppProvider >
+                    <Routes>
+                        <Route path='/' element={<BaseLayout />}>
+                            <Route index element={<HomePage />} />
 
-                    <Route path='product/:slug' element={<ProductDetailPage/>}/>    
-                </Route>
+                            <Route path='product/:slug' element={<ProductDetailPage />} />
 
-                <Route path='*'  element={<PageNotFound/>} />
-            </Routes>
-               
-               
-        </BrowserRouter>
-    </>
-  )
+                            {/* auth */}
+                            <Route path='login' element={<Login />} />
+                            <Route path='register' element={<Register />} />
+                        </Route>
+
+                        <Route path='*' element={<PageNotFound />} />
+                    </Routes>
+                </AppProvider>
+            </BrowserRouter>
+        </>
+    )
 }
 
 export default Routers;

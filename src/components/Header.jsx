@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react'
-
+import { Link } from 'react-router-dom';
+import { useAppContext } from '../provider/AppProvider';
+import Cookies from 'js-cookie';
 const Header = () => {
-  const [darkMode, setDarkMode] = useState(false);
+	const [darkMode, setDarkMode] = useState(false);
+	const {user,
+		 setUser} = useAppContext()
+	const handleThemeToggle = () => {
+		const bodyElement = document.body;
+		if (darkMode === true) {
+			bodyElement.setAttribute('data-theme', 'light');
+		} else {
+			bodyElement.setAttribute('data-theme', 'dark');
+		}
+		setDarkMode(!darkMode)
+	}
 
-  const handleThemeToggle = () => {
-    const bodyElement = document.body;
-  if (darkMode === true) {
-    bodyElement.setAttribute('data-theme', 'light');
-  } else {
-    bodyElement.setAttribute('data-theme', 'dark');
-  }
-  setDarkMode(!darkMode)
-  }
-
-  return (
-    <header id="masthead" className="site-header  header-type2">
+	return (
+		<header id="masthead" className="site-header  header-type2">
 			<div className="header-desktop min-1200">
 
 				<div
@@ -48,7 +51,7 @@ const Header = () => {
 								<div className="header-notify link-filled">
 									<i className="klb-delivery-icon-motocycle"></i>
 									<p>We deliver to you every day from <a href="#"
-											className="color-green-light">7:00 to 23:00</a></p>
+										className="color-green-light">7:00 to 23:00</a></p>
 								</div>
 
 
@@ -89,9 +92,9 @@ const Header = () => {
 								</nav>
 
 								<div className="theme-toggle">
-									<a href="#" className="theme-mode-toggle" onClick={()=>{handleThemeToggle()}}>
+									<a href="#" className="theme-mode-toggle" onClick={() => { handleThemeToggle() }}>
 										<div className="toggle-icon header-light-background"><i
-												className="klb-icon-sun-light"></i></div>
+											className="klb-icon-sun-light"></i></div>
 										<div className="toggle-text">
 											<span className="dark-theme">Dark Theme</span>
 											<span className="light-theme">Light Theme</span>
@@ -117,10 +120,10 @@ const Header = () => {
 										<img width="535" height="133"
 											src="/754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/10/logo-grocery.png"
 											alt="Grocery eCommerce Theme"
-											data-lazy-src="https://754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/10/logo-grocery.png"/><noscript><img
+											data-lazy-src="https://754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/10/logo-grocery.png" /><noscript><img
 												width="535" height="133"
 												src="/754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/10/logo-grocery.png"
-												alt="Grocery eCommerce Theme"/></noscript>
+												alt="Grocery eCommerce Theme" /></noscript>
 									</a>
 								</div>
 							</div>
@@ -149,33 +152,33 @@ const Header = () => {
 										method="get" id="searchform"><input
 											className="form-control search-input variation-filled" type="search"
 											name="s" defaultValue="" placeholder="Search for products..."
-											autoComplete="off"/><button type="submit" className="unset"><i
+											autoComplete="off" /><button type="submit" className="unset"><i
 												className="klb-icon-search-feather"></i></button><input
 											type="hidden" name="post_type" defaultValue="product" /></form>
 									<div className="header-search-results"><span
-											className="search-results-heading">Trending:</span>
+										className="search-results-heading">Trending:</span>
 										<ul className="search-keywords tag-style">
 											<li><a
-													href="https://klbtheme.com/blonwe/grocery?post_type=product&amp;s=organic">organic
-												</a></li>
+												href="https://klbtheme.com/blonwe/grocery?post_type=product&amp;s=organic">organic
+											</a></li>
 											<li><a
-													href="https://klbtheme.com/blonwe/grocery?post_type=product&amp;s=fresh">fresh
-												</a></li>
+												href="https://klbtheme.com/blonwe/grocery?post_type=product&amp;s=fresh">fresh
+											</a></li>
 											<li><a
-													href="https://klbtheme.com/blonwe/grocery?post_type=product&amp;s=great">great
-												</a></li>
+												href="https://klbtheme.com/blonwe/grocery?post_type=product&amp;s=great">great
+											</a></li>
 											<li><a
-													href="https://klbtheme.com/blonwe/grocery?post_type=product&amp;s=B5UEO3E8">B5UEO3E8
-												</a></li>
+												href="https://klbtheme.com/blonwe/grocery?post_type=product&amp;s=B5UEO3E8">B5UEO3E8
+											</a></li>
 											<li><a
-													href="https://klbtheme.com/blonwe/grocery?post_type=product&amp;s=food">food
-												</a></li>
+												href="https://klbtheme.com/blonwe/grocery?post_type=product&amp;s=food">food
+											</a></li>
 											<li><a
-													href="https://klbtheme.com/blonwe/grocery?post_type=product&amp;s=alaska">alaska
-												</a></li>
+												href="https://klbtheme.com/blonwe/grocery?post_type=product&amp;s=alaska">alaska
+											</a></li>
 											<li><a
-													href="https://klbtheme.com/blonwe/grocery?post_type=product&amp;s=shower">shower
-												</a></li>
+												href="https://klbtheme.com/blonwe/grocery?post_type=product&amp;s=shower">shower
+											</a></li>
 										</ul>
 									</div>
 								</div>
@@ -185,15 +188,28 @@ const Header = () => {
 
 
 								<div className="header-action login-button row-style popup">
-									<a href="my-account/index.html" className="action-link">
+									{Cookies.get('authToken') ? <>
+									<div className="action-icon">
+											<i className="klb-icon-user-cut"></i>
+										</div>
+										<div className="action-text">
+											<span>{user.name}</span>
+											<button onClick={()=> {
+												Cookies.remove('authToken')
+												setUser({})
+												}}>logout</button>
+										</div>
+										</>
+										: <Link to={'/login'} className="action-link">
 										<div className="action-icon">
 											<i className="klb-icon-user-cut"></i>
 										</div>
 										<div className="action-text">
-											<span>Sign In</span>
+											<span>Login</span>
 											<p>Account</p>
 										</div>
-									</a>
+									</Link>}
+									
 								</div>
 
 
@@ -488,7 +504,7 @@ const Header = () => {
 
 								<div className="custom-button custom-button-menu">
 									<a href="#" className="has-dropdown"><i
-											className="klb-ecommerce-icon-discount-bold"></i>Best Discounts</a>
+										className="klb-ecommerce-icon-discount-bold"></i>Best Discounts</a>
 									<div className="sub-menu mega-menu">
 										<div className="container">
 											<div className="mega-header">
@@ -531,16 +547,16 @@ const Header = () => {
 															</div>
 															<div className="content-wrapper price-filled">
 																<span className="price"><del
-																		aria-hidden="true"><span
-																			className="woocommerce-Price-amount amount"><bdi><span
-																					className="woocommerce-Price-currencySymbol">&#36;</span>14.00</bdi></span></del>
+																	aria-hidden="true"><span
+																		className="woocommerce-Price-amount amount"><bdi><span
+																			className="woocommerce-Price-currencySymbol">&#36;</span>14.00</bdi></span></del>
 																	<ins><span
-																			className="woocommerce-Price-amount amount"><bdi><span
-																					className="woocommerce-Price-currencySymbol">&#36;</span>11.00</bdi></span></ins></span>
+																		className="woocommerce-Price-amount amount"><bdi><span
+																			className="woocommerce-Price-currencySymbol">&#36;</span>11.00</bdi></span></ins></span>
 																<h2 className="product-title"><a
-																		href="product/the-famous-grouse-finest-blended-scotch-whisky/index.html">The
-																		Famous Grouse Finest Blended
-																		Scotch Whisky</a></h2>
+																	href="product/the-famous-grouse-finest-blended-scotch-whisky/index.html">The
+																	Famous Grouse Finest Blended
+																	Scotch Whisky</a></h2>
 																<div className="product-rating style-2">
 																	<div className="product-rating-inner">
 																		<i className="klb-icon-star"></i>
@@ -548,8 +564,8 @@ const Header = () => {
 																		</div>
 																	</div>
 																	<div className="rating-count"><span
-																			className="count-text">3
-																			Reviews</span></div>
+																		className="count-text">3
+																		Reviews</span></div>
 																</div>
 															</div>
 														</div>
@@ -584,17 +600,17 @@ const Header = () => {
 															</div>
 															<div className="content-wrapper price-filled">
 																<span className="price"><del
-																		aria-hidden="true"><span
-																			className="woocommerce-Price-amount amount"><bdi><span
-																					className="woocommerce-Price-currencySymbol">&#36;</span>7.49</bdi></span></del>
+																	aria-hidden="true"><span
+																		className="woocommerce-Price-amount amount"><bdi><span
+																			className="woocommerce-Price-currencySymbol">&#36;</span>7.49</bdi></span></del>
 																	<ins><span
-																			className="woocommerce-Price-amount amount"><bdi><span
-																					className="woocommerce-Price-currencySymbol">&#36;</span>6.49</bdi></span></ins></span>
+																		className="woocommerce-Price-amount amount"><bdi><span
+																			className="woocommerce-Price-currencySymbol">&#36;</span>6.49</bdi></span></ins></span>
 																<h2 className="product-title"><a
-																		href="product/signature-wood-fired-mushroom-and-caramelized-red-onion-frozen-pizza/index.html">Signature
-																		Wood-Fired Mushroom and
-																		Caramelized Red Onion Frozen
-																		Pizza</a></h2>
+																	href="product/signature-wood-fired-mushroom-and-caramelized-red-onion-frozen-pizza/index.html">Signature
+																	Wood-Fired Mushroom and
+																	Caramelized Red Onion Frozen
+																	Pizza</a></h2>
 																<div className="product-rating style-2">
 																	<div className="product-rating-inner">
 																		<i className="klb-icon-star"></i>
@@ -602,8 +618,8 @@ const Header = () => {
 																		</div>
 																	</div>
 																	<div className="rating-count"><span
-																			className="count-text">3
-																			Reviews</span></div>
+																		className="count-text">3
+																		Reviews</span></div>
 																</div>
 															</div>
 														</div>
@@ -638,16 +654,16 @@ const Header = () => {
 															</div>
 															<div className="content-wrapper price-filled">
 																<span className="price"><del
-																		aria-hidden="true"><span
-																			className="woocommerce-Price-amount amount"><bdi><span
-																					className="woocommerce-Price-currencySymbol">&#36;</span>4.30</bdi></span></del>
+																	aria-hidden="true"><span
+																		className="woocommerce-Price-amount amount"><bdi><span
+																			className="woocommerce-Price-currencySymbol">&#36;</span>4.30</bdi></span></del>
 																	<ins><span
-																			className="woocommerce-Price-amount amount"><bdi><span
-																					className="woocommerce-Price-currencySymbol">&#36;</span>2.30</bdi></span></ins></span>
+																		className="woocommerce-Price-amount amount"><bdi><span
+																			className="woocommerce-Price-currencySymbol">&#36;</span>2.30</bdi></span></ins></span>
 																<h2 className="product-title"><a
-																		href="product/shower-gel-le-petit-marseillais-vanilla-250ml/index.html">Shower
-																		gel LE PETIT MARSEILLAIS
-																		Vanilla, 250ml</a></h2>
+																	href="product/shower-gel-le-petit-marseillais-vanilla-250ml/index.html">Shower
+																	gel LE PETIT MARSEILLAIS
+																	Vanilla, 250ml</a></h2>
 																<div className="product-rating style-2">
 																	<div className="product-rating-inner">
 																		<i className="klb-icon-star"></i>
@@ -655,8 +671,8 @@ const Header = () => {
 																		</div>
 																	</div>
 																	<div className="rating-count"><span
-																			className="count-text">3
-																			Reviews</span></div>
+																		className="count-text">3
+																		Reviews</span></div>
 																</div>
 															</div>
 														</div>
@@ -691,16 +707,16 @@ const Header = () => {
 															</div>
 															<div className="content-wrapper price-filled">
 																<span className="price"><del
-																		aria-hidden="true"><span
-																			className="woocommerce-Price-amount amount"><bdi><span
-																					className="woocommerce-Price-currencySymbol">&#36;</span>3.99</bdi></span></del>
+																	aria-hidden="true"><span
+																		className="woocommerce-Price-amount amount"><bdi><span
+																			className="woocommerce-Price-currencySymbol">&#36;</span>3.99</bdi></span></del>
 																	<ins><span
-																			className="woocommerce-Price-amount amount"><bdi><span
-																					className="woocommerce-Price-currencySymbol">&#36;</span>3.00</bdi></span></ins></span>
+																		className="woocommerce-Price-amount amount"><bdi><span
+																			className="woocommerce-Price-currencySymbol">&#36;</span>3.00</bdi></span></ins></span>
 																<h2 className="product-title"><a
-																		href="product/pepperidge-farm-farmhouse-hearty-white-bread/index.html">Pepperidge
-																		Farm Farmhouse Hearty White
-																		Bread</a></h2>
+																	href="product/pepperidge-farm-farmhouse-hearty-white-bread/index.html">Pepperidge
+																	Farm Farmhouse Hearty White
+																	Bread</a></h2>
 																<div className="product-rating style-2">
 																	<div className="product-rating-inner">
 																		<i className="klb-icon-star"></i>
@@ -708,8 +724,8 @@ const Header = () => {
 																		</div>
 																	</div>
 																	<div className="rating-count"><span
-																			className="count-text">3
-																			Reviews</span></div>
+																		className="count-text">3
+																		Reviews</span></div>
 																</div>
 															</div>
 														</div>
@@ -742,15 +758,15 @@ const Header = () => {
 															</div>
 															<div className="content-wrapper price-filled">
 																<span className="price"><del
-																		aria-hidden="true"><span
-																			className="woocommerce-Price-amount amount"><bdi><span
-																					className="woocommerce-Price-currencySymbol">&#36;</span>4.60</bdi></span></del>
+																	aria-hidden="true"><span
+																		className="woocommerce-Price-amount amount"><bdi><span
+																			className="woocommerce-Price-currencySymbol">&#36;</span>4.60</bdi></span></del>
 																	<ins><span
-																			className="woocommerce-Price-amount amount"><bdi><span
-																					className="woocommerce-Price-currencySymbol">&#36;</span>3.60</bdi></span></ins></span>
+																		className="woocommerce-Price-amount amount"><bdi><span
+																			className="woocommerce-Price-currencySymbol">&#36;</span>3.60</bdi></span></ins></span>
 																<h2 className="product-title"><a
-																		href="product/yellow-fresh-pear-up-to-500g/index.html">Yellow
-																		Fresh Pear up to 500g</a></h2>
+																	href="product/yellow-fresh-pear-up-to-500g/index.html">Yellow
+																	Fresh Pear up to 500g</a></h2>
 																<div className="product-rating style-2">
 																	<div className="product-rating-inner">
 																		<i className="klb-icon-star"></i>
@@ -758,8 +774,8 @@ const Header = () => {
 																		</div>
 																	</div>
 																	<div className="rating-count"><span
-																			className="count-text">3
-																			Reviews</span></div>
+																		className="count-text">3
+																		Reviews</span></div>
 																</div>
 															</div>
 														</div>
@@ -794,16 +810,16 @@ const Header = () => {
 															</div>
 															<div className="content-wrapper price-filled">
 																<span className="price"><del
-																		aria-hidden="true"><span
-																			className="woocommerce-Price-amount amount"><bdi><span
-																					className="woocommerce-Price-currencySymbol">&#36;</span>1.93</bdi></span></del>
+																	aria-hidden="true"><span
+																		className="woocommerce-Price-amount amount"><bdi><span
+																			className="woocommerce-Price-currencySymbol">&#36;</span>1.93</bdi></span></del>
 																	<ins><span
-																			className="woocommerce-Price-amount amount"><bdi><span
-																					className="woocommerce-Price-currencySymbol">&#36;</span>0.75</bdi></span></ins></span>
+																		className="woocommerce-Price-amount amount"><bdi><span
+																			className="woocommerce-Price-currencySymbol">&#36;</span>0.75</bdi></span></ins></span>
 																<h2 className="product-title"><a
-																		href="product/pasta-barilla-chifferi-rigati-n-41/index.html">Pasta
-																		BARILLA Chifferi rigati
-																		n.41</a></h2>
+																	href="product/pasta-barilla-chifferi-rigati-n-41/index.html">Pasta
+																	BARILLA Chifferi rigati
+																	n.41</a></h2>
 																<div className="product-rating style-2">
 																	<div className="product-rating-inner">
 																		<i className="klb-icon-star"></i>
@@ -811,8 +827,8 @@ const Header = () => {
 																		</div>
 																	</div>
 																	<div className="rating-count"><span
-																			className="count-text">3
-																			Reviews</span></div>
+																		className="count-text">3
+																		Reviews</span></div>
 																</div>
 															</div>
 														</div>
@@ -860,10 +876,10 @@ const Header = () => {
 										<img width="535" height="133"
 											src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20535%20133'%3E%3C/svg%3E"
 											alt="Grocery eCommerce Theme"
-											data-lazy-src="https://754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/10/logo-grocery.png"/><noscript><img
+											data-lazy-src="https://754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/10/logo-grocery.png" /><noscript><img
 												width="535" height="133"
 												src="../../../754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/10/logo-grocery.png"
-												alt="Grocery eCommerce Theme"/></noscript>
+												alt="Grocery eCommerce Theme" /></noscript>
 									</a>
 								</div>
 							</div>
@@ -946,7 +962,7 @@ const Header = () => {
 				</div>
 			</div>
 		</header>
-  )
+	)
 }
 
 export default Header
