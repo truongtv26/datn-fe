@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react'
+import Cookies from 'js-cookie';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../provider/AppProvider';
-import Cookies from 'js-cookie';
+import { logout } from '../services/auth';
+import { Dropdown, Space } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+
 const Header = () => {
 	const [darkMode, setDarkMode] = useState(false);
-	const {user,
-		 setUser} = useAppContext()
+	const {user,setUser,
+		token} = useAppContext()
+
+	// dark mode
 	const handleThemeToggle = () => {
 		const bodyElement = document.body;
 		if (darkMode === true) {
@@ -14,6 +20,49 @@ const Header = () => {
 			bodyElement.setAttribute('data-theme', 'dark');
 		}
 		setDarkMode(!darkMode)
+	}
+
+	// logout
+     const handleLogout = ()=> {
+          logout().then((data)=> {
+               if (data.status === 200) {
+                    Cookies.remove('authToken')
+				localStorage.removeItem('user')
+                    setUser({});
+               }
+          });
+     }
+
+	//antd
+	const items = [];
+
+	if (Object.keys(user).length > 0) {
+		items.push({
+			label: (
+				<Link rel="noopener noreferrer" to={'profile'}>Profile</Link>
+			),
+			key: '2',
+		   },{
+			label: (
+				<Link rel="noopener noreferrer" onClick={handleLogout}>Logout</Link>
+			),
+			key: '3',
+		   });
+		if (user.role === 'owner' || user.role === 'staff') {
+			items.unshift({
+				label: (
+					<Link  rel="noopener noreferrer" to={'admin/dashboard'} >Dashboard</Link>
+				),
+				key: '1',
+			   })
+		}
+	} else {
+		items.push({
+			label: (
+				<Link rel="noopener noreferrer" to={'login'} >Login</Link>
+			),
+			key: '0',
+		   })
 	}
 
 	return (
@@ -188,16 +237,51 @@ const Header = () => {
 
 
 								<div className="header-action login-button row-style popup">
-									{Cookies.get('authToken') ? <>
+									{<Dropdown
+									menu={{
+									  items,
+									}}
+								   >
+									<a onClick={(e) => e.preventDefault()}>
+									  <Space>
+									  	<div className="action-icon">
+											<i className="klb-icon-user-cut"></i>
+										</div>
+										{user 
+										? 
+										<div className="action-text">
+											<span>{user.name}</span>
+										</div> 
+										: 
+										<div className="action-text">
+											<span>Login</span>
+											<p>Account</p>
+										</div>}
+									    <DownOutlined />
+									  </Space>
+									</a>
+								   </Dropdown>}
+									{/* {Object.keys(user).length ? <>
+									{user.role === 'owner' || user.role === 'staff' 
+									? <Dropdown
+									menu={{
+									  items,
+									}}
+								   >
+									<a onClick={(e) => e.preventDefault()}>
+									  <Space>
+									    Hover me
+									    <DownOutlined />
+									  </Space>
+									</a>
+								   </Dropdown>
+									: ''}
 									<div className="action-icon">
 											<i className="klb-icon-user-cut"></i>
 										</div>
 										<div className="action-text">
 											<span>{user.name}</span>
-											<button onClick={()=> {
-												Cookies.remove('authToken')
-												setUser({})
-												}}>logout</button>
+											<button onClick={handleLogout}>logout</button>
 										</div>
 										</>
 										: <Link to={'/login'} className="action-link">
@@ -208,7 +292,7 @@ const Header = () => {
 											<span>Login</span>
 											<p>Account</p>
 										</div>
-									</Link>}
+									</Link>} */}
 									
 								</div>
 

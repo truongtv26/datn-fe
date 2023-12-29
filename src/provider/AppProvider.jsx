@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { getUser } from "../services/auth"
+import { getUser, logout } from "../services/auth"
 import Cookies from "js-cookie";
 const AppContext = createContext();
 const AppProvider = ({ children }) => {
@@ -9,17 +9,16 @@ const AppProvider = ({ children }) => {
 
      useEffect(()=> {
           if (Cookies.get('authToken')) {
-               getUser()
-               .then((data) =>{
-                    setUser(data)
-               })
+               getUser().then((user) => setUser(user))
           }
-     }, [token])
+     }, [])
+
 
      return (
           <AppContext.Provider value={{
                user,
                setUser,
+               token,
                setToken,
           }}>
 
