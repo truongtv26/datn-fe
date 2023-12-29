@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Login from '../pages/auth/Login'
 import Register from '../pages/auth/Register'
 import AppProvider from '../provider/AppProvider'
+import BlogPage from '../pages/BlogPage'
 const Routers = () => {
     return (
         <>
@@ -17,6 +18,7 @@ const Routers = () => {
                             <Route index element={<HomePage />} />
 
                             <Route path='product/:slug' element={<ProductDetailPage />} />
+                            <Route path='blog/:slug' element={<BlogPage/>}></Route>
 
                             {/* auth */}
                             <Route path='login' element={<Login />} />
