@@ -1,25 +1,32 @@
 import React, { useContext, useState } from 'react'
 import Cookies from 'js-cookie'
 import { Link, useNavigate } from 'react-router-dom'
-import { login } from '../../services/auth'
+import { getUser, login } from '../../services/auth'
 import { useAppContext } from '../../provider/AppProvider'
 const Login = () => {
      const [remember, setRemember] = useState(false);
      const [errorMessage, setErrorMessage] = useState('');
-     const {user,setUser, setToken} = useAppContext()
+     const { user, setUser, setToken, setWebToken } = useAppContext()
      const navigate = useNavigate()
 
      const handleLogin = (event) => {
           event.preventDefault();
           login(user)
                .then((response) => {
-                    const {data, status, token} = response
+                    
+                    const { data, status, token } = response
                     if (status === 200) {
                          // login success
                          setErrorMessage('')
-                         Cookies.set('authToken', token, { expires: 2 });  
+                         Cookies.set('authToken', token, { expires: 2 });
                          setToken(token);
-                         navigate('/')
+                         getUser().then(data => {
+                              setUser(data);
+                              localStorage.setItem('user',  JSON.stringify(data))
+                              navigate("/")
+                         })
+                         
+                         
                     } else {
                          setErrorMessage(data.message)
                     }
@@ -47,7 +54,7 @@ const Login = () => {
                                              <div className="site-login-overflow">
                                                   <ul className="login-page-tab">
                                                        <li>
-                                                       <Link to={'/login'} className='active'>Login</Link></li>
+                                                            <Link to={'/login'} className='active'>Login</Link></li>
                                                   </ul>
                                                   <div id="customer_login" className="login-form-container">
                                                        <div className="login-form">
@@ -79,7 +86,7 @@ const Login = () => {
                                                                  <div><span>If you don't have account </span><Link to={'/register'} className='text-primary'>Register</Link></div>
                                                             </form>
                                                        </div>
-                                                  
+
                                                        <div className="register-form"></div>
                                                   </div>
                                              </div>
