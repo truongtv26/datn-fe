@@ -4,16 +4,9 @@ import { getUser, logout } from "../services/auth"
 import Cookies from "js-cookie";
 const AppContext = createContext();
 const AppProvider = ({ children }) => {
-     const [user, setUser] = useState({})
+     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) ?? {})
      const [token, setToken] = useState('');
-
-     useEffect(()=> {
-          if (Cookies.get('authToken')) {
-               getUser().then((user) => setUser(user))
-          }
-     }, [])
-
-
+     
      return (
           <AppContext.Provider value={{
                user,

@@ -33,7 +33,6 @@ export const logout = async () => {
 
         return response.data;
     } catch (error) {
-        console.error('Lỗi khi thực hiện đăng xuất:', error);
         return null;
     }
 }

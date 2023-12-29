@@ -1,4 +1,4 @@
-export const isUserAllowed = (user, roles) => {
+export const isUserAllowed = (user, roles) => { 
     // cấp tất cả quyền cho owner
     if (user.role === 'owner') {
         return true

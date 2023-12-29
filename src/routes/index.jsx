@@ -14,7 +14,7 @@ import OwnerPage from '../pages/admin/OwnerPage'
 import { useAppContext } from '../provider/AppProvider'
 
 const Routers = () => {
-    const { user } = useAppContext();
+    const { user } = useAppContext(); 
     return (
         <>
             <Routes>
@@ -38,16 +38,18 @@ const Routers = () => {
 
                     <Route path='dashboard' element={<Dashboard />} />
 
-                    {/* route chỉ dành cho owner */}
-                    <Route path='owner' element={
-                        <PrivateRoute isAllowed={() => isUserAllowed(user, ['owner'])}>
-                            
-                        </PrivateRoute>}>
-                        <Route index element={<OwnerPage />}></Route>
-                        
-                    </Route>
+                    
                 </Route>
+                {/* route chỉ dành cho owner */}
+                <Route path='admin' element={
+                        <PrivateRoute isAllowed={() => isUserAllowed(user, ['owner'])}>
+                            <AdminLayout />
+                        </PrivateRoute>}>
+                        <Route path='owner' element={<OwnerPage />}></Route>
 
+                    </Route>
+
+                <Route path='/404' element={<PageNotFound />} />
                 <Route path='*' element={<PageNotFound />} />
             </Routes>
         </>
