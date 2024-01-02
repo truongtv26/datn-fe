@@ -8,10 +8,11 @@ import OwnerPage from '../pages/admin/OwnerPage'
 import PageNotFound from '../components/errors/PageNotFound'
 import PrivateRoute from '../components/PrivateRoute'
 import { Route, Routes } from 'react-router-dom'
-
 import BlogPage from '../pages/BlogPage'
 import { useAppContext } from '../provider/AppProvider'
-
+import Register from '../pages/auth/Register'
+import Login from '../pages/auth/Login'
+import { isUserAllowed } from '../lib/utils'
 const Routers = () => {
     const { user } = useAppContext();
     return (
@@ -24,6 +25,10 @@ const Routers = () => {
 
                     <Route path='product/:slug' element={<ProductDetailPage />} />
                     <Route path='blog/:slug' element={<BlogPage />} />
+
+                    {/* auth */}
+                    <Route path='login' element={<Login />} />
+                    <Route path='register' element={<Register />} />
                 </Route>
 
                 {/* admin route */}
