@@ -23,7 +23,11 @@ const Login = () => {
                          getUser().then(data => {
                               setUser(data);
                               localStorage.setItem('user',  JSON.stringify(data))
-                              navigate("/")
+                              if (data.role === 'owner' || data.role === 'staff') {
+                                   navigate("/admin/dashboard")
+                              } else {
+                                   navigate("/")
+                              }
                          })
                          
                          
