@@ -18,10 +18,12 @@ import {
 import { Layout, Menu, Button, theme, Badge, Space, Avatar, Divider, Popover, Typography } from 'antd';
 import { Link, Outlet } from 'react-router-dom';
 import { Footer } from 'antd/es/layout/layout';
+import { useAppContext } from '../provider/AppProvider';
 const { Header, Sider, Content } = Layout;
 const { Text } = Typography;
 
 const AdminLayout = () => {
+  const { user } = useAppContext();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -121,7 +123,7 @@ const AdminLayout = () => {
 
   const userPopoverContent = (
     <div>
-      <Text strong>Dinh Hai Duong</Text>
+      <Text strong>{user.name}</Text>
       <Divider style={{ margin: '8px 0' }} />
       <Link to="/user-information">Profile</Link>
       <Divider style={{ margin: '8px 0' }} />
