@@ -18,7 +18,7 @@ const Login = () => {
                     if (status === 200) {
                          // login success
                          setErrorMessage('')
-                         Cookies.set('authToken', token, { expires: 2 });
+                         Cookies.set('authToken', token, { expires: 7 });
                          setToken(token);
                          getUser().then(data => {
                               setUser(data);

@@ -46,11 +46,11 @@ const Routers = () => {
 
                 {/* route chỉ dành cho owner */}
                 <Route path='admin' element={
-                    <PrivateRoute isAllowed={() => isUserAllowed(user, ['owner'])}>
-                        <AdminLayout />
-                    </PrivateRoute>}>
+                        <PrivateRoute isAllowed={() => isUserAllowed(user, ['owner'])}>
+                            <AdminLayout />
+                        </PrivateRoute>}>
+                        <Route path='owner' element={<OwnerPage />} />
 
-                    <Route path='owner' element={<OwnerPage />}></Route>
                 </Route>
 
                 <Route path='/404' element={<PageNotFound />} />
