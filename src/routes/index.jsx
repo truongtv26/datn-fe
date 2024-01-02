@@ -1,6 +1,6 @@
 import React from 'react'
 import BaseLayout from '../layouts/BaseLayout'
-import AdminLayout from '../layouts/AdminLayout'        
+import AdminLayout from '../layouts/AdminLayout'
 import HomePage from '../pages/HomePage'
 import ProductDetailPage from '../pages/ProductDetailPage'
 import Dashboard from '../pages/admin/Dashboard'
@@ -13,6 +13,7 @@ import { useAppContext } from '../provider/AppProvider'
 import Register from '../pages/auth/Register'
 import Login from '../pages/auth/Login'
 import { isUserAllowed } from '../lib/utils'
+import ListProductManage from '../components/admin/Product/ListProductManage'
 const Routers = () => {
     const { user } = useAppContext();
     return (
@@ -37,9 +38,10 @@ const Routers = () => {
                     <PrivateRoute isAllowed={() => isUserAllowed(user, ['owner', 'staff'])}>
                         <AdminLayout />
                     </PrivateRoute>
-                }>
 
+                }>
                     <Route path='dashboard' element={<Dashboard />} />
+                    <Route path='product' element={<ListProductManage />} />
                 </Route>
 
                 {/* route chỉ dành cho owner */}
