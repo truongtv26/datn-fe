@@ -46322,6 +46322,7 @@ body[data-color=custom][data-theme=light] .product-unit-price {
 .bordered .products.klb-slider .slick-list::before {
 	content: "";
 	position: absolute;
+	left:0%;
 	width: 100%;
 	height: calc(100% + 0px);
 	border: .0625rem solid;
