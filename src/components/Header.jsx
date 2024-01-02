@@ -580,7 +580,7 @@ const Header = () => {
 											<a href="shop/index93de.html?filter_cat=134">Bakery</a></li>
 										<li
 											className="menu-item menu-item-type-post_type menu-item-object-page menu-item-4399">
-											<a href="blog/index.html">Blog</a></li>
+											<Link to={'blog/123'}>Blog</Link></li>
 									</ul>
 								</nav>
 

@@ -1,20 +1,20 @@
 import React from 'react'
 import BaseLayout from '../layouts/BaseLayout'
+import AdminLayout from '../layouts/AdminLayout'        
 import HomePage from '../pages/HomePage'
 import ProductDetailPage from '../pages/ProductDetailPage'
-import PageNotFound from '../components/errors/PageNotFound'
-import { Route, Routes } from 'react-router-dom'
-import Login from '../pages/auth/Login'
-import Register from '../pages/auth/Register'
-import AdminLayout from '../layouts/AdminLayout'
-import PrivateRoute from '../components/PrivateRoute'
-import { isUserAllowed } from '../lib/utils'
 import Dashboard from '../pages/admin/Dashboard'
 import OwnerPage from '../pages/admin/OwnerPage'
+import PageNotFound from '../components/errors/PageNotFound'
+import PrivateRoute from '../components/PrivateRoute'
+import { Route, Routes } from 'react-router-dom'
+import BlogPage from '../pages/BlogPage'
 import { useAppContext } from '../provider/AppProvider'
-
+import Register from '../pages/auth/Register'
+import Login from '../pages/auth/Login'
+import { isUserAllowed } from '../lib/utils'
 const Routers = () => {
-    const { user } = useAppContext(); 
+    const { user } = useAppContext();
     return (
         <>
             <Routes>
@@ -22,6 +22,9 @@ const Routers = () => {
                 <Route path='/' element={<BaseLayout />}>
                     <Route index element={<HomePage />} />
                     <Route path='product/:slug' element={<ProductDetailPage />} />
+
+                    <Route path='product/:slug' element={<ProductDetailPage />} />
+                    <Route path='blog/:slug' element={<BlogPage />} />
 
                     {/* auth */}
                     <Route path='login' element={<Login />} />
