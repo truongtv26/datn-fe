@@ -244,9 +244,9 @@ const Header = () => {
 								   >
 									<a onClick={(e) => e.preventDefault()}>
 									  <Space>
-									  	<div className="action-icon">
+									  	{/* <div className="action-icon">
 											<i className="klb-icon-user-cut"></i>
-										</div>
+										</div> */}
 										{user 
 										? 
 										<div className="action-text">

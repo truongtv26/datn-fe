@@ -31,13 +31,7 @@ const Footer = () => {
 													Conditions and Privacy &amp; Cookies Policy.</a></p>
 										</div>
 									</div>
-                  <label style={{display: "none !important"}}>Leave this field empty if
-										you're human: <input type="text" name="_mc4wp_honeypot" defaultValue=""
-											tabIndex="-1" autoComplete="off" /></label>
-                      <input type="hidden"
-										name="_mc4wp_timestamp" defaultValue="1703214496" /><input type="hidden"
-										name="_mc4wp_form_id" defaultValue="676" /><input type="hidden"
-										name="_mc4wp_form_element_id" defaultValue="mc4wp-form-1" />
+                  
 									<div className="mc4wp-response"></div>
 								</form>
 							</div>
