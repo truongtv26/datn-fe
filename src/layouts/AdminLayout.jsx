@@ -164,7 +164,7 @@ const AdminLayout = () => {
                 ))}
               </Menu.SubMenu>
             ) : (
-              <Menu.Item key={item.key} icon={item.icon}>
+              <Menu.Item key={item.key} icon={item.icon} >
                 <Link to={item.link}>{item.label}</Link>
               </Menu.Item>
             )
@@ -190,17 +190,22 @@ const AdminLayout = () => {
               fontSize: '16px',
               width: 64,
               height: 64,
+              background: 'none',
+              justifyContent: 'center'
             }}
           />
 
           <div style={{
+			height: '100%',
             padding: 0,
             background: colorBgContainer,
             display: 'flex',
             justifyContent: 'space-between',
-            alignItems: 'center'
+            gap: '10px',
+            alignItems: 'center',
+			lineHeight: 0
           }}>
-            <div className="">
+            <div>
               <Space size="large">
                 <Badge count={1} size="small">
                   <BellOutlined style={{
@@ -213,11 +218,9 @@ const AdminLayout = () => {
                 </Badge>
               </Space>
             </div>
-            <div style={{
-              margin: "0 12px"
-            }}>
-              <Space direction="vertical" size={16}>
-                <Space wrap size={16}>
+            <div>
+              <Space direction="vertical" style={{ marginRight: "12px" }}>
+                <Space wrap>
                   <Popover content={userPopoverContent} placement="bottomLeft" trigger="hover">
                     <Avatar size="small" icon={<UserOutlined />} style={{ backgroundColor: '#000' }} />
                   </Popover>
