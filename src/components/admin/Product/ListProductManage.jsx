@@ -51,6 +51,7 @@ const ListProductManage = () => {
                 <div style={{ flexGrow: 1, marginRight: '8px' }}>
                     <p style={{ margin: '4px 0' }}>Nhập tên sản phẩm:</p>
                     <Input
+                        
                         placeholder="Tìm kiếm sản phẩm theo tên..."
                         allowClear
                         value={searchText}

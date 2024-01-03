@@ -1,26 +1,25 @@
 import React from 'react'
-import './BaseLayoutCss.css'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { Outlet } from 'react-router-dom'
 import SiteDrawer from '../components/SiteDrawer'
 import SiteBottom from '../components/SiteBottom'
-
-
+import './BaseLayout.css'
 const BaseLayout = () => {
 
 	return (
 		<>
-			<SiteDrawer />
-			<div id="page" className="page-content">
-				<Header />
-				<main>
+			<div className="home">
+				<SiteDrawer />
+				<div id="page" className="page-content">
+					<Header />
 					<Outlet />
-				</main>
-				<Footer />
-				<div className="site-overlay"></div>
+					<Footer />
+					<div className="site-overlay"></div>
+				</div>
+				<SiteBottom />
 			</div>
-			<SiteBottom />
+
 		</>
 	)
 }

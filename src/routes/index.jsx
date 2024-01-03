@@ -22,7 +22,6 @@ const Routers = () => {
                 {/* client route */}
                 <Route path='/' element={<BaseLayout />}>
                     <Route index element={<HomePage />} />
-                    <Route path='product/:slug' element={<ProductDetailPage />} />
 
                     <Route path='product/:slug' element={<ProductDetailPage />} />
                     <Route path='blog/:slug' element={<BlogPage />} />
