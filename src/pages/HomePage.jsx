@@ -87,7 +87,7 @@ const HomePage = () => {
 			<CarouselSection />
 
 			{/* categories */}
-			<div className='tw-relative'>
+			<div className='relative'>
 				<Button style={previousButton} onClick={() => { cateRef.current.prev() }} icon={<LeftOutlined />} />
 				<Carousel
 					dots={false}
