@@ -1,26 +1,26 @@
-import React from 'react'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import { Outlet } from 'react-router-dom'
-import SiteDrawer from '../components/SiteDrawer'
-import SiteBottom from '../components/SiteBottom'
-import './BaseLayout.css'
+import React from 'react';
+import { Layout } from "antd"
+	import Footer from '../components/Footer';
+import { Outlet } from 'react-router-dom';
+import { Content } from 'antd/es/layout/layout';
+import HeaderSection from '../components/Header';
+
+const layoutStyles = {
+	margin: ' 0 auto',
+	backgroundColor: '#ffffff',
+}
+
 const BaseLayout = () => {
+	
 
 	return (
-		<>
-			<div className="home">
-				<SiteDrawer />
-				<div id="page" className="page-content">
-					<Header />
-					<Outlet />
-					<Footer />
-					<div className="site-overlay"></div>
-				</div>
-				<SiteBottom />
-			</div>
-
-		</>
+		<Layout style={layoutStyles} className='container'>
+			<HeaderSection />
+			<Content>
+				<Outlet />
+			</Content>
+			<Footer />
+		</Layout>
 	)
 }
 

@@ -196,20 +196,19 @@ const AdminLayout = () => {
           />
 
           <div style={{
-			height: '100%',
+            height: '100%',
             padding: 0,
             background: colorBgContainer,
             display: 'flex',
             justifyContent: 'space-between',
             gap: '10px',
             alignItems: 'center',
-			lineHeight: 0
+            lineHeight: 0
           }}>
             <div>
               <Space size="large">
                 <Badge count={1} size="small">
                   <BellOutlined style={{
-                    padding: "4px",
                     backgroundColor: "#000",
                     color: "#fff",
                     borderRadius: '50%',
