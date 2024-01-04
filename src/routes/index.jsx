@@ -20,6 +20,7 @@ const Routers = () => {
         <>
             <Routes>
                 {/* client route */}
+                
                 <Route path='/' element={<BaseLayout />}>
                     <Route index element={<HomePage />} />
 
