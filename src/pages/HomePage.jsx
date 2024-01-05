@@ -1,8 +1,10 @@
 
 import React, { useRef } from 'react'
 import CarouselSection from '../components/ui/CarouselSection'
-import { Badge, Button, Carousel, Col, Row } from 'antd';
+import { Badge, Button, Card, Carousel, Col, Rate, Row } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import Meta from 'antd/es/card/Meta';
+import { Link } from 'react-router-dom';
 
 const contentStyle = {
 	margin: 0,
@@ -30,6 +32,11 @@ const nextButton = {
 	backgroundColor: 'transparent',
 	border: 0,
 	color: 'gray',
+}
+
+const productItemStyles = {
+	width: 'calc(25% - 20px)',
+	margin: '10px'
 }
 
 const HomePage = () => {
@@ -82,6 +89,73 @@ const HomePage = () => {
 		return slides;
 	};
 
+	const productData = [
+		{
+			id: 1,
+			name: 'Product 1',
+			price: 10000,
+			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+			rate: 4.5,
+			detail: 'detail product',
+		},
+		{
+			id: 2,
+			name: 'Product 2',
+			price: 20000,
+			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+			rate: 5,
+			detail: 'detail product',
+		},
+		{
+			id: 3,
+			name: 'Product 3',
+			price: 30000,
+			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+			rate: 1,
+			detail: 'detail product',
+		},
+		{
+			id: 4,
+			name: 'Product 4',
+			price: 40000,
+			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+			rate: 1,
+			detail: 'detail product',
+		},
+		{
+			id: 5,
+			name: 'Product 5',
+			price: 50000,
+			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+			rate: 6,
+			detail: 'detail product',
+		},
+		{
+			id: 6,
+			name: 'Product 6',
+			price: 60000,
+			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+			rate: 5,
+			detail: 'detail product',
+		},
+		{
+			id: 7,
+			name: 'Product 7',
+			price: 70000,
+			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+			rate: 5,
+			detail: 'detail product',
+		},
+		{
+			id: 8,
+			name: 'Product 8',
+			price: 80000,
+			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+			rate: 5,
+			detail: 'detail product',
+		},
+	];
+
 	return (
 		<>
 			<CarouselSection />
@@ -128,6 +202,31 @@ const HomePage = () => {
 					color: '#E53E3E',
 				}}>Use discount code in the checkout!</p>
 			</div>
+
+			{/* product */}
+			<p style={{fontSize: '24px', fontWeight: 'bold'}}>Don't miss this week's sales</p>
+			<div className="flex flex-wrap justify-start">
+				{productData.map((product, index) => {
+					return <Link key={index} to={`product/${product.id}`} style={productItemStyles}>
+						<Card
+							hoverable
+							cover={<img alt="example" src={product.image} />}
+						>
+							<Rate disabled allowHalf defaultValue={product.rate} className='rate' />
+							<Meta title={product.name} />
+							<p>{product.price}</p>
+							<p>{product.detail}</p>
+						</Card>
+					</Link>
+				})}
+
+				<div style={{
+					width: '100%',
+					display: 'flex',
+					justifyContent: 'center',}}>
+				<Button type="primary">Show more</Button>
+			</div>
+		</div >
 		</>
 	)
 }
