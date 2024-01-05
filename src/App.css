@@ -1,3 +1,7 @@
+:root {
+     --primary-color: #004644
+}
+
 .rate {
      font-size: 14px;
 }
@@ -358,4 +362,89 @@
      .md\:w-\[400px\] {
           width: 400px;
      }
+}
+
+* {
+     box-sizing: border-box;
+     margin: 0;
+     padding: 0;
+}
+
+.header {
+     display: flex;
+     flex-direction: column;
+     gap: 5px;
+     color: var(--primary-color);
+}
+
+.header .top-header {
+     background-color: #E5F3EF;
+     padding: 10px 0;
+     font-size: 12px;
+     display: flex;
+     justify-content: space-between;
+}
+.header .top-header ul {
+     display: flex;
+     gap: 10px;
+}
+.header .top-header ul li {
+     list-style: none;
+     text-wrap: nowrap;
+}
+
+.header .main-header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     gap: 60px;
+}
+
+.header .main-header > *,
+.header a{
+     color: var(--primary-color);
+}
+
+.header .main-header .search {
+     width: 100%;
+}
+.header .main-header ul {
+     display: flex;
+     gap: 24px;
+}
+.header .main-header ul li {
+     list-style: none;
+}
+
+.header .main-header .search button {
+     background-color: var(--primary-color);  
+}
+
+.header .main-header .search button:hover {
+     background-color: var(--primary-color);
+}
+:where(.css-dev-only-do-not-override-17sses9) .ant-input-affix-wrapper:focus-within,
+:where(.css-dev-only-do-not-override-17sses9) .ant-input-affix-wrapper:hover {
+     border-color: var(--primary-color)
+}
+
+:where(.css-dev-only-do-not-override-17sses9) .ant-input-affix-wrapper {
+     border-color: var(--primary-color)
+}
+
+.header .bottom-header {
+     display: flex;
+     justify-content: space-between;
+     padding: 14px 0;
+}
+.header .bottom-header ul {
+     display: flex;
+     gap: 40px;
+}
+.header .bottom-header ul li{
+     list-style: none;
+}
+.header .bottom-header ul li a{
+     font-size: 16px;
+     font-weight: bold;
 }

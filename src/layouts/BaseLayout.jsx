@@ -14,7 +14,7 @@ const BaseLayout = () => {
 	
 
 	return (
-		<Layout style={layoutStyles} className='container'>
+		<Layout style={layoutStyles} className='w-full mx-auto'>
 			<HeaderSection />
 			<Content>
 				<Outlet />
