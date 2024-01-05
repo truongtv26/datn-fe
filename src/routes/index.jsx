@@ -14,6 +14,7 @@ import Register from '../pages/auth/Register'
 import Login from '../pages/auth/Login'
 import { isUserAllowed } from '../lib/utils'
 import ListProductManage from '../components/admin/Product/ListProductManage'
+import AddProduct from '../components/admin/Product/AddProduct'
 const Routers = () => {
     const { user } = useAppContext();
     return (
@@ -42,6 +43,7 @@ const Routers = () => {
                 }>
                     <Route path='dashboard' element={<Dashboard />} />
                     <Route path='product' element={<ListProductManage />} />
+                    <Route path='product/add' element={<AddProduct />} />
                 </Route>
 
                 {/* route chỉ dành cho owner */}
