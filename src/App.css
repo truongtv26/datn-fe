@@ -339,3 +339,24 @@
           flex-direction: row;
      }
 }
+
+.w-\[240px\] {
+     width: 240px;
+}
+
+.mx-auto {
+     margin-left: auto;
+     margin-right: auto;
+}
+
+@media (min-width: 640px) {
+     .sm\:w-\[350px\] {
+          width: 350px;
+     }
+}
+
+@media (min-width: 768px) {
+     .md\:w-\[400px\] {
+          width: 400px;
+     }
+}
