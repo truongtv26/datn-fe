@@ -49,7 +49,7 @@ const Login = () => {
      };
 
      return (
-          <Form form={form} name="vertical_login" layout="inline" onFinish={onFinish} className='mx-auto flex flex-col items-center w-[240px] sm:w-[350px] md:w-[400px]'>
+          <Form form={form} name="vertical_login" layout="inline" onFinish={onFinish} className='flex flex-col mx-auto items-center w-[240px] sm:w-[350px] md:w-[400px]'>
                <p style={{ fontSize: '24px' }} className='mb-5' >Login</p>
                <Form.Item
                     name="email"

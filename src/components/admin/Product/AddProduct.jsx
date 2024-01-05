@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'
+import instance from '../../../core/api';
 import {
     HomeOutlined,
     PlusCircleFilled,
@@ -47,19 +47,19 @@ const AddProduct = () => {
     };
 
     useEffect(() => {
-        axios.get("http://127.0.0.1:8000/api/size").then(response => {
+        instance.get("/size").then(response => {
             setSize(response.data.sizes);
         })
     }, [size])
 
     useEffect(() => {
-        axios.get("http://127.0.0.1:8000/api/color").then(response => {
+        instance.get("/color").then(response => {
             setColor(response.data.colors);
         })
     }, [color])
 
     useEffect(() => {
-        axios.get("http://127.0.0.1:8000/api/product").then(response => {
+        instance.get("/product").then(response => {
             setProduct(response.data.products);
         })
     }, [product])
@@ -240,7 +240,7 @@ const AddProduct = () => {
                                 showSearch
                                 onChange={async (selectedValues) => {
                                     setSelectedSizes(await Promise.all(selectedValues.map(async (item) => {
-                                        return await axios.get(`http://127.0.0.1:8000/api/size/${item}`);
+                                        return await instance.get(`/size/${item}`);
                                     })))
                                 }}
                                 style={{
@@ -275,7 +275,7 @@ const AddProduct = () => {
                                 mode="multiple"
                                 onChange={async (selectedValues) => {
                                     setSelectedColors(await Promise.all(selectedValues.map(async (item) => {
-                                        return await axios.get(`http://127.0.0.1:8000/api/color/${item}`);
+                                        return await instance.get(`/color/${item}`);
                                     })))
                                 }}
                                 showSearch
