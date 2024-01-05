@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import instance from '../../../core/api';
 import {
     HomeOutlined,
     PlusCircleFilled,
@@ -6,7 +7,6 @@ import {
 } from '@ant-design/icons';
 import { Breadcrumb, Button, Modal, Flex, Input, Form, Select, Col, Row, Space, Table } from 'antd';
 import AddProperties from './AddProperties';
-import instance from '../../../core/api';
 
 const { Option } = Select;
 

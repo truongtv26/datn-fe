@@ -354,7 +354,6 @@
           width: 350px;
      }
 }
-
 @media (min-width: 768px) {
      .md\:w-\[400px\] {
           width: 400px;
