@@ -1,35 +1,39 @@
 
+:root {
+     --margin-container: 80px;
+}
+
 .container {
      width: 100%;
 }
 
 @media (min-width: 640px) {
      .container {
-          max-width: 640px;
+          max-width: calc(640px - var(--margin-container));
      }
 }
 
 @media (min-width: 768px) {
      .container {
-          max-width: 768px;
+          max-width: calc(768px - var(--margin-container));
      }
 }
 
 @media (min-width: 1024px) {
      .container {
-          max-width: 1024px;
+          max-width: calc(1024px - var(--margin-container));
      }
 }
 
 @media (min-width: 1280px) {
      .container {
-          max-width: 1280px;
+          max-width: calc(1280px - var(--margin-container));
      }
 }
 
 @media (min-width: 1536px) {
      .container {
-          max-width: 1536px;
+          max-width: calc(1536px - var(--margin-container));
      }
 }
 
