@@ -114,7 +114,7 @@ const HeaderSection = () => {
 						<ul>
 							<li><span><ThunderboltFilled /></span> We deliver to you every day from: <strong style={{
 								padding: '2px 6px',
-								backgroundColor: '#004644',
+								backgroundColor: 'var(--primary-color)',
 								color: 'white',
 								borderRadius: '10px',
 							}}>7:00 to 20:00</strong></li>
@@ -130,7 +130,7 @@ const HeaderSection = () => {
 					<div>
 						<Image
 							preview={false}
-							width={250}
+							maxWidth={250}
 							src={'https://754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/10/logo-grocery.png'}
 						/>
 					</div>
@@ -143,18 +143,19 @@ const HeaderSection = () => {
 							onSearch={(value) => {
 								console.log(value);
 							}}
+							className='hidden sm:block'
 						/>
 					</div>
 					<div>
 						<ul>
 							<li style={{ textAlign: 'end' }}>{checkUser(user)}</li>
 							<li>
-								<Badge count={10} color='#52c41a' size="small">
+								<Badge count={10} color='var(--primary-color)' size="small">
 									<HeartOutlined style={{ fontSize: '24px' }} />
 								</Badge>
 							</li>
 							<li style={{ marginRight: '20px' }}>
-								<Badge count={10} color='#52c41a' size="small">
+								<Badge count={10} color='var(--primary-color)' size="small">
 									<ShoppingCartOutlined style={{ fontSize: '24px', color: 'var(--primary-color)' }} />
 								</Badge>
 							</li>
@@ -171,12 +172,12 @@ const HeaderSection = () => {
 									items,
 								}}
 							>
-								<a onClick={(e) => e.preventDefault()}>
+								<Link to={'/shop'}>
 									<Space>
 										Shop
 										<DownOutlined />
 									</Space>
-								</a>
+								</Link>
 							</Dropdown>
 						</Link></li>
 						<li><Link to={'/blog'}>
@@ -185,12 +186,12 @@ const HeaderSection = () => {
 									items,
 								}}
 							>
-								<a onClick={(e) => e.preventDefault()}>
+								<Link to={'blog'}>
 									<Space>
 										Blog
 										<DownOutlined />
 									</Space>
-								</a>
+								</Link>
 							</Dropdown>
 						</Link></li>
 						<li><Link to={'/best-discount'}>
@@ -199,12 +200,12 @@ const HeaderSection = () => {
 									items,
 								}}
 							>
-								<a onClick={(e) => e.preventDefault()}>
+								<Link to={'best-discount'}>
 									<Space>
 										Best Discount
 										<DownOutlined />
 									</Space>
-								</a>
+								</Link>
 							</Dropdown>
 						</Link></li>
 					</ul>
