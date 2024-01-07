@@ -15,6 +15,7 @@ import Login from '../pages/auth/Login'
 import { isUserAllowed } from '../lib/utils'
 import ListProductManage from '../components/admin/Product/ListProductManage'
 import AddProduct from '../components/admin/Product/AddProduct'
+import ListProduct from '../pages/ListProduct'
 const Routers = () => {
     const { user } = useAppContext();
     return (
@@ -24,7 +25,7 @@ const Routers = () => {
                 
                 <Route path='/' element={<BaseLayout />}>
                     <Route index element={<HomePage />} />
-
+ <Route path='list-product' element={<ListProduct/>} />
                     <Route path='product/:slug' element={<ProductDetailPage />} />
                     <Route path='blog/:slug' element={<BlogPage />} />
 
