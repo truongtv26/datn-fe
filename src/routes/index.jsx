@@ -27,6 +27,7 @@ const Routers = () => {
                     <Route index element={<HomePage />} />
  <Route path='list-product' element={<ListProduct/>} />
                     <Route path='product/:slug' element={<ProductDetailPage />} />
+                    <Route path='blog' element={<BlogPage />} />
                     <Route path='blog/:slug' element={<BlogPage />} />
 
                     {/* auth */}
