@@ -50,7 +50,7 @@ const BlogPage = () => {
             title_category: "SMARTPHONE",
             title: "On the other hand we provide denounce with righteous",
             image: "https://754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/03/post-01.jpg",
-            created_at: "March 7, 2023",
+            created_at: "March 7, 2023 - Phone,Standart",
             description: "Donec rhoncus quis diam sit amet faucibus. Vivamus pellentesque, sem sed convallis ultricies, ante eros laoreet libero, vitae suscipit lorem turpis sit amet lectus. Quisque egestas lorem ut mauris ultrices, vitae sollicitudin quam facilisis. Vivamus rutrum urna non ligula tempor aliquet. Fusce tincidunt est magna, id malesuada massa imperdiet ut. Nunc non nisi urna. Nam",
         },
     ]
@@ -160,7 +160,7 @@ const BlogPage = () => {
                                     </div>
 
                                     <div className="title-date">
-                                        <p>{blog.title}</p>
+                                        <a href="">{blog.title}</a>
                                         <p className='created-at'>{blog.created_at}</p>
                                     </div>
                                 </div>
