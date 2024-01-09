@@ -577,3 +577,246 @@
      overflow: 'hidden';
      position: 'relative';
 }
+
+/* Css Phần BlogPage */
+
+.blog-container{
+     display: flex;
+     justify-content: start;
+     gap: 3%;
+}
+
+/* Css Phần Left Blog */
+.blog-container .left-blog{
+     width: 70%;
+    
+}
+
+.left-blog .image img{
+     max-width: 100%;
+     border-radius: 15px;
+}
+
+.left-blog .content{
+     width: 100%;
+     margin-top: 20px;
+     
+}
+
+.left-blog .content .title-category a{
+     font-size: .8875rem;
+     font-weight: 700;
+     color:#004745;
+     text-transform: uppercase;
+}
+
+.left-blog .content .title-category{
+     margin-top: 10px;
+}
+.left-blog .content .title-blog{
+     margin-top: 10px;
+}
+.left-blog .content .title-blog a{
+     font-size: 30px;
+     font-weight: 700;
+     text-transform: uppercase;
+     color: #000;
+}
+
+.left-blog .content .title-blog a:hover{
+     text-decoration: underline;   
+}
+
+.left-blog .content .created-at{
+     margin-top: 10px;
+}
+
+.left-blog .content .created-at p{
+     color: #004644;
+}
+
+.left-blog .content .description{
+     margin-top: 10px;
+}
+
+.left-blog .content .description p{
+     font-size: 15px;
+     color :#969EA4;
+}
+
+.left-blog .content .button{
+     margin-top: 10px;
+     margin-bottom:60px;
+}
+
+
+/* Css Phần Right Blog */
+
+.blog-container .right-blog{
+     width: 25%;
+}
+
+.blog-container .right-blog .post-widget .title-post{
+     font-size: 15px;
+     font-weight: bold;
+}
+
+
+.blog-container .right-blog .post-widget .content{
+     display: flex;
+     justify-content: start;
+     gap: 20px;
+     margin-top: 20px;
+     margin-bottom:50px;
+}
+
+
+.blog-container .right-blog .post-widget .content .image-post img{
+     width: 70px;
+     height: 70px;
+     border-radius: 10px;
+}
+
+.blog-container .right-blog .post-widget .content .title-date a{
+     font-size: 15px;
+     font-weight: 500;
+     color :#000;
+}
+
+.right-blog .content .title-date a:hover{
+     text-decoration: underline;   
+}
+
+.blog-container .right-blog .post-widget .content .title-date .created-at{
+     font-size: 12px;
+     margin-top: 5px;
+     color :#000;
+
+
+}
+
+.blog-container .right-blog .social{
+     margin-top: 50px;
+}
+
+.blog-container .right-blog .social .title-social{
+     font-size: 15px;
+     font-weight: bold;
+}
+
+.blog-container .right-blog .social .content{
+     margin-top: 20px;
+}
+
+.blog-container .right-blog .social .content .face{
+     background-color: #1877f2;
+     align-items: center;
+     border-radius: 5px;
+     margin-top: 15px;
+}
+
+.blog-container .right-blog .social .content .twitter{
+     background-color: #1da1f2;
+     align-items: center;
+     border-radius: 5px;
+     margin-top: 15px;
+
+}
+
+.blog-container .right-blog .social .content .linked{
+     background-color: #0077b5;
+     align-items: center;
+     border-radius: 5px;
+     margin-top: 15px;
+
+}
+
+.blog-container .right-blog .social .content .you{
+     background-color: #ff0000;
+     align-items: center;
+     border-radius: 5px;
+     margin-top: 15px;
+}
+
+.blog-container .right-blog .social .content .face a{
+     color: #fff;
+     font-size: 15px;
+}
+
+.blog-container .right-blog .social .content .twitter a{
+     color: #fff;
+     font-size: 15px;
+}
+
+.blog-container .right-blog .social .content .linked a{
+     color: #fff;
+     font-size: 15px;
+}
+
+.blog-container .right-blog .social .content .you a{
+     color: #fff;
+     font-size: 15px;
+}
+
+/* Css Responsive Blog Page  */
+
+@media screen and (max-width: 1280px) {
+     .blog-container{
+          display: block;
+     }
+
+     .blog-container .left-blog{
+          width: 100%;
+     }
+     .blog-container .left-blog .blog .image img{
+          width: 100%;
+     }
+
+     .blog-container .left-blog .blog .content{
+          width: 100%;
+     }
+
+     .blog-container .right-blog{
+          width: 100%;
+     }
+
+     .blog-container .right-blog .post-widget .content .title-date a{
+          font-size: 20px;
+     }
+
+}
+
+@media screen and (max-width:640px) {
+     .container{
+          align-items: center;
+          justify-content: center;
+     }
+
+     .blog-container{
+          /* justify-content: center;
+          margin: auto; */
+          margin-left: 20px;
+          margin-right: 20px;
+     }
+
+     .blog-container .left-blog .blog .image img{
+          width: 100%;
+     }
+
+     .blog-container .left-blog .blog .content{
+          width: 100%;
+     }
+
+     .blog-container .right-blog .post-widget .content .title-date a{
+          font-size: 18px;
+     }
+
+     .left-blog .content .title-blog a{
+          font-size: 25px;
+          font-weight: 700;
+          text-transform: uppercase;
+          color: #000;
+     }
+
+}
+/* Css Responsive */
