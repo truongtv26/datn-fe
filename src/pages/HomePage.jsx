@@ -36,7 +36,9 @@ const nextButton = {
 
 const productItemStyles = {
 	width: 'calc(25% - 20px)',
-	margin: '10px'
+	margin: '10px',
+	position: 'relative',
+	overflow: 'hidden',
 }
 
 const HomePage = () => {
@@ -233,10 +235,7 @@ const HomePage = () => {
 					{productData.map((product, index) => {
 						return <Link key={index} to={`product/${product.id}`} style={productItemStyles}>
 							<Card
-								style={{
-									overflow: 'hidden',
-									position: 'relative',
-								}}
+								size='small'
 								hoverable
 								borderRadius={10}
 								cover={<img alt="example" src={product.image} />}

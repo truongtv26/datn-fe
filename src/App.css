@@ -472,10 +472,12 @@
      font-size: 16px;
      font-weight: bold;
 }
+
 .product-name {
-     margin-top: 5px!important;
-     margin-bottom: 5px!important;
+     margin-top: 5px !important;
+     margin-bottom: 5px !important;
 }
+
 .product-detail {
      display: -webkit-box;
      -webkit-line-clamp: 2;
@@ -497,6 +499,7 @@
      text-decoration: line-through;
      font-weight: 400;
 }
+
 .price .new-price {
      color: #E53E3E;
      font-family: 'Fira Sans', sans-serif;
@@ -504,7 +507,7 @@
 
 .ant-card-head {
      position: absolute;
-     position: absolute;
+     z-index: 10;
      top: 40%;
      left: 50%;
      transform: translate(-50%, -50%);
@@ -513,12 +516,14 @@
 .product-hover {
      z-index: 10;
 }
+
 .footer {
      display: flex;
      flex-direction: column;
      justify-content: space-between;
      gap: 20px;
 }
+
 .main-footer {
      display: flex;
      justify-content: start;
@@ -552,15 +557,23 @@
      font-size: 24px;
      margin-bottom: 20px;
 }
+
 .footer .bottom-footer .items {
      display: flex;
      align-items: center;
      gap: 5px;
 }
+
 .footer .bottom-footer .items .title {
      font-size: 24px;
      font-weight: 'bold';
 }
+
 .footer .bottom-footer ul li {
      list-style: none;
+}
+
+.product-items {
+     overflow: 'hidden';
+     position: 'relative';
 }
