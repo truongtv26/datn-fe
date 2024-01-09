@@ -57,7 +57,7 @@ const HeaderSection = () => {
 					<div style={{ fontSize: '12px' }}>xin chào</div>
 					<div style={{
 						fontWeight: 'bold',
-						maxWidth: '80px',
+						maxwidth: '80px',
 						overflow: 'hidden',
 						textWrap: 'nowrap'
 					}}>
@@ -130,7 +130,7 @@ const HeaderSection = () => {
 					<div>
 						<Image
 							preview={false}
-							maxWidth={250}
+							maxwidth={250}
 							src={'https://754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/10/logo-grocery.png'}
 						/>
 					</div>
@@ -172,12 +172,10 @@ const HeaderSection = () => {
 									items,
 								}}
 							>
-								<Link to={'/shop'}>
-									<Space>
-										Shop
-										<DownOutlined />
-									</Space>
-								</Link>
+								<Space>
+									Shop
+									<DownOutlined />
+								</Space>
 							</Dropdown>
 						</Link></li>
 						<li><Link to={'/blog'}>
@@ -186,12 +184,10 @@ const HeaderSection = () => {
 									items,
 								}}
 							>
-								<Link to={'blog'}>
-									<Space>
-										Blog
-										<DownOutlined />
-									</Space>
-								</Link>
+								<Space>
+									Blog
+									<DownOutlined />
+								</Space>
 							</Dropdown>
 						</Link></li>
 						<li><Link to={'/best-discount'}>
@@ -200,12 +196,10 @@ const HeaderSection = () => {
 									items,
 								}}
 							>
-								<Link to={'best-discount'}>
-									<Space>
-										Best Discount
-										<DownOutlined />
-									</Space>
-								</Link>
+								<Space>
+									Best Discount
+									<DownOutlined />
+								</Space>
 							</Dropdown>
 						</Link></li>
 					</ul>
