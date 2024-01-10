@@ -735,11 +735,11 @@
 .blog-wrapper .blog-list {
      display: flex;
      justify-content: space-between;
-     gap: 10px;
+     gap: 20px;
 }
 .blog-wrapper .blog-list .blog-item {
      display: flex;
-     flex: 0 0 25%;
+     flex: 0 0 calc(25% - 20px);
 }
 
 

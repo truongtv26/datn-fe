@@ -166,7 +166,7 @@ const HomePage = () => {
 	const blogData = [
 		{
 			id: 1,
-			title_category: "Tablet",
+			category: "Tablet",
 			title: "English Breakfast Tea With Tasty Donut Desserts",
 			image: "https://754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/03/post-04.jpg",
 			created_at: "March 7, 2023",
@@ -174,7 +174,7 @@ const HomePage = () => {
 		},
 		{
 			id: 2,
-			title_category: "SMARTPHONE",
+			category: "SMARTPHONE",
 			title: "The Problem With Typefaces on the Web",
 			image: "https://754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/03/post-03.jpg",
 			created_at: "March 7, 2023",
@@ -183,7 +183,7 @@ const HomePage = () => {
 
 		{
 			id: 3,
-			title_category: "Tablet",
+			category: "Tablet",
 			title: "But I must explain to you how all this mistaken idea",
 			image: "https://754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/03/post-02.jpg",
 			created_at: "March 7, 2023",
@@ -192,7 +192,7 @@ const HomePage = () => {
 
 		{
 			id: 4,
-			title_category: "SMARTPHONE",
+			category: "SMARTPHONE",
 			title: "On the other hand we provide denounce with righteous",
 			image: "https://754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/03/post-01.jpg",
 			created_at: "March 7, 2023 - Phone,Standart",
