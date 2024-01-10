@@ -4,6 +4,7 @@ import { Layout } from "antd"
 import { Outlet } from 'react-router-dom';
 import { Content } from 'antd/es/layout/layout';
 import HeaderSection from '../components/Header';
+import { useAppContext } from '../provider/AppProvider';
 
 const layoutStyles = {
 	margin: ' 0 auto',
@@ -11,9 +12,7 @@ const layoutStyles = {
 }
 
 const BaseLayout = () => {
-	
-
-	return (
+ 	return (
 		<Layout style={layoutStyles} className='w-full mx-auto'>
 			<HeaderSection />
 			<Content>
