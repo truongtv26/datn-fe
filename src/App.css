@@ -727,6 +727,8 @@
      list-style: none;
 }
 
+
+
 /* Css Phần BlogPage */
 
 .blog-wrapper {
@@ -935,8 +937,10 @@
 
 /* Css Responsive Blog Page  */
 
+
 @media screen and (max-width: 1024px) {
      .blog-container {
+
           display: block;
      }
 
