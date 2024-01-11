@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
-import { Checkbox, Breadcrumb, Layout, Menu, theme, Card, Pagination, Input, Slider, Button, Rate } from 'antd';
+import { Checkbox, Breadcrumb, Layout, Menu, theme, Card, Pagination, Input, Slider, Button, Rate, Divider } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
+const CheckboxGroup = Checkbox.Group;
+const plainOptions = ['Apple', 'Pear', 'Orange'];
+const defaultCheckedList = ['Apple', 'Orange'];
+
+
 
 const { Sider, Content } = Layout;
 const { Meta } = Card;
 const productItemStyles = {
-	width: 'calc(25% - 20px)',
-	margin: '10px'
+  width: 'calc(25% - 20px)',
+  margin: '10px'
 }
 
 // 
@@ -25,77 +30,25 @@ const checkboxStyle = {
 const grayStyle = { color: 'gray', fontSize: '16px', };
 const redStyle = { color: 'red', fontSize: '22px', };
 
-const generateSubnav = (count, total, withChildren) => {
-  return Array.from({ length: count }, (_, index) => {
-    const key = total + index + 1;
-    return {
-      key: `sub${key}`,
-      label: (
-        <div>
-          <Checkbox onChange={onChange} /> {`subnav ${key}`}
-        </div>
-      ),
-      children: withChildren
-        ? Array.from({ length: 4 }, (_, j) => ({
-          key: key * 4 + j + 1,
-          label: (
-            <div>
-              <Checkbox onChange={onChange} /> {`option${key * 4 + j + 1}`}
-            </div>
-          ),
-        }))
-        : [],
-    };
-  });
-};
+// 
 
 const onChange = (e) => {
   console.log(`checked = ${e.target.checked}`);
 };
 
-const initialSubnavs = generateSubnav(5, 0, true); // Tạo 5 subnav có chứa con
-const additionalSubnavs = generateSubnav(4, 5, false); // Tạo thêm 4 subnav không chứa con
 
-const items2 = [...initialSubnavs, ...additionalSubnavs]; // Tổng cộng 9 subnav
 
-const replaceContent = (key, newLabel, newOptions) => {
-  const subnavIndex = items2.findIndex((item) => item.key === `sub${key}`);
-  if (subnavIndex !== -1) {
-    items2[subnavIndex].label = (
-      <div>
-        <Checkbox onChange={onChange} /> {newLabel}
-      </div>
-    );
-    if (newOptions && newOptions.length > 0) {
-      items2[subnavIndex].children = newOptions.map((option, index) => ({
-        key: subnavIndex * 4 + index + 1,
-        label: (
-          <div style={{ fontSize: '16px' }}>
-          <Checkbox onChange={onChange} /> {newLabel}
-        </div>
-        ),
-      }));
-    }
-  }
-};
+
+
 
 // 
 
 // 
 
-// Thay đổi nhãn của từng subnav
-replaceContent('1', 'NIKE', ['Giày Nike Air Force 1 Low ‘Rubiks Cube’ FN6840-657', 'Giày Nike Air Force 1 Low ‘Rubiks Cube’ FN6840-657', 'Giày Nike Air Force 1 Low ‘Rubiks Cube’ FN6840-657', 'Giày Nike Air Force 1 Low ‘Rubiks Cube’ FN6840-657']);
-replaceContent('2', 'ADIDAS', ['Giày adidas Multix ‘White Black’ FX5118', 'Giày adidas Yeezy Boost 700 ‘Utility Black’ FV5304', 'Giày adidas Yeezy 700 V3 ‘Copper Fade’ GY4109', 'Giày adidas Yeezy 700 V3 ‘Copper Fade’ GY4109']);
-replaceContent('3', 'JORDAN', ['Giày Air Jordan Series ES ‘White Grey Fog’ DN1857-100', 'Giày Air Jordan Series ES ‘White Grey Fog’ DN1857-100', 'Giày Air Jordan Series ES ‘White Grey Fog’ DN1857-100', 'Giày Air Jordan Series ES ‘White Grey Fog’ DN1857-100']);
-replaceContent('4', 'COCA COLA', ['Option 4-1', 'Option 4-2', 'Option 4-3', 'Option 4-4']);
-replaceContent('5', 'DIOR', ['Option 5-1', 'Option 5-2', 'Option 5-3', 'Option 5-4']);
-replaceContent('6', 'FILA');
-replaceContent('7', 'GIVENCHI');
-replaceContent('8', 'GUCCI');
-replaceContent('9', 'LASCOTE');
+
 
 const categories = [
-  { image: 'https://sneakerdaily.vn/wp-content/uploads/2023/07/Thiet-ke-chua-co-ten.png.webp' },
+  { image: 'https://klbtheme.com/blonwe/grocery/wp-content/uploads/sites/5/2023/07/grocery-banner.jpg' },
 ];
 
 const ListProduct = () => {
@@ -107,82 +60,89 @@ const ListProduct = () => {
   const handleSliderChange = (value) => {
     setPriceRange(value);
   };
+
+  const [checkedList, setCheckedList] = useState(defaultCheckedList);
+  const checkAll = plainOptions.length === checkedList.length;
+  const indeterminate = checkedList.length > 0 && checkedList.length < plainOptions.length;
+  const onChange = (list) => {
+    setCheckedList(list);
+  };
+  const onCheckAllChange = (e) => {
+    setCheckedList(e.target.checked ? plainOptions : []);
+  };
   // 
   const productData = [
-		{
-			id: 1,
-			name: 'Product 1 Lorem ipsum dolor sit amet.',
-			price: 1000000,
-			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
-			rate: 4.5,
-			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		},
-		{
-			id: 2,
-			name: 'Product 2',
-			price: 20000,
-			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
-			rate: 5,
-			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		},
-		{
-			id: 3,
-			name: 'Product 3',
-			price: 30000,
-			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
-			rate: 1,
-			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		},
-		{
-			id: 4,
-			name: 'Product 4',
-			price: 40000,
-			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
-			rate: 1,
-			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		},
-		{
-			id: 5,
-			name: 'Product 5',
-			price: 50000,
-			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
-			rate: 6,
-			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		},
-		{
-			id: 6,
-			name: 'Product 6',
-			price: 60000,
-			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
-			rate: 5,
-			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		},
-		{
-			id: 7,
-			name: 'Product 7',
-			price: 70000,
-			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
-			rate: 5,
-			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		},
-		{
-			id: 8,
-			name: 'Product 8',
-			price: 80000,
-			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
-			rate: 5,
-			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		},
-	];
+    {
+      id: 1,
+      name: 'Product 1 Lorem ipsum dolor sit amet.',
+      price: 1000000,
+      image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+      rate: 4.5,
+      detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    },
+    {
+      id: 2,
+      name: 'Product 2',
+      price: 20000,
+      image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+      rate: 5,
+      detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    },
+    {
+      id: 3,
+      name: 'Product 3',
+      price: 30000,
+      image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+      rate: 1,
+      detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    },
+    {
+      id: 4,
+      name: 'Product 4',
+      price: 40000,
+      image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+      rate: 1,
+      detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    },
+    {
+      id: 5,
+      name: 'Product 5',
+      price: 50000,
+      image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+      rate: 6,
+      detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    },
+    {
+      id: 6,
+      name: 'Product 6',
+      price: 60000,
+      image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+      rate: 5,
+      detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    },
+    {
+      id: 7,
+      name: 'Product 7',
+      price: 70000,
+      image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+      rate: 5,
+      detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    },
+    {
+      id: 8,
+      name: 'Product 8',
+      price: 80000,
+      image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+      rate: 5,
+      detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    },
+  ];
 
 
 
   return (
     <div className='container mx-auto'>
-      <Breadcrumb style={{ margin: '16px 0' }}>
-        <Breadcrumb.Item>Home</Breadcrumb.Item>
-        <Breadcrumb.Item>Shop</Breadcrumb.Item>
-      </Breadcrumb>
+
 
       {categories.map((category, index) => (
         <div key={index}>
@@ -190,22 +150,25 @@ const ListProduct = () => {
         </div>
       ))}
 
+      <Layout>
         <Sider width={200} style={{ background: colorBgContainer }}>
           <h2>Product Categories</h2>
-          <Menu
-            mode="inline"
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
-            style={{ height: 'auto', borderRight: 0 }}
-            items={items2}
-          />
+          <Menu> <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
+            Check all
+          </Checkbox>
+          <Divider />
+          <CheckboxGroup options={plainOptions} value={checkedList} onChange={onChange} /></Menu>
+          
+         
+      
+         
           <h2>Filter by price</h2>
 
 
           {/* Hai ô input cho giá trị tối thiểu và tối đa */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px',fontSize:'16px' }}>
-            <div style={{marginTop:'10px',marginRight:'5px'}} >
-              <span style={{margin:'10px'}}  >Min price</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px', fontSize: '16px' }}>
+            <div style={{ marginTop: '10px', marginRight: '5px' }} >
+              <span style={{ margin: '10px' }}  >Min price</span>
               <Input
 
                 type="number"
@@ -214,24 +177,24 @@ const ListProduct = () => {
                 onChange={(e) => handleSliderChange([e.target.value, priceRange[1]])}
               />
             </div>
-            <div style={{marginTop:'10px',marginRight:'5px'}} >
-              <span style={{margin:'10px'}} >Max price</span>
-          
-            <Input
+            <div style={{ marginTop: '10px', marginRight: '5px' }} >
+              <span style={{ margin: '10px' }} >Max price</span>
+
+              <Input
 
 
-              type="number"
-              placeholder="Max Price"
-              value={priceRange[1]}
-              onChange={(e) => handleSliderChange([priceRange[0], e.target.value])}
-            />
-              </div>
+                type="number"
+                placeholder="Max Price"
+                value={priceRange[1]}
+                onChange={(e) => handleSliderChange([priceRange[0], e.target.value])}
+              />
+            </div>
           </div>
           {/* Thanh slider */}
           <div>
 
           </div>
-          <Slider style={{marginTop:'4vh',marginRight:'1vh'}}
+          <Slider style={{ marginTop: '4vh', marginRight: '1vh' }}
             range
             defaultValue={priceRange}
             min={0}
@@ -240,41 +203,41 @@ const ListProduct = () => {
           />
 
           {/* brands */}
-          <div style={{marginTop:'20px'}} >
+          <div style={{ marginTop: '20px' }} >
 
-       
-          <h2 >Brands</h2>
-          <div  style={{marginTop:'20px'}}>
-          <Checkbox style={{fontSize:'2vh'}} onChange={onChange}>Adidas</Checkbox>
-         
-          </div>
-          <div style={{marginTop:'20px'}}>
-          <Checkbox style={{fontSize:'2vh'}} onChange={onChange}>Filas</Checkbox>
-          </div>
-          <div style={{marginTop:'20px'}}>
-          <Checkbox style={{fontSize:'2vh'}} onChange={onChange}>Converse</Checkbox>
-          </div>
-          <div style={{marginTop:'20px'}}>
-          <Checkbox style={{fontSize:'2vh'}} onChange={onChange}>Nike</Checkbox>
-          </div>
-          <div style={{marginTop:'20px'}}>
-          <Checkbox style={{fontSize:'2vh'}} onChange={onChange}>Fila</Checkbox>
-          </div>
-          </div>
 
-            {/* status */}
-            <div style={{marginTop:'20px'}}>
-            <h2>Product Status</h2>
-          <div style={{marginTop:'20px'}}>
-          <Checkbox style={{fontSize:'2vh'}} onChange={onChange}>Instock</Checkbox>
-          </div>
-          <div style={{marginTop:'20px'}}>
-          <Checkbox style={{fontSize:'2vh'}} onChange={onChange}>Onsale</Checkbox>
-          </div>
+            <h2 >Brands</h2>
+            <div style={{ marginTop: '20px' }}>
+              <Checkbox style={{ fontSize: '2vh' }} onChange={onChange}>Adidas</Checkbox>
+
             </div>
-        
-        
-       
+            <div style={{ marginTop: '20px' }}>
+              <Checkbox style={{ fontSize: '2vh' }} onChange={onChange}>Filas</Checkbox>
+            </div>
+            <div style={{ marginTop: '20px' }}>
+              <Checkbox style={{ fontSize: '2vh' }} onChange={onChange}>Converse</Checkbox>
+            </div>
+            <div style={{ marginTop: '20px' }}>
+              <Checkbox style={{ fontSize: '2vh' }} onChange={onChange}>Nike</Checkbox>
+            </div>
+            <div style={{ marginTop: '20px' }}>
+              <Checkbox style={{ fontSize: '2vh' }} onChange={onChange}>Fila</Checkbox>
+            </div>
+          </div>
+
+          {/* status */}
+          <div style={{ marginTop: '20px' }}>
+            <h2>Product Status</h2>
+            <div style={{ marginTop: '20px' }}>
+              <Checkbox style={{ fontSize: '2vh' }} onChange={onChange}>Instock</Checkbox>
+            </div>
+            <div style={{ marginTop: '20px' }}>
+              <Checkbox style={{ fontSize: '2vh' }} onChange={onChange}>Onsale</Checkbox>
+            </div>
+          </div>
+
+
+
 
 
 
@@ -285,51 +248,62 @@ const ListProduct = () => {
 
         </Sider>
 
-      	<p style={{ fontSize: '24px', fontWeight: 'bold', margin: '10px 0' }}>Don't miss this week's sales</p>
-			<div style={{
-				boxShadow: '0 0 5px 3px var(--secondary-color)',
-				padding: '10px',
-				borderRadius: '5px',
-			}}>
-				<div className="flex flex-wrap justify-start">
-					{productData.map((product, index) => {
-						return <Link key={index} to={`product/${product.id}`} style={productItemStyles}>
-							<Card
-								style={{
-									overflow: 'hidden',
-									position: 'relative',
-								}}
-								hoverable
-								borderRadius={10}
-								cover={<img alt="example" src={product.image} />}
-							>
-								<Rate disabled allowHalf defaultValue={product.rate} className='rate' />
-								<Meta title={product.name} className='product-name' />
-								<div className='price'>
-									<p className="new-price">
-										{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)}
-									</p>
-									<p className="old-price">
-										{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)}
-									</p>
-								</div>
-								<p className='product-detail'>
-									{product.detail}
-								</p>
+        <Layout style={{ padding: '0 24px 24px' }}>
+          <Content
+            style={{
+              padding: 24,
+              margin: 0,
+              minHeight: 280,
+              background: colorBgContainer,
+              borderRadius: borderRadiusLG,
+            }}
+          >
 
-							</Card>
-						</Link>
-					})}
+            <p style={{ fontSize: '24px', fontWeight: 'bold', margin: '10px 0' }}>Don't miss this week's sales</p>
+            <div style={{
+              boxShadow: '0 0 5px 3px var(--secondary-color)',
+              padding: '10px',
+              borderRadius: '5px',
+            }}>
+              <div className="flex flex-wrap justify-start">
+                {productData.map((product, index) => {
+                  return <Link key={index} to={`product/${product.id}`} style={productItemStyles}>
+                    <Card
+                      style={{
+                        overflow: 'hidden',
+                        position: 'relative',
+                      }}
+                      hoverable
+                      borderRadius={10}
+                      cover={<img alt="example" src={product.image} />}
+                    >
+                      <Rate disabled allowHalf defaultValue={product.rate} className='rate' />
+                      <Meta title={product.name} className='product-name' />
+                      <div className='price'>
+                        <p className="new-price">
+                          {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)}
+                        </p>
+                        <p className="old-price">
+                          {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)}
+                        </p>
+                      </div>
+                      <p className='product-detail'>
+                        {product.detail}
+                      </p>
 
-					<div style={{
-						width: '100%',
-						display: 'flex',
-						justifyContent: 'center',
-					}}>
-						<Button type="primary">Show more</Button>
-					</div>
-				</div >
-			</div>
+                    </Card>
+                  </Link>
+                })}
+              </div >
+            </div>
+            <div style={{ display: 'flex', marginTop: '20px', justifyContent: 'center', alignItems: 'center' }}>
+              <Pagination defaultCurrent={1} total={50} />
+            </div>
+
+          </Content>
+
+        </Layout>
+      </Layout>
       {/* <Pagination current={current} onChangepage={onChangepage} total={50} /> */}
     </div>
   );
@@ -827,7 +801,3 @@ export default ListProduct;
 // };
 
 // export default App;
-
-
-
-
