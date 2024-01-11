@@ -472,10 +472,12 @@
      font-size: 16px;
      font-weight: bold;
 }
+
 .product-name {
-     margin-top: 5px!important;
-     margin-bottom: 5px!important;
+     margin-top: 5px !important;
+     margin-bottom: 5px !important;
 }
+
 .product-detail {
      display: -webkit-box;
      -webkit-line-clamp: 2;
@@ -497,6 +499,7 @@
      text-decoration: line-through;
      font-weight: 400;
 }
+
 .price .new-price {
      color: #E53E3E;
      font-family: 'Fira Sans', sans-serif;
@@ -513,12 +516,14 @@
 .product-hover {
      z-index: 10;
 }
+
 .footer {
      display: flex;
      flex-direction: column;
      justify-content: space-between;
      gap: 20px;
 }
+
 .main-footer {
      display: flex;
      justify-content: start;
@@ -552,15 +557,86 @@
      font-size: 24px;
      margin-bottom: 20px;
 }
+
 .footer .bottom-footer .items {
      display: flex;
      align-items: center;
      gap: 5px;
 }
+
 .footer .bottom-footer .items .title {
      font-size: 24px;
      font-weight: 'bold';
 }
+
 .footer .bottom-footer ul li {
      list-style: none;
+}
+
+/* product list */
+.input-label {
+     display: flex;
+     flex-direction: column;
+}
+
+.input-label span {
+     margin-bottom: 5px;
+     font-weight: bold;
+     color: #333;
+     /* Màu chữ của nhãn */
+}
+
+.input-label input {
+     width: 80px;
+     /* Độ rộng của ô input */
+}
+
+
+
+
+
+
+/* ProductCard.css */
+.product-card {
+     position: relative;
+     /* Các thuộc tính khác của card */
+
+     /* Hiệu ứng khi hover */
+     &:hover {
+          /* Các thuộc tính hover của card */
+
+          /* Hiển thị biểu tượng giỏ hàng khi hover */
+          .cart-icon {
+               opacity: 1;
+          }
+     }
+}
+
+/* Biểu tượng giỏ hàng ẩn đi ban đầu */
+.cart-icon {
+
+     position: absolute;
+     top: 10%;
+     right: 10%;
+     transform: translate(-50%, -50%);
+     opacity: 0;
+     transition: opacity 0.3s ease;
+     /* Hiệu ứng hiển thị */
+     cursor: pointer;
+}
+
+
+/* styles.css */
+
+
+
+
+.custom-image {
+     width: 100%;
+     /* Thay đổi chiều rộng của ảnh tương ứng */
+     max-width: 100%;
+     /* Tối đa chiều rộng của phần tử cha */
+     height: auto;
+     /* Duy trì tỷ lệ khung hình */
+     margin-bottom: 50px;
 }

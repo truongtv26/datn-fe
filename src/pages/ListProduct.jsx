@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { Checkbox, Breadcrumb, Layout, Menu, theme, Card, Pagination, Input, Slider } from 'antd';
+import { Checkbox, Breadcrumb, Layout, Menu, theme, Card, Pagination, Input, Slider, Button, Rate } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 
 const { Sider, Content } = Layout;
 const { Meta } = Card;
-
+const productItemStyles = {
+	width: 'calc(25% - 20px)',
+	margin: '10px'
+}
 
 // 
 const { Search } = Input;
@@ -94,7 +98,7 @@ const categories = [
   { image: 'https://sneakerdaily.vn/wp-content/uploads/2023/07/Thiet-ke-chua-co-ten.png.webp' },
 ];
 
-const App = () => {
+const ListProduct = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -104,6 +108,72 @@ const App = () => {
     setPriceRange(value);
   };
   // 
+  const productData = [
+		{
+			id: 1,
+			name: 'Product 1 Lorem ipsum dolor sit amet.',
+			price: 1000000,
+			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+			rate: 4.5,
+			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+		},
+		{
+			id: 2,
+			name: 'Product 2',
+			price: 20000,
+			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+			rate: 5,
+			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+		},
+		{
+			id: 3,
+			name: 'Product 3',
+			price: 30000,
+			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+			rate: 1,
+			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+		},
+		{
+			id: 4,
+			name: 'Product 4',
+			price: 40000,
+			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+			rate: 1,
+			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+		},
+		{
+			id: 5,
+			name: 'Product 5',
+			price: 50000,
+			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+			rate: 6,
+			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+		},
+		{
+			id: 6,
+			name: 'Product 6',
+			price: 60000,
+			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+			rate: 5,
+			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+		},
+		{
+			id: 7,
+			name: 'Product 7',
+			price: 70000,
+			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+			rate: 5,
+			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+		},
+		{
+			id: 8,
+			name: 'Product 8',
+			price: 80000,
+			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
+			rate: 5,
+			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+		},
+	];
 
 
 
@@ -120,7 +190,6 @@ const App = () => {
         </div>
       ))}
 
-      <Layout>
         <Sider width={200} style={{ background: colorBgContainer }}>
           <h2>Product Categories</h2>
           <Menu
@@ -216,459 +285,58 @@ const App = () => {
 
         </Sider>
 
-        <Layout style={{ padding: '0 24px 24px' }}>
-          <Content
-            style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-            }}
-          >
-            <div style={{ display: 'flex', textAlign: 'center' }}>
-              <div className='product-card' style={{ margin: '10px' }}>
-                <Card
-
-                  hoverable
-                  style={{
-                    width: 210,
-                  }}
-
-                  cover={<img alt="example" src="https://sneakerdaily.vn/wp-content/uploads/2024/01/Giay-Air-Jordan-1-Retro-High-OG-GS-Chicago-Lost-Found-FD1437-612.jpg" />}
-                >
-                  <div className="cart-icon">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                  </div>
-                  <h3>Giày Air Jordan 1 Retro Low OG
-                    ‘Year of the Dragon’ FN3727-100</h3>
-                  <strong style={grayStyle}><s>$1400</s></strong> - <strong style={redStyle}>$1900</strong>
-
-                  <button style={{ padding: '1vh', fontSize: '20px', width: '16vh', borderRadius: '1vh', backgroundColor: 'black', color: 'white', border: 'none', marginTop: '1vh' }}>Add to Cart</button>
-
-
-
-                </Card>
-
-
-              </div>
-              <div className='product-card' style={{ margin: '10px' }}>
-                <Card
-                  hoverable
-                  style={{
-                    width: 210,
-                  }}
-                  cover={<img alt="example" src="https://sneakerdaily.vn/wp-content/uploads/2024/01/Giay-Air-Jordan-1-Mid-Patent-SE-GS-Black-Gold-BQ6931-007.jpg" />}
-                >
-                  <div className="cart-icon">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                  </div>
-
-                  <h3>Giày Air Jordan 1 Retro Low OG
-                    ‘Year of the Dragon’ FN3727-100</h3>
-                  <strong style={grayStyle}><s>$1400</s></strong> - <strong style={redStyle}>$1900</strong>
-                  <button style={{ padding: '1vh', fontSize: '20px', width: '16vh', borderRadius: '1vh', backgroundColor: 'black', color: 'white', border: 'none', marginTop: '1vh' }}>Add to Cart</button>
-                </Card>
-              </div>
-              <div className='product-card' style={{ margin: '10px' }}>
-                <Card
-                  hoverable
-                  style={{
-                    width: 210,
-                  }}
-                  cover={<img alt="example" src="https://sneakerdaily.vn/wp-content/uploads/2022/09/Giay-Nike-Air-Force-1-Low-Triple-White-315122-111-CW2288-111-DD8959-100.jpg" />}
-                >
-                  <div className="cart-icon">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                  </div>
-                  <h3>Giày Air Jordan 1 Retro Low OG
-                    ‘Year of the Dragon’ FN3727-100</h3>
-                  <strong style={grayStyle}><s>$1400</s></strong> - <strong style={redStyle}>$1900</strong>
-                  <button style={{ padding: '1vh', fontSize: '20px', width: '16vh', borderRadius: '1vh', backgroundColor: 'black', color: 'white', border: 'none', marginTop: '1vh' }}>Add to Cart</button>
-
-                </Card>
-              </div>
-              <div className='product-card' style={{ margin: '10px' }}>
-                <Card
-                  hoverable
-                  style={{
-                    width: 210,
-                  }}
-                  cover={<img alt="example" src="https://sneakerdaily.vn/wp-content/uploads/2020/11/Giay-nam-Air-Jordan-1-Low-Light-Smoke-Grey-Red-553558-030.jpg" />}
-                >
-                  <div className="cart-icon">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                  </div>
-                  <h3>Giày Air Jordan 1 Retro Low OG
-                    ‘Year of the Dragon’ FN3727-100</h3>
-                  <strong style={grayStyle}><s>$1400</s></strong> - <strong style={redStyle}>$1900</strong>
-                  {/* <Meta title="Giày Air Jordan 1 Retro Low OG
-       ‘Year of the Dragon’ FN3727-100" description="www.instagram.com" /> */}
-                  <button style={{ padding: '1vh', fontSize: '20px', width: '16vh', borderRadius: '1vh', backgroundColor: 'black', color: 'white', border: 'none', marginTop: '1vh' }}>Add to Cart</button>
-
-                </Card>
-              </div>
-              <div className='product-card' style={{ margin: '10px' }}>
-
-                <Card
-
-                  hoverable
-                  style={{
-                    width: 210,
-                  }}
-                  cover={<img alt="example" src="https://sneakerdaily.vn/wp-content/uploads/2024/01/Giay-WMNS-Air-Jordan-1-Low-SE-Year-of-the-Dragon-FJ5735-100.jpg" />}
-                >
-                  <div className="cart-icon">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                  </div>
-                  <h3>Giày Air Jordan 1 Retro Low OG
-                    ‘Year of the Dragon’ FN3727-100</h3>
-                  <strong style={grayStyle}><s>$1400</s></strong> - <strong style={redStyle}>$1900</strong>
-
-                  <button style={{ padding: '1vh', width: '16vh', fontSize: '20px', borderRadius: '1vh', backgroundColor: 'black', color: 'white', border: 'none', marginTop: '1vh' }}>Add to Cart</button>
-                </Card>
-
-              </div>
-            </div>
-
-
-            {/* test2 */}
-            <div style={{ display: 'flex', textAlign: 'center', marginTop: '20px' }}>
-              <div className='product-card' style={{ margin: '10px' }}>
-                <Card
-
-                  hoverable
-                  style={{
-                    width: 210,
-                  }}
-
-                  cover={<img alt="example" src="https://sneakerdaily.vn/wp-content/uploads/2024/01/Giay-Air-Jordan-1-Retro-High-OG-GS-Chicago-Lost-Found-FD1437-612.jpg" />}
-                >
-                  <div className="cart-icon">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                  </div>
-                  <h3>Giày Air Jordan 1 Retro Low OG
-                    ‘Year of the Dragon’ FN3727-100</h3>
-                  <strong style={grayStyle}><s>$1400</s></strong> - <strong style={redStyle}>$1900</strong>
-
-                  <button style={{ padding: '1vh', fontSize: '20px', width: '16vh', borderRadius: '1vh', backgroundColor: 'black', color: 'white', border: 'none', marginTop: '1vh' }}>Add to Cart</button>
-
-
-
-                </Card>
-
-
-              </div>
-              <div className='product-card' style={{ margin: '10px' }}>
-                <Card
-                  hoverable
-                  style={{
-                    width: 210,
-                  }}
-                  cover={<img alt="example" src="https://sneakerdaily.vn/wp-content/uploads/2024/01/Giay-Air-Jordan-1-Mid-Patent-SE-GS-Black-Gold-BQ6931-007.jpg" />}
-                >
-                  <div className="cart-icon">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                  </div>
-
-                  <h3>Giày Air Jordan 1 Retro Low OG
-                    ‘Year of the Dragon’ FN3727-100</h3>
-                  <strong style={grayStyle}><s>$1400</s></strong> - <strong style={redStyle}>$1900</strong>
-                  <button style={{ padding: '1vh', fontSize: '20px', width: '16vh', borderRadius: '1vh', backgroundColor: 'black', color: 'white', border: 'none', marginTop: '1vh' }}>Add to Cart</button>
-                </Card>
-              </div>
-              <div className='product-card' style={{ margin: '10px' }}>
-                <Card
-                  hoverable
-                  style={{
-                    width: 210,
-                  }}
-                  cover={<img alt="example" src="https://sneakerdaily.vn/wp-content/uploads/2022/09/Giay-Nike-Air-Force-1-Low-Triple-White-315122-111-CW2288-111-DD8959-100.jpg" />}
-                >
-                  <div className="cart-icon">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                  </div>
-                  <h3>Giày Air Jordan 1 Retro Low OG
-                    ‘Year of the Dragon’ FN3727-100</h3>
-                  <strong style={grayStyle}><s>$1400</s></strong> - <strong style={redStyle}>$1900</strong>
-                  <button style={{ padding: '1vh', fontSize: '20px', width: '16vh', borderRadius: '1vh', backgroundColor: 'black', color: 'white', border: 'none', marginTop: '1vh' }}>Add to Cart</button>
-
-                </Card>
-              </div>
-              <div className='product-card' style={{ margin: '10px' }}>
-                <Card
-                  hoverable
-                  style={{
-                    width: 210,
-                  }}
-                  cover={<img alt="example" src="https://sneakerdaily.vn/wp-content/uploads/2020/11/Giay-nam-Air-Jordan-1-Low-Light-Smoke-Grey-Red-553558-030.jpg" />}
-                >
-                  <div className="cart-icon">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                  </div>
-                  <h3>Giày Air Jordan 1 Retro Low OG
-                    ‘Year of the Dragon’ FN3727-100</h3>
-                  <strong style={grayStyle}><s>$1400</s></strong> - <strong style={redStyle}>$1900</strong>
-                  {/* <Meta title="Giày Air Jordan 1 Retro Low OG
-       ‘Year of the Dragon’ FN3727-100" description="www.instagram.com" /> */}
-                  <button style={{ padding: '1vh', fontSize: '20px', width: '16vh', borderRadius: '1vh', backgroundColor: 'black', color: 'white', border: 'none', marginTop: '1vh' }}>Add to Cart</button>
-
-                </Card>
-              </div>
-              <div className='product-card' style={{ margin: '10px' }}>
-
-                <Card
-
-                  hoverable
-                  style={{
-                    width: 210,
-                  }}
-                  cover={<img alt="example" src="https://sneakerdaily.vn/wp-content/uploads/2024/01/Giay-WMNS-Air-Jordan-1-Low-SE-Year-of-the-Dragon-FJ5735-100.jpg" />}
-                >
-                  <div className="cart-icon">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                  </div>
-                  <h3>Giày Air Jordan 1 Retro Low OG
-                    ‘Year of the Dragon’ FN3727-100</h3>
-                  <strong style={grayStyle}><s>$1400</s></strong> - <strong style={redStyle}>$1900</strong>
-
-                  <button style={{ padding: '1vh', fontSize: '20px', width: '16vh', borderRadius: '1vh', backgroundColor: 'black', color: 'white', border: 'none', marginTop: '1vh' }}>Add to Cart</button>
-                </Card>
-
-              </div>
-            </div>
-            {/* test2 */}
-
-            {/* test3 */}
-            <div style={{ display: 'flex', textAlign: 'center', marginTop: '20px' }}>
-              <div className='product-card' style={{ margin: '10px' }}>
-                <Card
-
-                  hoverable
-                  style={{
-                    width: 210,
-                  }}
-
-                  cover={<img alt="example" src="https://sneakerdaily.vn/wp-content/uploads/2024/01/Giay-Air-Jordan-1-Retro-High-OG-GS-Chicago-Lost-Found-FD1437-612.jpg" />}
-                >
-                  <div className="cart-icon">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                  </div>
-                  <h3>Giày Air Jordan 1 Retro Low OG
-                    ‘Year of the Dragon’ FN3727-100</h3>
-                  <strong style={grayStyle}><s>$1400</s></strong> - <strong style={redStyle}>$1900</strong>
-
-                  <button style={{ padding: '1vh', fontSize: '20px', width: '16vh', borderRadius: '1vh', backgroundColor: 'black', color: 'white', border: 'none', marginTop: '1vh' }}>Add to Cart</button>
-
-
-
-                </Card>
-
-
-              </div>
-              <div className='product-card' style={{ margin: '10px' }}>
-                <Card
-                  hoverable
-                  style={{
-                    width: 210,
-                  }}
-                  cover={<img alt="example" src="https://sneakerdaily.vn/wp-content/uploads/2024/01/Giay-Air-Jordan-1-Mid-Patent-SE-GS-Black-Gold-BQ6931-007.jpg" />}
-                >
-                  <div className="cart-icon">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                  </div>
-
-                  <h3>Giày Air Jordan 1 Retro Low OG
-                    ‘Year of the Dragon’ FN3727-100</h3>
-                  <strong style={grayStyle}><s>$1400</s></strong> - <strong style={redStyle}>$1900</strong>
-                  <button style={{ padding: '1vh', fontSize: '20px', width: '16vh', borderRadius: '1vh', backgroundColor: 'black', color: 'white', border: 'none', marginTop: '1vh' }}>Add to Cart</button>
-                </Card>
-              </div>
-              <div className='product-card' style={{ margin: '10px' }}>
-                <Card
-                  hoverable
-                  style={{
-                    width: 210,
-                  }}
-                  cover={<img alt="example" src="https://sneakerdaily.vn/wp-content/uploads/2022/09/Giay-Nike-Air-Force-1-Low-Triple-White-315122-111-CW2288-111-DD8959-100.jpg" />}
-                >
-                  <div className="cart-icon">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                  </div>
-                  <h3>Giày Air Jordan 1 Retro Low OG
-                    ‘Year of the Dragon’ FN3727-100</h3>
-                  <strong style={grayStyle}><s>$1400</s></strong> - <strong style={redStyle}>$1900</strong>
-                  <button style={{ padding: '1vh', fontSize: '20px', width: '16vh', borderRadius: '1vh', backgroundColor: 'black', color: 'white', border: 'none', marginTop: '1vh' }}>Add to Cart</button>
-
-                </Card>
-              </div>
-              <div className='product-card' style={{ margin: '10px' }}>
-                <Card
-                  hoverable
-                  style={{
-                    width: 210,
-                  }}
-                  cover={<img alt="example" src="https://sneakerdaily.vn/wp-content/uploads/2020/11/Giay-nam-Air-Jordan-1-Low-Light-Smoke-Grey-Red-553558-030.jpg" />}
-                >
-                  <div className="cart-icon">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                  </div>
-                  <h3>Giày Air Jordan 1 Retro Low OG
-                    ‘Year of the Dragon’ FN3727-100</h3>
-                  <strong style={grayStyle}><s>$1400</s></strong> - <strong style={redStyle}>$1900</strong>
-                  {/* <Meta title="Giày Air Jordan 1 Retro Low OG
-       ‘Year of the Dragon’ FN3727-100" description="www.instagram.com" /> */}
-                  <button style={{ padding: '1vh', fontSize: '20px', width: '16vh', borderRadius: '1vh', backgroundColor: 'black', color: 'white', border: 'none', marginTop: '1vh' }}>Add to Cart</button>
-
-                </Card>
-              </div>
-              <div className='product-card' style={{ margin: '10px' }}>
-
-                <Card
-
-                  hoverable
-                  style={{
-                    width: 210,
-                  }}
-                  cover={<img alt="example" src="https://sneakerdaily.vn/wp-content/uploads/2024/01/Giay-WMNS-Air-Jordan-1-Low-SE-Year-of-the-Dragon-FJ5735-100.jpg" />}
-                >
-                  <div className="cart-icon">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                  </div>
-                  <h3>Giày Air Jordan 1 Retro Low OG
-                    ‘Year of the Dragon’ FN3727-100</h3>
-                  <strong style={grayStyle}><s>$1400</s></strong> - <strong style={redStyle}>$1900</strong>
-
-                  <button style={{ padding: '1vh', fontSize: '20px', width: '16vh', borderRadius: '1vh', backgroundColor: 'black', color: 'white', border: 'none', marginTop: '1vh' }}>Add to Cart</button>
-                </Card>
-
-              </div>
-            </div>
-
-            {/* test3 */}
-
-            {/* test4 */}
-            <div style={{ display: 'flex', textAlign: 'center', marginTop: '20px' }}>
-              <div className='product-card' style={{ margin: '10px' }}>
-                <Card
-
-                  hoverable
-                  style={{
-                    width: 210,
-                  }}
-
-                  cover={<img alt="example" src="https://sneakerdaily.vn/wp-content/uploads/2024/01/Giay-Air-Jordan-1-Retro-High-OG-GS-Chicago-Lost-Found-FD1437-612.jpg" />}
-                >
-                  <div className="cart-icon">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                  </div>
-                  <h3>Giày Air Jordan 1 Retro Low OG
-                    ‘Year of the Dragon’ FN3727-100</h3>
-                  <strong style={grayStyle}><s>$1400</s></strong> - <strong style={redStyle}>$1900</strong>
-
-                  <button style={{ padding: '1vh', fontSize: '20px', width: '16vh', borderRadius: '1vh', backgroundColor: 'black', color: 'white', border: 'none', marginTop: '1vh' }}>Add to Cart</button>
-
-
-
-                </Card>
-
-
-              </div>
-              <div className='product-card' style={{ margin: '10px' }}>
-                <Card
-                  hoverable
-                  style={{
-                    width: 210,
-                  }}
-                  cover={<img alt="example" src="https://sneakerdaily.vn/wp-content/uploads/2024/01/Giay-Air-Jordan-1-Mid-Patent-SE-GS-Black-Gold-BQ6931-007.jpg" />}
-                >
-                  <div className="cart-icon">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                  </div>
-
-                  <h3>Giày Air Jordan 1 Retro Low OG
-                    ‘Year of the Dragon’ FN3727-100</h3>
-                  <strong style={grayStyle}><s>$1400</s></strong> - <strong style={redStyle}>$1900</strong>
-                  <button style={{ padding: '1vh', fontSize: '20px', width: '16vh', borderRadius: '1vh', backgroundColor: 'black', color: 'white', border: 'none', marginTop: '1vh' }}>Add to Cart</button>
-                </Card>
-              </div>
-              <div className='product-card' style={{ margin: '10px' }}>
-                <Card
-                  hoverable
-                  style={{
-                    width: 210,
-                  }}
-                  cover={<img alt="example" src="https://sneakerdaily.vn/wp-content/uploads/2022/09/Giay-Nike-Air-Force-1-Low-Triple-White-315122-111-CW2288-111-DD8959-100.jpg" />}
-                >
-                  <div className="cart-icon">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                  </div>
-                  <h3>Giày Air Jordan 1 Retro Low OG
-                    ‘Year of the Dragon’ FN3727-100</h3>
-                  <strong style={grayStyle}><s>$1400</s></strong> - <strong style={redStyle}>$1900</strong>
-                  <button style={{ padding: '1vh', fontSize: '20px', width: '16vh', borderRadius: '1vh', backgroundColor: 'black', color: 'white', border: 'none', marginTop: '1vh' }}>Add to Cart</button>
-
-                </Card>
-              </div>
-              <div className='product-card' style={{ margin: '10px' }}>
-                <Card
-                  hoverable
-                  style={{
-                    width: 210,
-                  }}
-                  cover={<img alt="example" src="https://sneakerdaily.vn/wp-content/uploads/2020/11/Giay-nam-Air-Jordan-1-Low-Light-Smoke-Grey-Red-553558-030.jpg" />}
-                >
-                  <div className="cart-icon">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                  </div>
-                  <h3>Giày Air Jordan 1 Retro Low OG
-                    ‘Year of the Dragon’ FN3727-100</h3>
-                  <strong style={grayStyle}><s>$1400</s></strong> - <strong style={redStyle}>$1900</strong>
-                  {/* <Meta title="Giày Air Jordan 1 Retro Low OG
-       ‘Year of the Dragon’ FN3727-100" description="www.instagram.com" /> */}
-                  <button style={{ padding: '1vh', fontSize: '20px', width: '16vh', borderRadius: '1vh', backgroundColor: 'black', color: 'white', border: 'none', marginTop: '1vh' }}>Add to Cart</button>
-
-                </Card>
-              </div>
-              <div className='product-card' style={{ margin: '10px' }}>
-
-                <Card
-
-                  hoverable
-                  style={{
-                    width: 210,
-                  }}
-                  cover={<img alt="example" src="https://sneakerdaily.vn/wp-content/uploads/2024/01/Giay-WMNS-Air-Jordan-1-Low-SE-Year-of-the-Dragon-FJ5735-100.jpg" />}
-                >
-                  <div className="cart-icon">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                  </div>
-                  <h3>Giày Air Jordan 1 Retro Low OG
-                    ‘Year of the Dragon’ FN3727-100</h3>
-                  <strong style={grayStyle}><s>$1400</s></strong> - <strong style={redStyle}>$1900</strong>
-
-                  <button style={{ padding: '1vh', fontSize: '20px', width: '16vh', borderRadius: '1vh', backgroundColor: 'black', color: 'white', border: 'none', marginTop: '1vh' }}>Add to Cart</button>
-                </Card>
-
-              </div>
-            </div>
-            {/* test4 */}
-
-            <div style={{ display: 'flex', marginTop: '20px', justifyContent: 'center', alignItems: 'center' }}>
-              <Pagination defaultCurrent={1} total={50} />
-            </div>
-
-          </Content>
-
-        </Layout>
-      </Layout>
+      	<p style={{ fontSize: '24px', fontWeight: 'bold', margin: '10px 0' }}>Don't miss this week's sales</p>
+			<div style={{
+				boxShadow: '0 0 5px 3px var(--secondary-color)',
+				padding: '10px',
+				borderRadius: '5px',
+			}}>
+				<div className="flex flex-wrap justify-start">
+					{productData.map((product, index) => {
+						return <Link key={index} to={`product/${product.id}`} style={productItemStyles}>
+							<Card
+								style={{
+									overflow: 'hidden',
+									position: 'relative',
+								}}
+								hoverable
+								borderRadius={10}
+								cover={<img alt="example" src={product.image} />}
+							>
+								<Rate disabled allowHalf defaultValue={product.rate} className='rate' />
+								<Meta title={product.name} className='product-name' />
+								<div className='price'>
+									<p className="new-price">
+										{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)}
+									</p>
+									<p className="old-price">
+										{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)}
+									</p>
+								</div>
+								<p className='product-detail'>
+									{product.detail}
+								</p>
+
+							</Card>
+						</Link>
+					})}
+
+					<div style={{
+						width: '100%',
+						display: 'flex',
+						justifyContent: 'center',
+					}}>
+						<Button type="primary">Show more</Button>
+					</div>
+				</div >
+			</div>
       {/* <Pagination current={current} onChangepage={onChangepage} total={50} /> */}
     </div>
   );
 };
 
 
-export default App;
+export default ListProduct;
 
 
 
