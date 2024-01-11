@@ -166,7 +166,7 @@ const HeaderSection = () => {
 				<div className='bottom-header container mx-auto'>
 					<ul>
 						<li><Link to={'/'}>Home</Link></li>
-						<li><Link to={'/shop'}>
+						<li><Link to={'/list-product'}>
 							<Dropdown
 								menu={{
 									items,
