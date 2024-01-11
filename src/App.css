@@ -449,6 +449,11 @@
      border-color: var(--primary-color)
 }
 
+.line {
+     margin: 20px 0;
+     border: 1px solid var(--primary-color);
+}
+
 :where(.css-dev-only-do-not-override-17sses9) .ant-input-affix-wrapper {
      border-color: var(--primary-color)
 }
@@ -507,13 +512,18 @@
 
 .ant-card-head {
      position: absolute;
-     position: absolute;
+     z-index: 10;
      top: 40%;
      left: 50%;
      transform: translate(-50%, -50%);
 }
 
 .product-hover {
+     display: none;
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
      z-index: 10;
 }
 
@@ -532,7 +542,6 @@
 .main-footer .footer-items {
      display: flex;
      flex-direction: column;
-     flex: 0 0 33%;
 }
 
 .main-footer .footer-items ul {

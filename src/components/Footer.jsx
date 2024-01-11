@@ -53,10 +53,10 @@ const Footer = () => {
 					</ul>
 					<ul className='items'>
 						<li style={{ fontWeight: 'bold', fontSize: '16px' }}>We accept:</li>
-						<li><img width="36" height="12" src="https://static-00.iconduck.com/assets.00/visa-icon-2048x628-6yzgq2vq.png" alt="payment" data-lazy-src="../../../754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/11/visa.png" data-ll-status="loaded" class="entered lazyloaded" /></li>
-						<li><img width="24" height="16" src="https://cdn.iconscout.com/icon/free/png-256/free-mastercard-3521564-2944982.png" alt="payment" data-lazy-src="../../../754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/11/visa.png" data-ll-status="loaded" class="entered lazyloaded" /></li>
-						<li><img width="36" height="12" src="https://static-00.iconduck.com/assets.00/visa-icon-2048x628-6yzgq2vq.png" alt="payment" data-lazy-src="../../../754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/11/visa.png" data-ll-status="loaded" class="entered lazyloaded" /></li>
-						<li><img width="24" height="16" src="https://cdn.iconscout.com/icon/free/png-256/free-mastercard-3521564-2944982.png" alt="payment" data-lazy-src="../../../754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/11/visa.png" data-ll-status="loaded" class="entered lazyloaded" /></li>
+						<li><img width="36" height="12" src="https://static-00.iconduck.com/assets.00/visa-icon-2048x628-6yzgq2vq.png" alt="payment" data-lazy-src="../../../754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/11/visa.png" data-ll-status="loaded" className="entered lazyloaded" /></li>
+						<li><img width="24" height="16" src="https://cdn.iconscout.com/icon/free/png-256/free-mastercard-3521564-2944982.png" alt="payment" data-lazy-src="../../../754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/11/visa.png" data-ll-status="loaded" className="entered lazyloaded" /></li>
+						<li><img width="36" height="12" src="https://static-00.iconduck.com/assets.00/visa-icon-2048x628-6yzgq2vq.png" alt="payment" data-lazy-src="../../../754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/11/visa.png" data-ll-status="loaded" className="entered lazyloaded" /></li>
+						<li><img width="24" height="16" src="https://cdn.iconscout.com/icon/free/png-256/free-mastercard-3521564-2944982.png" alt="payment" data-lazy-src="../../../754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/11/visa.png" data-ll-status="loaded" className="entered lazyloaded" /></li>
 					</ul>
 				</div>
 			</div>

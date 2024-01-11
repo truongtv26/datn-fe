@@ -16,6 +16,8 @@ import { isUserAllowed } from '../lib/utils'
 import ListProductManage from '../components/admin/Product/ListProductManage'
 import AddProduct from '../components/admin/Product/AddProduct'
 import ListProduct from '../pages/ListProduct'
+import CartPage from '../pages/CartPage'
+
 const Routers = () => {
     const { user } = useAppContext();
     return (
@@ -25,10 +27,11 @@ const Routers = () => {
                 
                 <Route path='/' element={<BaseLayout />}>
                     <Route index element={<HomePage />} />
- <Route path='list-product' element={<ListProduct/>} />
+                    <Route path='list-product' element={<ListProduct/>} />
                     <Route path='product/:slug' element={<ProductDetailPage />} />
+                    <Route path='blog' element={<BlogPage />} />
                     <Route path='blog/:slug' element={<BlogPage />} />
-
+                    <Route path='cart' element={<CartPage />} />
                     {/* auth */}
                     <Route path='login' element={<Login />} />
                     <Route path='register' element={<Register />} />
