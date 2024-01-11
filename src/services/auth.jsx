@@ -32,16 +32,18 @@ export const logout = async () => {
 export const getUser = async () => {
     try {
         const response = await instance.get(`/user`, {
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('authToken')
-            }
-        })
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+          }
+        });
+    
         if (response.status === 200) {
-            return response.data.data
+          return response.data.data;
         }
-        return response
-    } catch (error) {
-        return error.response
-    }
+    
+        throw new Error('Failed to fetch user data');
+      } catch (error) {
+        throw new Error(error.response ? error.response.data : error.message);
+      }
 }
 

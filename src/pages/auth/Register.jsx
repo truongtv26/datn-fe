@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input } from 'antd';
+import { LoadingOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Spin } from 'antd';
 import { getUser, register } from '../../services/auth';
 import { useAppContext } from '../../provider/AppProvider';
 import { Link, useNavigate } from 'react-router-dom';
 const Register = () => {
-     const { setUser, setIsLoading } = useAppContext()
+     const { setUser } = useAppContext()
 
      const [form] = Form.useForm();
+     const [isRegister, setIsRegister] = useState(false)
      const [clientReady, setClientReady] = useState(false);
      
      const [errorMessage, setErrorMessage] = useState(null);
@@ -24,7 +25,7 @@ const Register = () => {
           return Promise.reject('Email not valid');
      }
      const onFinish = (values) => {
-          setIsLoading(true);
+          setIsRegister(true);
           register(values).then((data)=> {
                if (data.status === 201) {
                     // register success
@@ -33,10 +34,9 @@ const Register = () => {
                          setUser(data);
                          navigate("/")
                     })
-                    setIsLoading(false);
                } else {
+                    setIsRegister(false);
                     setErrorMessage(data.data.message);
-                    setIsLoading(false);
                }
           })
      };
@@ -127,6 +127,7 @@ const Register = () => {
                               }
                               className='bg-[#4096FF]'
                          >
+                              {isRegister && <Spin indicator={<LoadingOutlined style={{fontSize: 24, color: '#fff', marginRight: '5px'}} spin />}/>}
                               Register
                          </Button>
                     )}

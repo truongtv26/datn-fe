@@ -1,27 +1,30 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { getUser } from "../services/auth";
+import { useQuery } from "react-query";
+import SkeletonUI from "../layouts/SkeletonUI";
 const AppContext = createContext();
 const AppProvider = ({ children }) => {
      const [user, setUser] = useState({})
-     const [isLoading, setIsLoading] = useState(false);
 
-     useEffect(() =>{
-          if (localStorage.getItem('authToken')) {
-               getUser().then(user =>setUser(user))
-          }
-     },[])
+     const { error, isLoading } = useQuery('get_user', getUser, {
+          onSuccess: (user) => setUser(user),
+     });
 
+     if (isLoading && localStorage.getItem('authToken')) {
+          return <SkeletonUI />
+     }
+     if (error) {
+          return "error"
+     }
      return (
           <AppContext.Provider value={{
                user,
                setUser,
-               isLoading,
-               setIsLoading,
           }}>
-
                {children}
           </AppContext.Provider>
      )
+
 }
 
 export default AppProvider

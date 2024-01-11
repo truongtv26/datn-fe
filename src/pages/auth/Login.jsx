@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input } from 'antd';
+import { LoadingOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Spin } from 'antd';
 import { getUser, login } from '../../services/auth';
 import { useAppContext } from '../../provider/AppProvider';
 import { Link, useNavigate } from 'react-router-dom';
 const Login = () => {
-     const { setUser, setIsLoading } = useAppContext()
-     
-     const [form] = Form.useForm();
+     const { setUser } = useAppContext()
 
+     const [form] = Form.useForm();
+     const [isLogin, setIsLogin] = useState(false)
      const [clientReady, setClientReady] = useState(false);
 
      const [errorMessage, setErrorMessage] = useState(null);
@@ -26,7 +26,7 @@ const Login = () => {
           return Promise.reject('Email not valid');
      }
      const onFinish = (values) => {
-          setIsLoading(true);
+          setIsLogin(true)
           login(values)
                .then((response) => {
                     const { data, status, token } = response
@@ -42,9 +42,8 @@ const Login = () => {
                                    navigate("/")
                               }
                          })
-                         setIsLoading(false);
                     } else {
-                         setIsLoading(false);
+                         setIsLogin(false)
                          setErrorMessage(data.message)
                     }
                })
@@ -64,7 +63,7 @@ const Login = () => {
                               validator: validateEmail,
                          }
                     ]}
-                    style={{marginBottom: '20px', width: '100%'}}
+                    style={{ marginBottom: '20px', width: '100%' }}
                >
                     <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
                </Form.Item>
@@ -76,8 +75,8 @@ const Login = () => {
                               message: 'Please input your password!',
                          },
                     ]}
-                    style={{width: '100%'}}
-                    
+                    style={{ width: '100%' }}
+
                >
                     <Input
                          prefix={<LockOutlined className="site-form-item-icon" />}
@@ -99,6 +98,7 @@ const Login = () => {
                               }
                               className='bg-[#4096FF]'
                          >
+                              {isLogin && <Spin indicator={<LoadingOutlined style={{fontSize: 24, color: '#fff', marginRight: '5px'}} spin />}/>}
                               Log in
                          </Button>
                     )}
