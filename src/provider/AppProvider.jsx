@@ -1,20 +1,23 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
-import { getUser, logout } from "../services/auth"
-import Cookies from "js-cookie";
+import { getUser } from "../services/auth";
 const AppContext = createContext();
 const AppProvider = ({ children }) => {
-     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) ?? {})
-     const [token, setToken] = useState('');
-     
+     const [user, setUser] = useState({})
+     const [isLoading, setIsLoading] = useState(false);
+
+     useEffect(() =>{
+          if (localStorage.getItem('authToken')) {
+               getUser().then(user =>setUser(user))
+          }
+     },[])
+
      return (
           <AppContext.Provider value={{
                user,
                setUser,
-               token,
-               setToken,
+               isLoading,
+               setIsLoading,
           }}>
-
 
                {children}
           </AppContext.Provider>

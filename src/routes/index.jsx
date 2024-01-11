@@ -22,10 +22,10 @@ const Routers = () => {
         <>
             <Routes>
                 {/* client route */}
-                
+
                 <Route path='/' element={<BaseLayout />}>
                     <Route index element={<HomePage />} />
- <Route path='list-product' element={<ListProduct/>} />
+                    <Route path='list-product' element={<ListProduct />} />
                     <Route path='product/:slug' element={<ProductDetailPage />} />
                     <Route path='blog' element={<BlogPage />} />
                     <Route path='blog/:slug' element={<BlogPage />} />
@@ -50,10 +50,10 @@ const Routers = () => {
 
                 {/* route chỉ dành cho owner */}
                 <Route path='admin' element={
-                        <PrivateRoute isAllowed={() => isUserAllowed(user, ['owner'])}>
-                            <AdminLayout />
-                        </PrivateRoute>}>
-                        <Route path='owner' element={<OwnerPage />} />
+                    <PrivateRoute isAllowed={() => isUserAllowed(user, ['owner'])}>
+                        <AdminLayout />
+                    </PrivateRoute>}>
+                    <Route path='owner' element={<OwnerPage />} />
 
                 </Route>
 

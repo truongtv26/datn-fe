@@ -2,14 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import { getUser, login } from '../../services/auth';
-import Cookies from 'js-cookie';
 import { useAppContext } from '../../provider/AppProvider';
 import { Link, useNavigate } from 'react-router-dom';
 const Login = () => {
-     const { setUser, setToken } = useAppContext()
+     const { setUser, setIsLoading } = useAppContext()
+     
      const [form] = Form.useForm();
+
      const [clientReady, setClientReady] = useState(false);
+
      const [errorMessage, setErrorMessage] = useState(null);
+
      const navigate = useNavigate()
      // To disable submit button at the beginning.
      useEffect(() => {
@@ -23,26 +26,25 @@ const Login = () => {
           return Promise.reject('Email not valid');
      }
      const onFinish = (values) => {
+          setIsLoading(true);
           login(values)
                .then((response) => {
                     const { data, status, token } = response
                     if (status === 200) {
                          // login success
                          setErrorMessage('')
-                         Cookies.set('authToken', token, { expires: 7 });
-                         setToken(token);
+                         localStorage.setItem('authToken', token)
                          getUser().then(data => {
                               setUser(data);
-                              localStorage.setItem('user', JSON.stringify(data))
                               if (data.role === 'owner' || data.role === 'staff') {
                                    navigate("/admin/dashboard")
                               } else {
                                    navigate("/")
                               }
                          })
-
-
+                         setIsLoading(false);
                     } else {
+                         setIsLoading(false);
                          setErrorMessage(data.message)
                     }
                })

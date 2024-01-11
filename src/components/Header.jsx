@@ -91,9 +91,8 @@ const HeaderSection = () => {
 	const handleLogout = () => {
 		logout().then((data) => {
 			if (data.status === 200) {
-				Cookies.remove('authToken')
-				localStorage.removeItem('user')
 				setUser({});
+				localStorage.removeItem('authToken');
 			}
 		});
 	}

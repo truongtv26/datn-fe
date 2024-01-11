@@ -4,11 +4,11 @@ import Routers from './routes'
 import AppProvider from './provider/AppProvider'
 function App() {
     return (
-        <BrowserRouter>
-            <AppProvider>
+        <AppProvider>
+            <BrowserRouter>
                 <Routers />
-            </AppProvider>
-        </BrowserRouter>
+            </BrowserRouter>
+        </AppProvider>
     )
 }
 
