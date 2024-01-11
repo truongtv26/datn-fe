@@ -402,8 +402,26 @@
 }
 
 .header .top-header ul {
-     display: flex;
+     display: none;
      gap: 10px;
+}
+
+@media (min-width: 1024px) {
+     .header .top-header ul {
+          display: flex;
+     }
+}
+
+@media (min-width: 1280px) {
+     .header .top-header ul {
+          display: flex;
+     }
+}
+
+@media (min-width: 1536px) {
+     .header .top-header ul {
+          display: flex;
+     }
 }
 
 .header .top-header ul li {
@@ -734,11 +752,13 @@
 .blog-wrapper {
      margin: 20px 0;
 }
+
 .blog-wrapper .blog-list {
      display: flex;
      justify-content: space-between;
      gap: 20px;
 }
+
 .blog-wrapper .blog-list .blog-item {
      display: flex;
      flex: 0 0 calc(25% - 20px);

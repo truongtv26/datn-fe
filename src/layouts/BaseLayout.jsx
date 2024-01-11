@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout } from "antd"
-	import Footer from '../components/Footer';
+import Footer from '../components/Footer';
 import { Outlet } from 'react-router-dom';
 import { Content } from 'antd/es/layout/layout';
 import HeaderSection from '../components/Header';
@@ -12,7 +12,7 @@ const layoutStyles = {
 }
 
 const BaseLayout = () => {
- 	return (
+	return (
 		<Layout style={layoutStyles} className='w-full mx-auto'>
 			<HeaderSection />
 			<Content>

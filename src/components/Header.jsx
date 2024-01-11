@@ -111,7 +111,7 @@ const HeaderSection = () => {
 							<li><strong>Contact</strong></li>
 							<li><strong>FAQ</strong></li>
 						</ul>
-						<ul>
+						<ul className=''>
 							<li><span><ThunderboltFilled /></span> We deliver to you every day from: <strong style={{
 								padding: '2px 6px',
 								backgroundColor: 'var(--primary-color)',
