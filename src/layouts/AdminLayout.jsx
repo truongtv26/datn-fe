@@ -21,6 +21,8 @@ import { Footer } from 'antd/es/layout/layout';
 import { useAppContext } from '../provider/AppProvider';
 const { Header, Sider, Content } = Layout;
 const { Text } = Typography;
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AdminLayout = () => {
   const { user } = useAppContext();
@@ -67,11 +69,6 @@ const AdminLayout = () => {
               label: 'Kích Cỡ',
               link: '/admin/product/size',
             },
-            {
-              key: 'loaiDe',
-              label: 'Đế giày',
-              link: '/admin/product/meterial',
-            }
           ]
         }
       ]
@@ -239,6 +236,7 @@ const AdminLayout = () => {
           }}
         >
           <Outlet />
+          <ToastContainer />
         </Content>
         {/* Footer */}
         <Footer
