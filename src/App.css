@@ -2382,7 +2382,7 @@
 }
 
 
-.cart-total .totals .shipping{
+.cart-total .totals .shipping-checkout{
      display: flex;
      border-bottom: 1px solid #E6E8EB;
      padding-top: 20px;
