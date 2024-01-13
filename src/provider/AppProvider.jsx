@@ -11,7 +11,7 @@ const AppProvider = ({ children }) => {
      });
 
      if (isLoading && localStorage.getItem('authToken')) {
-          return <SkeletonUI />
+          return null;
      }
  
      return (
