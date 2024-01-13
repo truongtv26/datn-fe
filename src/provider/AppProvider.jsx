@@ -13,9 +13,7 @@ const AppProvider = ({ children }) => {
      if (isLoading && localStorage.getItem('authToken')) {
           return <SkeletonUI />
      }
-     if (error) {
-          return "error"
-     }
+
      return (
           <AppContext.Provider value={{
                user,
