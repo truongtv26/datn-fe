@@ -1,5 +1,4 @@
 import instance from '../core/api'
-import Cookies from 'js-cookie'
 
 export const register = async (user) => {
     try {
@@ -19,19 +18,13 @@ export const login = async (user) => {
 }
 export const logout = async () => {
     try {
-        const authToken = Cookies.get('authToken');
-
-        if (!authToken) {
-            return null;
+        if (localStorage.getItem('authToken')) {
+            const response = await instance.post(`/logout`, null, {
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('authToken') },
+            });
+            return response.data;
         }
-
-        const response = await instance.post(`/logout`, null, {
-            headers: {
-                'Authorization': 'Bearer ' + authToken
-            }
-        });
-
-        return response.data;
+        return false;
     } catch (error) {
         return null;
     }
@@ -39,14 +32,18 @@ export const logout = async () => {
 export const getUser = async () => {
     try {
         const response = await instance.get(`/user`, {
-            headers: { 'Authorization': 'Bearer ' + Cookies.get('authToken') },
-        })
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+          }
+        });
+    
         if (response.status === 200) {
-            return response.data.data
+          return response.data.data;
         }
-        return response
-    } catch (error) {
-        return error.response
-    }
+    
+        throw new Error('Failed to fetch user data');
+      } catch (error) {
+        throw new Error(error.response ? error.response.data : error.message);
+      }
 }
 

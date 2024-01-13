@@ -402,8 +402,26 @@
 }
 
 .header .top-header ul {
-     display: flex;
+     display: none;
      gap: 10px;
+}
+
+@media (min-width: 1024px) {
+     .header .top-header ul {
+          display: flex;
+     }
+}
+
+@media (min-width: 1280px) {
+     .header .top-header ul {
+          display: flex;
+     }
+}
+
+@media (min-width: 1536px) {
+     .header .top-header ul {
+          display: flex;
+     }
 }
 
 .header .top-header ul li {
@@ -732,60 +750,27 @@
      list-style: none;
 }
 
-/* product list */
-.input-label {
+.is-loading {
      display: flex;
-     flex-direction: column;
-}
-
-.input-label span {
-     margin-bottom: 5px;
-     font-weight: bold;
-     color: #333;
-     /* Màu chữ của nhãn */
-}
-
-.input-label input {
-     width: 80px;
-     /* Độ rộng của ô input */
-}
-
-
-
-
-
-
-/* ProductCard.css */
-.product-card {
-     position: relative;
-     /* Các thuộc tính khác của card */
-
-     /* Hiệu ứng khi hover */
-     &:hover {
-          /* Các thuộc tính hover của card */
-
-          /* Hiển thị biểu tượng giỏ hàng khi hover */
-          .cart-icon {
-               opacity: 1;
-          }
-     }
-}
-
-/* Biểu tượng giỏ hàng ẩn đi ban đầu */
-.cart-icon {
-
-     position: absolute;
-     top: 10%;
-     right: 10%;
+     justify-content: center;
+     align-items: center;
+     position: fixed;
+     top: 50%;
+     left: 50%;
      transform: translate(-50%, -50%);
-     opacity: 0;
-     transition: opacity 0.3s ease;
-     /* Hiệu ứng hiển thị */
-     cursor: pointer;
+     z-index: 999;
+     width: 100%;
+     height: 100vh;
+     background-color: var(--secondary-color);
+     opacity: 0.3;
+     overflow: hidden;
 }
 
+.is-loading span {
+     position: absolute;
+     z-index: 1000;
+}
 
-/* styles.css */
 
 
 /* Css Phần BlogPage */
@@ -793,11 +778,13 @@
 .blog-wrapper {
      margin: 20px 0;
 }
+
 .blog-wrapper .blog-list {
      display: flex;
      justify-content: space-between;
      gap: 20px;
 }
+
 .blog-wrapper .blog-list .blog-item {
      display: flex;
      flex: 0 0 calc(25% - 20px);

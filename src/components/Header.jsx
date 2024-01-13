@@ -91,9 +91,8 @@ const HeaderSection = () => {
 	const handleLogout = () => {
 		logout().then((data) => {
 			if (data.status === 200) {
-				Cookies.remove('authToken')
-				localStorage.removeItem('user')
 				setUser({});
+				localStorage.removeItem('authToken');
 			}
 		});
 	}
@@ -111,7 +110,7 @@ const HeaderSection = () => {
 							<li><strong>Contact</strong></li>
 							<li><strong>FAQ</strong></li>
 						</ul>
-						<ul>
+						<ul className=''>
 							<li><span><ThunderboltFilled /></span> We deliver to you every day from: <strong style={{
 								padding: '2px 6px',
 								backgroundColor: 'var(--primary-color)',

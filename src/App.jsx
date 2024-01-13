@@ -2,13 +2,20 @@ import { BrowserRouter } from 'react-router-dom'
 import './App.css'
 import Routers from './routes'
 import AppProvider from './provider/AppProvider'
+import {
+    QueryClient,
+    QueryClientProvider,
+} from 'react-query'
+const queryClient = new QueryClient()
 function App() {
     return (
-        <BrowserRouter>
+        <QueryClientProvider client={queryClient}>
             <AppProvider>
-                <Routers />
+                <BrowserRouter>
+                    <Routers />
+                </BrowserRouter>
             </AppProvider>
-        </BrowserRouter>
+        </QueryClientProvider>
     )
 }
 

@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input } from 'antd';
+import { LoadingOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Spin } from 'antd';
 import { getUser, register } from '../../services/auth';
-import Cookies from 'js-cookie';
 import { useAppContext } from '../../provider/AppProvider';
 import { Link, useNavigate } from 'react-router-dom';
 const Register = () => {
-     const { setUser, setToken } = useAppContext()
+     const { setUser } = useAppContext()
+
      const [form] = Form.useForm();
+     const [isRegister, setIsRegister] = useState(false)
      const [clientReady, setClientReady] = useState(false);
+     
      const [errorMessage, setErrorMessage] = useState(null);
      const navigate = useNavigate()
      // To disable submit button at the beginning.
@@ -23,17 +25,17 @@ const Register = () => {
           return Promise.reject('Email not valid');
      }
      const onFinish = (values) => {
+          setIsRegister(true);
           register(values).then((data)=> {
                if (data.status === 201) {
                     // register success
-                    Cookies.set('authToken', data.token, { expires: 2 });
-                    setToken(data.token);
+                    localStorage.setItem('authToken', data.token);
                     getUser().then(data => {
                          setUser(data);
-                         localStorage.setItem('user',  JSON.stringify(data))
                          navigate("/")
                     })
                } else {
+                    setIsRegister(false);
                     setErrorMessage(data.data.message);
                }
           })
@@ -125,6 +127,7 @@ const Register = () => {
                               }
                               className='bg-[#4096FF]'
                          >
+                              {isRegister && <Spin indicator={<LoadingOutlined style={{fontSize: 24, color: '#fff', marginRight: '5px'}} spin />}/>}
                               Register
                          </Button>
                     )}
