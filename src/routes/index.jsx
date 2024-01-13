@@ -9,6 +9,7 @@ import PageNotFound from '../components/errors/PageNotFound'
 import PrivateRoute from '../components/PrivateRoute'
 import { Route, Routes } from 'react-router-dom'
 import BlogPage from '../pages/BlogPage'
+import BlogDetailPage from '../pages/BlogDetailPage'
 import { useAppContext } from '../provider/AppProvider'
 import Register from '../pages/auth/Register'
 import Login from '../pages/auth/Login'
@@ -17,6 +18,8 @@ import ListProductManage from '../components/admin/Product/ListProductManage'
 import AddProduct from '../components/admin/Product/AddProduct'
 import ListProduct from '../pages/ListProduct'
 import CartPage from '../pages/CartPage'
+import CheckPage from '../pages/CheckPage'
+
 
 const Routers = () => {
     const { user } = useAppContext();
@@ -30,8 +33,9 @@ const Routers = () => {
                     <Route path='list-product' element={<ListProduct/>} />
                     <Route path='product/:slug' element={<ProductDetailPage />} />
                     <Route path='blog' element={<BlogPage />} />
-                    <Route path='blog/:slug' element={<BlogPage />} />
+                    <Route path='blog/:slug' element={<BlogDetailPage />} />
                     <Route path='cart' element={<CartPage />} />
+                    <Route path='checkout/:slug' element={<CheckPage />} />
                     {/* auth */}
                     <Route path='login' element={<Login />} />
                     <Route path='register' element={<Register />} />

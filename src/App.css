@@ -810,9 +810,10 @@
      gap: 3%;
 }
 
-/* Css Phần Left Blog */
+/* Css Phần Left Blog ........... */
 .blog-container .left-blog {
      width: 70%;
+     margin-bottom: 20px;
 
 }
 
@@ -886,7 +887,7 @@
 }
 
 
-/* Css Phần Right Blog */
+/* Css Phần Right Blog .............. */
 
 .blog-container .right-blog {
      width: 25%;
@@ -1060,6 +1061,391 @@
 }
 
 /* Css Responsive */
+
+/* Css Phần BlogDetailPage ............... */
+
+.left-blog .blogDetailpage .image img {
+     max-width: 100%;
+     border-radius: 15px;
+}
+
+.left-blog .blogDetailpage .content {
+     width: 100%;
+     margin-top: 20px;
+
+}
+
+.left-blog .blogDetailpage .content .title-category a {
+     font-size: 11px;
+     font-weight: 700;
+     color: #004745;
+     text-transform: uppercase;
+}
+
+.left-blog .blogDetailpage .content .title-category {
+     margin-top: 10px;
+}
+
+.left-blog .blogDetailpage .content .title-blog {
+     width: 100%;
+     height: 120px;
+     margin-top: 10px;
+     display: -webkit-box;
+     -webkit-line-clamp: 2;
+     -webkit-box-orient: vertical;
+     overflow: hidden;
+     text-overflow: ellipsis;
+}
+
+.left-blog .blogDetailpage .content .title-blog a {
+     font-size: 45px;
+     font-weight: 700;
+     text-transform: uppercase;
+     color: #000;
+}
+
+.left-blog .blogDetailpage .content .title-blog a:hover {
+     text-decoration: underline;
+}
+
+.left-blog .blogDetailpage .content .created-at {
+     margin-top: 20px;
+     margin-bottom: 30px;
+}
+
+.left-blog .blogDetailpage .content .created-at p {
+     color: #004644;
+}
+
+.left-blog .blogDetailpage .content .description {
+     margin-top: 10px;
+     display: -webkit-box;
+     -webkit-line-clamp: 3;
+     -webkit-box-orient: vertical;
+     overflow: hidden;
+     text-overflow: ellipsis;
+}
+
+.left-blog .blogDetailpage .content .description p {
+     font-size: 15px;
+     color: #000;
+}
+
+.left-blog .blogDetailpage .content .hot-blogdetail{
+     width: 100%;
+     height: 96px;
+     border-left: 4px solid #CED4DA;
+     margin-top: 20px;
+     margin-bottom: 20px;
+}
+
+.left-blog .blogDetailpage .content .hot-blogdetail p{
+     padding: 20px 30px 12px 50px;
+     font-size: 14px;
+     color: #000;
+     font-style: italic;
+}
+
+.left-blog .blogDetailpage .content .desmore{
+     width: 100%;
+     margin-top: 10px;
+}
+
+
+.left-blog .blogDetailpage .content .desmore p {
+     font-size: 15px;
+     color: #000;
+     padding-top: 10px;
+     padding-bottom: 10px;
+}
+
+/* Css phần comment .............. */
+.left-blog .comment{
+     width: 100%;
+}
+.left-blog .comment .title-comment{
+     margin-top: 10px;
+     margin-bottom: 10px;
+     border-bottom: 1px solid #ADB5BD;
+}
+.left-blog .comment .title-comment p{
+     font-size: 22px;
+     font-weight: 630;
+     color: #000;
+     padding-bottom: 10px;
+}
+
+.left-blog .comment .content-comment .cm{
+     display: flex;
+     gap: 30px;
+}
+
+.left-blog .comment .content-comment .cm .image img{
+     border-radius: 50%;
+     max-width: 82px;
+     height: 82px;
+}
+
+
+.left-blog .comment .content-comment .cm .nd-content p{
+     font-size: 14px;
+     font-weight: 700;
+     color: #000;
+     padding-right: 20px;
+     margin-bottom: 10px;
+
+}
+.left-blog .comment .content-comment .cm .nd-content span{
+     font-size: 14px;
+     font-weight: 600;
+     color: #CED4DA;
+}
+
+.left-blog .comment .content-comment .cm .nd-content .nd{
+     font-size: 14px;
+     color: #000;
+}
+
+.left-blog .comment .content-comment .cm .nd-content .nd p{
+     font-size: 14px;
+     color: #000;
+     margin-top: 10px;
+}
+
+.left-blog .comment .content-comment .cm .reply{
+     margin-top: 10px;
+}
+
+.left-blog .comment .content-comment .cm .reply a{
+     font-size: 12px;
+     color: #000;
+     font-weight: 700;
+}
+
+/* css Reply comment */
+
+.left-blog .comment .content-comment .reply-content{
+     display: flex;
+     gap: 30px;
+     margin-top: 30px;
+     margin-left: 30px;
+}
+
+.left-blog .comment .content-comment .reply-content .image img{
+     border-radius: 50%;
+     max-width: 82px;
+     height: 82px;
+}
+
+
+.left-blog .comment .content-comment .reply-content .nd-content p{
+     font-size: 14px;
+     font-weight: 700;
+     color: #000;
+     padding-right: 20px;
+     margin-bottom: 10px;
+
+}
+.left-blog .reply-content .content-comment .reply-content .nd-content span{
+     font-size: 14px;
+     font-weight: 600;
+     color: #CED4DA;
+}
+
+.left-blog .comment .content-comment .reply-content .nd-content .nd{
+     font-size: 14px;
+     color: #000;
+}
+
+.left-blog .comment .content-comment .reply-content .nd-content .nd p{
+     font-size: 14px;
+     color: #000;
+     margin-top: 10px;
+}
+
+.left-blog .comment .content-comment .reply-content .reply{
+     margin-top: 10px;
+}
+
+.left-blog .comment .content-comment .reply-content .reply a{
+     font-size: 12px;
+     color: #000;
+     font-weight: 700;
+}
+
+.left-blog .write-comment{
+     width: 100%;
+}
+
+.left-blog .write-comment .title{
+     border-top: 1px solid #CED4DA;
+     margin-top: 20px;
+}
+
+.left-blog .write-comment .title p{
+     font-size: 24px;
+     font-weight: 600;
+     color: #000;
+     padding-top: 10px;
+}
+
+.left-blog .write-comment .title span{
+     font-size: 14px;
+     font-weight: 600;
+     color: #000;
+}
+
+.left-blog .write-comment .form form .comment{
+     width: 100%;
+     margin-top: 10px;
+}
+
+
+.left-blog .write-comment .form form .comment textarea{
+     width: 100%;
+     padding: 12px;
+     height: 150px;
+     border: 1px solid #CED4DA;
+     background-color: #fff;
+     border-radius: 8px;
+     -webkit-box-shadow: 0 1px 2px 0 rgba(27,31,34,.045);
+     box-shadow: 0 1px 2px 0 rgba(27,31,34,.045);
+     margin-top: 10px;
+     margin-bottom: 15px;
+     font-size: 17px;
+     font-weight: 600;
+     color: #000;
+}
+
+.left-blog .write-comment .form form .tk{
+
+     width: 100%;
+     display: flex;
+     gap: 20px;
+
+}
+
+.left-blog .write-comment .form form .tk .name{
+          width: 50%;
+}
+
+
+.left-blog .write-comment .form form .tk .email{
+     width: 50%;
+}
+
+.form-control{
+     width: 100%;
+     height: 46px;
+     padding: 1px 12px;
+     background-color: #fff;
+     border-radius: 8px;
+     border: 1px solid #CED4DA;
+     -webkit-box-shadow: 0 1px 2px 0 rgba(27,31,34,.045);
+     box-shadow: 0 1px 2px 0 rgba(27,31,34,.045);
+     border-radius: 8px;
+     margin-top: 10px;
+     font-size: 14px;
+     font-weight: 600;
+     color: #000;
+}
+
+.left-blog .write-comment .form form .website{
+     margin-top: 10px;
+}
+
+.left-blog .write-comment .form form .check{
+     margin-top: 20px;
+     margin-bottom: 20px;
+}
+.left-blog .write-comment .form form .check input{
+     cursor: pointer;
+}
+
+.left-blog .write-comment .form form button{
+     width: 173px;
+     height: 46px;
+     font-size: 15px;
+     font-weight: 600;
+     border-color: transparent;  
+}
+
+
+/* Css Phần ResponSive BlogDetailPage */
+
+@media screen and (max-width:768px) {
+     .left-blog .comment .title-comment p{
+          font-size: 18px;
+          font-weight: 630;
+          color: #000;
+          padding-bottom: 10px;
+     }
+}
+
+@media screen and (max-width:640px) {
+
+     .left-blog .blogDetailpage .content .hot-blogdetail{
+         display: none;
+     }
+
+     .left-blog .write-comment .form form .tk{
+          width: 100%;
+          display: block;
+     }
+     
+     .left-blog .write-comment .form form .tk .name{
+               width: 100%;
+     }
+     
+     
+     .left-blog .write-comment .form form .tk .email{
+          width: 100%;
+          margin-top: 10px;
+     }
+
+     .left-blog .write-comment .form form button{
+          width: 100%;
+          height: 40px;
+          font-size: 15px;
+          font-weight: 600;
+          border-color: transparent;  
+     }
+
+     .left-blog .comment .content-comment .reply-content .image img{
+          border-radius: 50%;
+          max-width: 72px;
+          height: 72px;
+     }
+     .left-blog .comment .content-comment .comment .image img{
+          border-radius: 50%;
+          max-width: 72px;
+          height: 72px;
+     }
+
+     .left-blog .blogDetailpage .content .title-blog {
+          width: 100%;
+          height: 120px;
+          margin-top: 10px;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+     }
+
+     .left-blog .blogDetailpage .content .title-blog a {
+          font-size: 30px;
+          font-weight: 700;
+          text-transform: uppercase;
+          color: #000;
+     }
+}
+
+
+
+
+
+/* Css Phần BlogDetailPage ............... */
 
 
 /* Css Phần CartPage ........................... */
@@ -1824,15 +2210,189 @@
      }
 }
 
+/* Css Checkout .......... */ 
 
-
-
-.custom-image {
+.notification{
      width: 100%;
-     /* Thay đổi chiều rộng của ảnh tương ứng */
-     max-width: 100%;
-     /* Tối đa chiều rộng của phần tử cha */
-     height: auto;
-     /* Duy trì tỷ lệ khung hình */
-     margin-bottom: 50px;
+     border: 1px solid  #F7F7F7;;
+     border-radius: 5px;
+     background-color:  #F7F7F7;;
+     margin-bottom: 25px;
+}
+
+.notification p{
+     font-size: .895rem;
+     padding: 25px 30px 30px 30px;
+}
+
+
+.freeship{
+     width: 100%;
+     border: 1px dashed #9DECA9;
+     border-radius: 5px;
+     background-color: #F3FCF4;
+     margin-bottom: 25px;
+}
+
+.form-confirm form .oner textarea{
+     width: 100%;
+     padding: 12px;
+     height: 150px;
+     border: 1px solid #CED4DA;
+     background-color: #fff;
+     border-radius: 8px;
+     -webkit-box-shadow: 0 1px 2px 0 rgba(27,31,34,.045);
+     box-shadow: 0 1px 2px 0 rgba(27,31,34,.045);
+     margin-top: 10px;
+     margin-bottom: 15px;
+     font-size: 17px;
+     font-weight: 600;
+     color: #000;
+}
+.form-confirm form .title-form p{
+     font-size: 1.25rem;
+     font-weight: 600;
+     color: #000;
+}
+
+.form-confirm form .name{
+     display: flex;
+     gap: 20px;
+}
+
+.form-confirm form .name .first-name{
+     width: 50%;
+}
+.form-confirm form .name .last-name{
+     width: 50%;
+}
+
+
+.form-confirm form .information{
+     margin-top: 10px;
+     margin-bottom: 10px;
+}
+.form-confirm form .name .first-name,
+.form-confirm form .name .last-name{
+     margin-top: 10px;
+}
+
+.form-confirm form .name input{
+     margin-top: 10px;
+}
+
+.form-confirm form .different-address{
+     display: none;
+}
+
+.form-confirm form .different-address .name{
+     display: block;
+}
+
+.form-confirm form .different-address .name .first-name{
+     width: 100%;
+}
+.form-confirm form .different-address .name .last-name{
+     width: 100%;
+}
+
+.form-confirm form .account{
+     display: none;
+}
+
+.form-confirm form .checkbox{
+     margin-top: 10px;
+     margin-bottom: 10px;
+}
+
+.form-confirm form .checkbox input{
+    margin-right: 10px;
+}
+
+.cart-total .totals .subtotal-checkout{
+     display: flex;
+     justify-content: space-between;
+     border-bottom: 1px solid #E6E8EB;
+     padding-top: 20px;
+     padding-bottom: 10px;
+}
+
+.cart-total .totals .subtotal-checkout p{
+     font-size: 16px;
+     font-weight: 700;
+}
+
+.cart-total .totals .subtotal span{
+     font-weight: 700;
+}
+.right-content .cart-total .totals .checkout p{
+     color: #4F575E;
+     font-size: 16px;
+}
+
+.right-content .cart-total .totals .checkout p a{
+     color: #E53E3e;
+     font-weight: 600;
+     font-size: 16px;
+}
+
+
+.right-content .cart-total .totals .checkout .infor a{
+     color: #228BE6;
+     font-size: 16px;
+}
+
+.right-content .cart-total .totals .checkout .infor{
+     margin-top: 10px;
+     margin-bottom: 10px;
+}
+
+.right-content .cart-total .totals .checkout .infor p{
+     display: none;
+}
+
+.right-content .cart-total .totals .checkout .infor input{
+     margin-right: 10px;
+}
+
+.right-content .cart-total .totals .checkout .infor label{
+     font-size: 0.9375rem;
+     font-weight: 700;
+     color: #004745;
+}
+
+
+.cart-total .totals .shipping{
+     display: flex;
+     border-bottom: 1px solid #E6E8EB;
+     padding-top: 20px;
+     padding-bottom: 10px;
+     justify-content: space-between;
+     height: 100px;
+}
+.cart-total .totals .shipping-checkout .ship{
+     padding-top: 0px;
+}
+
+.cart-total .totals .shipping-checkout .data-shipping{
+     position: relative;
+}
+
+.cart-total .totals .shipping-checkout .data-shipping form{
+     margin-bottom: 10px;
+}
+
+.cart-total .totals .shipping-checkout form label{
+     padding-right: 10px;
+     font-size: 14px;
+     
+}
+.cart-total .totals .shipping-checkout form .local{
+     padding-right: 30.5px;
+     font-size: 14px;
+     
+}
+
+.cart-total .totals .shipping-checkout form input:hover{
+     cursor: pointer;
 }

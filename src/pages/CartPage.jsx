@@ -283,36 +283,6 @@ const CartPage = () => {
 
 
 
-            {/* <div>
-
-                <input
-                    type="text"
-                    id="quantity_65855a72d93e9"
-                    class="input-text qty text"
-                    name="cart[47d1e990583c9c67424d369f3414728e][qty]"
-                    value="2"
-                    aria-label="Product quantity"
-                    size="4"
-                    min="0"
-                    max=""
-                    step="1"
-                    placeholder=""
-                    inputmode="numeric"
-                    autocomplete="off"
-                />
-
-            </div> */}
-
-
-
-            {/* <div className="">
-			<p className="">Your order qualifies for free shipping!</p>
-			<div className=""> <span style="width: 100%"></span></div>
-		    </div> */}
-
-
-
-
 
 
 
