@@ -110,7 +110,7 @@ const HeaderSection = () => {
 							<li><strong>Contact</strong></li>
 							<li><strong>FAQ</strong></li>
 						</ul>
-						<ul>
+						<ul className=''>
 							<li><span><ThunderboltFilled /></span> We deliver to you every day from: <strong style={{
 								padding: '2px 6px',
 								backgroundColor: 'var(--primary-color)',
@@ -165,7 +165,7 @@ const HeaderSection = () => {
 				<div className='bottom-header container mx-auto'>
 					<ul>
 						<li><Link to={'/'}>Home</Link></li>
-						<li><Link to={'/shop'}>
+						<li><Link to={'/list-product'}>
 							<Dropdown
 								menu={{
 									items,
