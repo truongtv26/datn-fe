@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Checkbox, Breadcrumb, Layout, Menu, theme, Card, Pagination, Input, Slider, Button, Rate, Divider } from 'antd';
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+//import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 const CheckboxGroup = Checkbox.Group;
