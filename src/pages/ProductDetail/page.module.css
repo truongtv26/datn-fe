@@ -1,40 +1,141 @@
 .price {
-    margin-block: 1rem;
+  margin-block: 1rem;
 }
 
 .price .new-price {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: #d33;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #d33;
 }
 
 .price .old-price {
-    opacity: 0.5;
-    font-size: 1rem;
-    color: #333;
-    text-decoration: line-through;
+  opacity: 0.5;
+  font-size: 1rem;
+  color: #333;
+  text-decoration: line-through;
 }
 
 .size-box {
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #ccc;
+  margin-top: 30px;
+  margin-bottom: 24px;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
 }
 
 .size-box .label {
-    font-weight: 700;
-    font-size: 1.3rem;
-    line-height: 20px;
-    color: #666;
-    text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1.3rem;
+  line-height: 20px;
+  color: #666;
+  text-transform: uppercase;
 }
 
 .size-box .size-item {
-    width: 1.875rem;
-    height: 1.875rem;
-    border: 1px solid #000;
-    cursor: pointer;
+  width: 1.875rem;
+  height: 1.875rem;
+  border: 1px solid #000;
+  cursor: pointer;
 }
 
-.action-button {
-    background-color: red;
+.action-btn {
+  width: 49%;
+  padding: 12px 20px;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.action-btn.active {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.action-btn.add-btn {
+  background-color: #a46497;
+}
+
+.action-btn.buy-btn {
+  background-color: #d33;
+}
+
+/* swiper */
+.cus-swiper {
+  height: 415px;
+  margin-bottom: 8px;
+}
+
+.cus-swiper-2 {
+  height: 90px;
+}
+
+.cus-swiper-2 .cus-slide-2 .slide-img,
+.cus-swiper .cus-slide .slide-img {
+  width: 100%;
+  object-fit: cover;
+}
+
+/* description */
+.desc-wrapper {
+  margin-top: 120px;
+}
+
+.desc-wrapper .title {
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+.desc-wrapper p {
+  margin-block: 20px;
+  font-size: 18px;
+  font-weight: 400;
+}
+.desc-wrapper a {
+  margin-top: 3rem;
+}
+
+.highlight {
+  color: #d33;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.img-desc {
+  padding-block: 12px;
+  background-color: #e5e5e5;
+  font-size: 18px;
+  font-style: italic;
+}
+
+/* similar product */
+
+.similar-wrapper {
+  margin-top: 120px;
+}
+
+.card-name {
+  margin-block: 16px;
+  color: #23527c;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* tips */
+.tips-title {
+  font-size: 18px;
+  color: #000;
+}
+
+.tips-desc {
+  margin-top: 6px;
+  margin-bottom: 10px;
+  color: rgba(51, 51, 51, 0.5);
+}
+.tips-date {
+  font-size: 12px;
+  font-style: italic;
+  color: rgb(108, 117, 125);
 }
