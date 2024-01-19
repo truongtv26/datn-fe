@@ -1,0 +1,40 @@
+.price {
+    margin-block: 1rem;
+}
+
+.price .new-price {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #d33;
+}
+
+.price .old-price {
+    opacity: 0.5;
+    font-size: 1rem;
+    color: #333;
+    text-decoration: line-through;
+}
+
+.size-box {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #ccc;
+}
+
+.size-box .label {
+    font-weight: 700;
+    font-size: 1.3rem;
+    line-height: 20px;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.size-box .size-item {
+    width: 1.875rem;
+    height: 1.875rem;
+    border: 1px solid #000;
+    cursor: pointer;
+}
+
+.action-button {
+    background-color: red;
+}
