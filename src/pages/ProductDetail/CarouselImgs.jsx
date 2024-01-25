@@ -42,8 +42,8 @@ export const CarouselImgs = ({ listImg }) => {
         modules={[FreeMode, Navigation, Thumbs]}
         className={styles["cus-swiper"]}
       >
-        {data?.map((img) => (
-          <SwiperSlide className={styles["cus-slide"]}>
+        {data?.map((img, index) => (
+          <SwiperSlide key={index} className={styles["cus-slide"]}>
             <img src={img} alt="" className={styles["slide-img"]} />
           </SwiperSlide>
         ))}
@@ -59,8 +59,8 @@ export const CarouselImgs = ({ listImg }) => {
         modules={[FreeMode, Navigation, Thumbs]}
         className={styles["cus-swiper-2"]}
       >
-        {data?.map((img) => (
-          <SwiperSlide className={styles["cus-slide-2"]}>
+        {data?.map((img, index) => (
+          <SwiperSlide key={index} className={styles["cus-slide-2"]}>
             <img src={img} alt="" className={styles["slide-img"]} />
           </SwiperSlide>
         ))}
