@@ -1,7 +1,7 @@
 
 import React, { useRef, useState } from 'react'
 import CarouselSection from '../components/ui/CarouselSection'
-import { Badge, Button, Card, Carousel, Col, Image, Rate, Row } from 'antd';
+import { Badge, Button, Card, Carousel, Col, Image, Pagination, Rate, Row } from 'antd';
 import { CreditCardOutlined, LeftOutlined, PercentageOutlined, PhoneOutlined, RightOutlined } from '@ant-design/icons';
 import Meta from 'antd/es/card/Meta';
 import { Link } from 'react-router-dom';
@@ -200,6 +200,10 @@ const HomePage = () => {
 		},
 	]
 
+	const onShowSizeChange = (current, pageSize) => {
+		console.log(current, pageSize);
+	   };
+
 	return (
 		<div className='container mx-auto'>
 			<CarouselSection />
@@ -231,9 +235,6 @@ const HomePage = () => {
 				<div className="flex flex-wrap justify-start">
 					{productData.map((product, index) => {
 						return <div key={index} className='product-items'>
-							<div className="product-hover">
-								<Button type='primary'>Add To Cart</Button>
-							</div>
 							<div className="product-badges">20%</div>
 							<Link to={`product/${product.id}`}>
 								<Card
@@ -265,7 +266,7 @@ const HomePage = () => {
 						display: 'flex',
 						justifyContent: 'center',
 					}}>
-						<Button type="primary">Show more</Button>
+						<Pagination defaultCurrent={1} total={500} showSizeChanger={false} onShowSizeChange={onShowSizeChange} />
 					</div>
 				</div >
 			</div>
