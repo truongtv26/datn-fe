@@ -8,10 +8,12 @@ import { Description } from "./ProductDescription";
 import { SimilarProduct } from "./SimilarProduct";
 import { Tips } from "./Tips";
 
-const sizes = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47];
 
 const ProductDetailPage = () => {
+  
   const { slug } = useParams();
+  
+  const sizes = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47];
   return (
     <div className="container mx-auto">
       <Breadcrumb
