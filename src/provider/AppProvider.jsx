@@ -6,14 +6,14 @@ const AppContext = createContext();
 const AppProvider = ({ children }) => {
      const [user, setUser] = useState({})
 
-     const { error, isLoading } = useQuery('get_user', getUser, {
+     const { isLoading, isError } = useQuery('get_user', getUser, {
           onSuccess: (user) => setUser(user),
      });
-
+     // console.log(isLoading);
      if (isLoading && localStorage.getItem('authToken')) {
           return null;
      }
- 
+
      return (
           <AppContext.Provider value={{
                user,
