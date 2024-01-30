@@ -15,13 +15,15 @@ import Login from '../pages/auth/Login'
 import { isUserAllowed } from '../lib/utils'
 import ListProductManage from '../components/admin/Product/ListProductManage'
 import AddProduct from '../components/admin/Product/AddProduct'
+import EditProduct from '../components/admin/Product/EditProduct'
+import EditProductDetail from '../components/admin/Product/EditProductDetail'
 const Routers = () => {
     const { user } = useAppContext();
     return (
         <>
             <Routes>
                 {/* client route */}
-                
+
                 <Route path='/' element={<BaseLayout />}>
                     <Route index element={<HomePage />} />
 
@@ -44,14 +46,15 @@ const Routers = () => {
                     <Route path='dashboard' element={<Dashboard />} />
                     <Route path='product' element={<ListProductManage />} />
                     <Route path='product/add' element={<AddProduct />} />
+                    <Route path='product/:id/edit' element={<EditProduct />} />
                 </Route>
 
                 {/* route chỉ dành cho owner */}
                 <Route path='admin' element={
-                        <PrivateRoute isAllowed={() => isUserAllowed(user, ['owner'])}>
-                            <AdminLayout />
-                        </PrivateRoute>}>
-                        <Route path='owner' element={<OwnerPage />} />
+                    <PrivateRoute isAllowed={() => isUserAllowed(user, ['owner'])}>
+                        <AdminLayout />
+                    </PrivateRoute>}>
+                    <Route path='owner' element={<OwnerPage />} />
 
                 </Route>
 
