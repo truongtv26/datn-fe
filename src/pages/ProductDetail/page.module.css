@@ -55,11 +55,11 @@
 }
 
 .action-btn.add-btn {
-  background-color: #a46497;
+  background-color: #d86b87;
 }
 
 .action-btn.buy-btn {
-  background-color: #d33;
+  background-color: var(--primary-color);
 }
 
 /* swiper */
@@ -138,4 +138,9 @@
   font-size: 12px;
   font-style: italic;
   color: rgb(108, 117, 125);
+}
+
+.loading {
+  width: 100%;
+  height: 550px;
 }

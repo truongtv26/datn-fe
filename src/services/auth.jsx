@@ -41,9 +41,9 @@ export const getUser = async () => {
           return response.data.data;
         }
     
-        throw new Error('Failed to fetch user data');
+        return response
       } catch (error) {
-        throw new Error(error.response ? error.response.data : error.message);
+        return {}
       }
 }
 

@@ -1,10 +1,10 @@
 
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import CarouselSection from '../components/ui/CarouselSection'
-import { Badge, Button, Card, Carousel, Col, Image, Rate, Row } from 'antd';
+import { Badge, Button, Card, Carousel, Col, Image, Pagination, Rate, Row } from 'antd';
 import { CreditCardOutlined, LeftOutlined, PercentageOutlined, PhoneOutlined, RightOutlined } from '@ant-design/icons';
-import Meta from 'antd/es/card/Meta';
 import { Link } from 'react-router-dom';
+import instance from '../core/api';
 
 const contentStyle = {
 	margin: 0,
@@ -36,8 +36,20 @@ const nextButton = {
 
 
 const HomePage = () => {
+	const VITE_URL = import.meta.env.VITE_URL;
 
 	const cateRef = useRef()
+
+	// trạng thái sản phẩm
+	const [product, setProduct] = useState([]);
+	const [productPage, setProductPage] = useState('');
+
+
+	useEffect(() => {
+		instance.get(`product-list?${productPage}`).then(({ data }) => {
+			setProduct(data)
+		})
+	}, [productPage])
 
 	const categories = [
 		{ title: 'Category 1', image: 'https://754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/05/iamge-1-1-450x450.png' },
@@ -53,10 +65,10 @@ const HomePage = () => {
 	const createSlides = () => {
 		const slides = [];
 
-		// 4 items per slide
-		const itemPerSlide = 5;
-		for (let i = 0; i < categories.length; i += itemPerSlide) {
-			const slideContent = categories.slice(i, i + itemPerSlide).map((category, index) => (
+		// Slide items
+		const slideItems = 5;
+		for (let i = 0; i < categories.length; i += slideItems) {
+			const slideContent = categories.slice(i, i + slideItems).map((category, index) => (
 				<Col key={index} style={{ border: '1px solid var(--secondary-color)', borderRadius: '10px', flex: '0 0 19.6%' }}>
 					<div style={{
 						backgroundImage: `url(${category.image})`,
@@ -96,72 +108,6 @@ const HomePage = () => {
 		return slides;
 	};
 
-	const productData = [
-		{
-			id: 1,
-			name: 'Product 1 Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.',
-			price: 1000000,
-			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
-			rate: 4.5,
-			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		},
-		{
-			id: 2,
-			name: 'Product 2 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.',
-			price: 20000,
-			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
-			rate: 5,
-			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		},
-		{
-			id: 3,
-			name: 'Product 3 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.',
-			price: 30000,
-			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
-			rate: 1,
-			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		},
-		{
-			id: 4,
-			name: 'Product 4 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.',
-			price: 40000,
-			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
-			rate: 1,
-			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		},
-		{
-			id: 5,
-			name: 'Product 5 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.',
-			price: 50000,
-			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
-			rate: 6,
-			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		},
-		{
-			id: 6,
-			name: 'Product 6 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.',
-			price: 60000,
-			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
-			rate: 5,
-			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		},
-		{
-			id: 7,
-			name: 'Product 7 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.',
-			price: 70000,
-			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
-			rate: 5,
-			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		},
-		{
-			id: 8,
-			name: 'Product 8 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.',
-			price: 80000,
-			image: 'https://sneakerdaily.vn/wp-content/uploads/2023/10/Giay-Air-Jordan-1-Low-Alternate-Royal-Toe-553558-140.jpg',
-			rate: 5,
-			detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		},
-	];
 
 	const blogData = [
 		{
@@ -200,6 +146,11 @@ const HomePage = () => {
 		},
 	]
 
+	const onShowSizeChange = (current, pageSize) => {
+		setProductPage(`page=${current}` + `&pageSize=${pageSize}`)
+	};
+
+
 	return (
 		<div className='container mx-auto'>
 			<CarouselSection />
@@ -229,26 +180,28 @@ const HomePage = () => {
 			<p style={{ fontSize: '24px', fontWeight: 'bold', margin: '10px 0' }}>Don't miss this week's sales</p>
 			<div className='product-wrapper'>
 				<div className="flex flex-wrap justify-start">
-					{productData.map((product, index) => {
+					{product.map((product, index) => {
+						const priceRange = product.variants.map(variant => variant.price);
+						const image = product.variants.map(variant => variant.images[0])[0]
+						const productImage = VITE_URL + 'storage/'+ image?.folder + '/' + image?.url;
 						return <div key={index} className='product-items'>
-							<div className="product-hover">
-								<Button type='primary'>Add To Cart</Button>
-							</div>
 							<div className="product-badges">20%</div>
-							<Link to={`product/${product.id}`}>
+							<Link to={`product/${product.slug}`}>
 								<Card
 									size='small'
 									hoverable
-									cover={<img alt="example" src={product.image} />}
+									cover={<img alt="example" src={productImage} />}
 								>
 									<Rate disabled allowHalf defaultValue={product.rate} className='rate' />
 									<p className='product-name'>{product.name}</p>
 									<div className='price'>
 										<p className="new-price">
-											{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)}
+											{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(Math.min(...priceRange))}
+											-
+											{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(Math.max(...priceRange))}
 										</p>
 										<p className="old-price">
-											{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)}
+											{/* {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)} */}
 										</p>
 									</div>
 									<p className='product-detail'>
@@ -265,7 +218,7 @@ const HomePage = () => {
 						display: 'flex',
 						justifyContent: 'center',
 					}}>
-						<Button type="primary">Show more</Button>
+						<Pagination defaultCurrent={1} total={200} showSizeChanger={false} pageSize={8} onChange={onShowSizeChange} />
 					</div>
 				</div >
 			</div>
