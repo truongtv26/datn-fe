@@ -2,13 +2,16 @@ import React from 'react'
 import BaseLayout from '../layouts/BaseLayout'
 import AdminLayout from '../layouts/AdminLayout'
 import HomePage from '../pages/HomePage'
-import ProductDetailPage from '../pages/ProductDetailPage'
+import ListProduct from '../pages/ListProduct'
+import BlogPage from '../pages/BlogPage'
+import BlogDetailPage from '../pages/BlogDetailPage'
+import CartPage from '../pages/CartPage'
+import CheckPage from '../pages/CheckPage'
 import Dashboard from '../pages/admin/Dashboard'
 import OwnerPage from '../pages/admin/OwnerPage'
 import PageNotFound from '../components/errors/PageNotFound'
 import PrivateRoute from '../components/PrivateRoute'
 import { Route, Routes } from 'react-router-dom'
-import BlogPage from '../pages/BlogPage'
 import { useAppContext } from '../provider/AppProvider'
 import Register from '../pages/auth/Register'
 import Login from '../pages/auth/Login'
@@ -17,6 +20,8 @@ import ListProductManage from '../components/admin/Product/ListProductManage'
 import AddProduct from '../components/admin/Product/AddProduct'
 import EditProduct from '../components/admin/Product/EditProduct'
 import EditProductDetail from '../components/admin/Product/EditProductDetail'
+import ProductDetailPage from '../pages/ProductDetail'
+
 const Routers = () => {
   const { user } = useAppContext();
   return (
@@ -24,13 +29,11 @@ const Routers = () => {
       <Routes>
         {/* client route */}
 
-        <Route path='/' element={<BaseLayout />}>
-          <Route index element={<HomePage />} />
 
           <Route path="/" element={<BaseLayout />}>
             <Route index element={<HomePage />} />
             <Route path="list-product" element={<ListProduct />} />
-            <Route path="product/:slug" element={<ProductDetail />} />
+            <Route path="product/:slug" element={<ProductDetailPage />} />
             <Route path="blog" element={<BlogPage />} />
             <Route path="blog/:slug" element={<BlogDetailPage />} />
             <Route path="cart" element={<CartPage />} />
