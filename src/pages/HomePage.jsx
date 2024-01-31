@@ -182,9 +182,8 @@ const HomePage = () => {
 				<div className="flex flex-wrap justify-start">
 					{product.map((product, index) => {
 						const priceRange = product.variants.map(variant => variant.price);
-						const image = product.variants.map(variant => variant.image)[0]
+						const image = product.variants.map(variant => variant.images[0])[0]
 						const productImage = VITE_URL + 'storage/'+ image?.folder + '/' + image?.url;
-
 						return <div key={index} className='product-items'>
 							<div className="product-badges">20%</div>
 							<Link to={`product/${product.slug}`}>
