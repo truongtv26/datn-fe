@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import CarouselSection from '../components/ui/CarouselSection'
 import { Badge, Button, Card, Carousel, Col, Image, Pagination, Rate, Row } from 'antd';
 import { CreditCardOutlined, LeftOutlined, PercentageOutlined, PhoneOutlined, RightOutlined } from '@ant-design/icons';
-import Meta from 'antd/es/card/Meta';
 import { Link } from 'react-router-dom';
 import instance from '../core/api';
 

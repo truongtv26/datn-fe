@@ -55,11 +55,11 @@
 }
 
 .action-btn.add-btn {
-  background-color: #a46497;
+  background-color: #d86b87;
 }
 
 .action-btn.buy-btn {
-  background-color: #d33;
+  background-color: var(--primary-color);
 }
 
 /* swiper */
