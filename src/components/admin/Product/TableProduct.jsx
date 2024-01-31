@@ -44,6 +44,8 @@ const TableProduct = ({ props, handleChange }) => {
       render: (_, record) => (
         <InputNumber
           defaultValue={record.quantity}
+          formatter={(value) => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          parser={(value) => value !== null && value !== undefined ? value.replace(/\$\s?|(,*)/g, "") : ""}
           onChange={(value) => handleChangeQuantity(value, record)}
           min={1}
         />
@@ -54,8 +56,10 @@ const TableProduct = ({ props, handleChange }) => {
       dataIndex: 'price',
       key: 'price',
       render: (_, record) => (
-        <Input
+        <InputNumber
           defaultValue={record.price}
+          formatter={(value) => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          parser={(value) => value !== null && value !== undefined ? value.replace(/\$\s?|(,*)/g, "") : ""}
           onChange={(e) => handleChangePrice(e, record)}
         />
       ),
@@ -65,8 +69,10 @@ const TableProduct = ({ props, handleChange }) => {
       dataIndex: 'weight',
       key: 'weight',
       render: (_, record) => (
-        <Input
+        <InputNumber
           defaultValue={record.weight}
+          formatter={(value) => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          parser={(value) => value !== null && value !== undefined ? value.replace(/\$\s?|(,*)/g, "") : ""}
           onChange={(e) => handleChangeWeight(e, record)}
         />
       ),
@@ -86,7 +92,8 @@ const TableProduct = ({ props, handleChange }) => {
       dataIndex: 'image',
       key: 'image',
       render: (_, record, index) => ({
-        children: index === 0 ? <AddImageModal colorName={record.colorName} handleChange={handleImageSelect} /> : null,
+
+        children: index === 0 ? <AddImageModal colorName={record.colorName} handleChange={handleImageSelect} images={record.images && record.images.length > 0 ? record.images : []} /> : null,
         props: {
           rowSpan: index === 0 ? groupByColor[record.colorName].length : 0,
         },
@@ -232,6 +239,7 @@ const TableProduct = ({ props, handleChange }) => {
               quantity: item.quantity,
               price: item.price,
               weight: item.weight,
+              images: item.images || []
             }))}
             columns={columns}
             pagination={false}

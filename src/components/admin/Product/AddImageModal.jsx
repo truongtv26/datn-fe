@@ -8,9 +8,9 @@ import instance from '../../../core/api';
 import { toast } from 'react-toastify';
 const { Title } = Typography;
 const { confirm } = Modal;
-const AddImageModal = ({ colorName, handleChange}) => {
+const AddImageModal = ({ colorName, handleChange, images }) => {
     // trạng thái ảnh được chọn
-    const [selectedImages, setSelectedImages] = useState([]);
+    const [selectedImages, setSelectedImages] = useState(images);
 
     // trạng thái danh sách ảnh của thư viện
     const [listImage, setListImage] = useState([]);
@@ -121,7 +121,7 @@ const AddImageModal = ({ colorName, handleChange}) => {
             <Button onClick={showModal}>
                 <  PictureFilled />
             </Button>
-            <Modal title="Chọn hình ảnh" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} width="70%" footer={null} style={{position: 'relative'}}>
+            <Modal title="Chọn hình ảnh" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} width="70%" footer={null} style={{ position: 'relative' }}>
                 <div>
                     <Title level={5}>Danh sách ảnh của sản phẩm</Title>
                     {selectedImages.length === 0 ? (
@@ -178,6 +178,7 @@ const AddImageModal = ({ colorName, handleChange}) => {
                                                 name="imageSelect"
                                                 value={image.url}
                                                 onChange={handleImageSelect}
+                                                checked={selectedImages.some((oldImage) => (oldImage === image.url))}
                                             />
                                         </div>
                                     </div>
