@@ -14,12 +14,12 @@ export const CarouselImgs = ({ listVariant, current }) => {
 	const [swiper, setSwiper] = useState(null);
 	const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
-	const currentSwiper = VITE_URL + `storage/${current?.folder}/${current?.url}`
-	const data = listVariant.map(({ image }) => VITE_URL + 'storage/' + image?.folder + '/' + image?.url)
-
+	const currentSwiper = current?.map(image =>  VITE_URL + `storage/${image?.folder}/${image?.url}`)
+	const data = ([...new Map(listVariant.map(({images})=> images).flat().map(image => [image.id, image])).values()])
+		.map(image => VITE_URL + `storage/${image?.folder}/${image?.url}`);
+	console.log(current);
 	useEffect(() => {
 		const currentIndex = data.findIndex((img) => img === currentSwiper);
-
 		if (swiper && swiper.realIndex != currentIndex) {
 			swiper.slideTo(currentIndex)
 		}

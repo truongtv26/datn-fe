@@ -22,8 +22,8 @@ const ProductDetailPage = () => {
 
 	// lấy chi tiết sản phẩm
 	useEffect(() => {
-		instance.get(`/product-detail/${slug}`).then(({ data: { original } }) => {
-			setProduct(...original);
+		instance.get(`/product-detail/${slug}`).then(({ data}) => {
+			setProduct(data);
 			setIsLoading(false);
 		})
 	}, [])
@@ -31,7 +31,11 @@ const ProductDetailPage = () => {
 	// lấy thuộc tính sản phẩm
 	useEffect(() => {
 		instance.get(`/product-attributes/${slug}`).then(({ data }) => {
-			setAttributes(data)
+			const attributes = {
+				colors: [...new Map(data.colors.map(color => [color.id, color])).values()],
+				sizes: [...new Map(data.sizes.map(color => [color.id, color])).values()]
+			}
+			setAttributes(attributes)
 			setIsLoading(false);
 		})
 	}, [])
@@ -56,7 +60,7 @@ const ProductDetailPage = () => {
 
 	// gio hang
 	const hanldeCart = ()=> {
-		// console.log(variant);
+		console.log(variant);
 	}
 
 	return isLoading
@@ -83,7 +87,7 @@ const ProductDetailPage = () => {
 			<div className="w-full mt-5">
 				<Row gutter={[40]} justify="space-between">
 					<Col xs={24} lg={11}>
-						<CarouselImgs listVariant={product.variants} current={variant?.image}/>
+						<CarouselImgs listVariant={product.variants} current={variant?.images}/>
 					</Col>
 
 					<Col xs={24} lg={11}>

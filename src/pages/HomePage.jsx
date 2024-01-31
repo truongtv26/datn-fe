@@ -47,7 +47,7 @@ const HomePage = () => {
 
 	useEffect(() => {
 		instance.get(`product-list?${productPage}`).then(({ data }) => {
-			setProduct(data.original)
+			setProduct(data)
 		})
 	}, [productPage])
 
