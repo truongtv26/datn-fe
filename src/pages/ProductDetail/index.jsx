@@ -60,7 +60,7 @@ const ProductDetailPage = () => {
 
 	// gio hang
 	const hanldeCart = ()=> {
-		console.log(variant);
+		console.log('cart' + variant);
 	}
 
 	return isLoading

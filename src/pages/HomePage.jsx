@@ -5,6 +5,7 @@ import { Badge, Button, Card, Carousel, Col, Image, Pagination, Rate, Row } from
 import { CreditCardOutlined, LeftOutlined, PercentageOutlined, PhoneOutlined, RightOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import instance from '../core/api';
+import ProductList from '../components/product/ProductList';
 
 const contentStyle = {
 	margin: 0,
@@ -36,14 +37,12 @@ const nextButton = {
 
 
 const HomePage = () => {
-	const VITE_URL = import.meta.env.VITE_URL;
 
 	const cateRef = useRef()
 
 	// trạng thái sản phẩm
 	const [product, setProduct] = useState([]);
 	const [productPage, setProductPage] = useState('');
-
 
 	useEffect(() => {
 		instance.get(`product-list?${productPage}`).then(({ data }) => {
@@ -146,9 +145,6 @@ const HomePage = () => {
 		},
 	]
 
-	const onShowSizeChange = (current, pageSize) => {
-		setProductPage(`page=${current}` + `&pageSize=${pageSize}`)
-	};
 
 
 	return (
@@ -178,50 +174,8 @@ const HomePage = () => {
 
 			{/* product */}
 			<p style={{ fontSize: '24px', fontWeight: 'bold', margin: '10px 0' }}>Don't miss this week's sales</p>
-			<div className='product-wrapper'>
-				<div className="flex flex-wrap justify-start">
-					{product.map((product, index) => {
-						const priceRange = product.variants.map(variant => variant.price);
-						const image = product.variants.map(variant => variant.images[0])[0]
-						const productImage = VITE_URL + 'storage/'+ image?.folder + '/' + image?.url;
-						return <div key={index} className='product-items'>
-							<div className="product-badges">20%</div>
-							<Link to={`product/${product.slug}`}>
-								<Card
-									size='small'
-									hoverable
-									cover={<img alt="example" src={productImage} />}
-								>
-									<Rate disabled allowHalf defaultValue={product.rate} className='rate' />
-									<p className='product-name'>{product.name}</p>
-									<div className='price'>
-										<p className="new-price">
-											{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(Math.min(...priceRange))}
-											-
-											{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(Math.max(...priceRange))}
-										</p>
-										<p className="old-price">
-											{/* {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)} */}
-										</p>
-									</div>
-									<p className='product-detail'>
-										{product.detail}
-									</p>
-
-								</Card>
-							</Link>
-						</div>
-					})}
-
-					<div style={{
-						width: '100%',
-						display: 'flex',
-						justifyContent: 'center',
-					}}>
-						<Pagination defaultCurrent={1} total={200} showSizeChanger={false} pageSize={8} onChange={onShowSizeChange} />
-					</div>
-				</div >
-			</div>
+			<ProductList data={product} setProductPage={setProductPage}/>
+		
 
 			{/* categories banner */}
 			<div className="category-banner-wrapper">
