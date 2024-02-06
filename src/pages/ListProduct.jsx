@@ -130,8 +130,8 @@ const ListProduct = () => {
 							<Input
 								type="number"
 								placeholder="Min Price"
-								value={priceRange[0]}
-								onChange={(e) => handlePriceRangeChange([e.target.value, priceRange[1]])}
+								defaultValue={priceRange[0]}
+								onChange={(e) => handlePriceRangeChange([Number(e.target.value), priceRange[1]])}
 							/>
 						</div>
 						<div style={{ marginTop: '10px', marginRight: '5px' }} >
@@ -139,8 +139,8 @@ const ListProduct = () => {
 							<Input
 								type="number"
 								placeholder="Max Price"
-								value={priceRange[1]}
-								onChange={(e) => handlePriceRangeChange([priceRange[0], e.target.value])}
+								defaultValue={priceRange[1]}
+								onChange={(e) => handlePriceRangeChange([priceRange[0], Number(e.target.value)])}
 							/>
 						</div>
 					</div>
@@ -150,6 +150,7 @@ const ListProduct = () => {
 					</div>
 					<Slider style={{ marginTop: '4vh', marginRight: '1vh' }}
 						range
+						
 						min={priceRange[0]}
 						max={priceRange[1]}
 						onChange={handlePriceRangeChange}
@@ -157,7 +158,6 @@ const ListProduct = () => {
 
 					{/* brands */}
 					<div style={{ marginTop: '20px' }} >
-
 
 						<h2 >Brands</h2>
 						<div style={{ marginTop: '20px' }}>
