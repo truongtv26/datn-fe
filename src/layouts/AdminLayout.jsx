@@ -96,12 +96,11 @@ const AdminLayout = () => {
       key: 'qlVoucher',
       icon: <GiftOutlined />,
       label: 'Giảm giá',
-      link: '/admin/vouchers',
       children: [
         {
           key: 'qlDotGiamGia',
           label: 'Quản lý đợt giảm giá',
-          link: '/admin/employees',
+          link: '/admin/promotion',
         },
         {
           key: 'qlPhieuGiamGia',
