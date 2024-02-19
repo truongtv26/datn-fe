@@ -75,7 +75,8 @@ const ProductDetailPage = () => {
 
 		if (oldCart.some(item =>
 			item.product_id === cartItem.product_id &&
-			item.variant_id === cartItem.variant_id
+			item.variant_id === cartItem.variant_id &&
+			item.quantity >=1
 		)) {
 			cartItem.quantity < 1 ? toast.error('Vui lòng chọn số lượng sản phẩm!') 
 			: toast.error('Sản phẩm đã có trong giỏ hàng!');;
