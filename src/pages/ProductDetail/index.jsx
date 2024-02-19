@@ -65,16 +65,24 @@ const ProductDetailPage = () => {
 
 	// xử lý giỏ hàng
 	const hanldeCart = () => {
-		const item = {
+		const cartItem = {
 			product_id: product.id,
 			variant_id: variant.id,
 			quantity: optionSelected.quantity ?? 0,
 		}
 
-		if (item.quantity > 0) {
-			toast.success('Added to cart successfully');
+		const oldCart = JSON.parse(localStorage.getItem('cart')) ?? [];
+
+		if (oldCart.some(item =>
+			item.product_id === cartItem.product_id &&
+			item.variant_id === cartItem.variant_id
+		)) {
+			cartItem.quantity < 1 ? toast.error('Vui lòng chọn số lượng sản phẩm!') 
+			: toast.error('Sản phẩm đã có trong giỏ hàng!');;
 		} else {
-			toast.error('Quantity must be greater than zero');
+			const updatedCart = [...oldCart, cartItem];
+			localStorage.setItem("cart", JSON.stringify(updatedCart));
+			toast.success('Sản phẩm đã được thêm vào giỏ hàng!');
 		}
 	}
 

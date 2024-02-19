@@ -1,5 +1,5 @@
-import React from 'react';
-import { Badge, Dropdown, Image, Layout, Space, theme, Typography } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Badge, Button, Dropdown, Image, Layout, Popover, Space, theme, Typography } from 'antd';
 import Search from 'antd/es/input/Search';
 import {
 	DownOutlined,
@@ -16,6 +16,8 @@ import { useAppContext } from '../provider/AppProvider';
 import { Link } from 'react-router-dom';
 import { logout } from '../services/auth';
 import Cookies from 'js-cookie';
+import CartTable from './cart/CartTable';
+import instance from '../core/api';
 const items = new Array(3).fill(null).map((_, index) => ({
 	key: String(index + 1),
 	label: `nav ${index + 1}`,
@@ -26,10 +28,14 @@ const onSearch = (value, _e, info) => console.log(info?.source, value);
 
 const HeaderSection = () => {
 	const { user, setUser } = useAppContext()
+
+	const [cart, setCart] = useState([]);
+
 	const {
 		token: { colorBgContainer, borderRadiusLG },
 	} = theme.useToken();
 
+	// Kiểm tra đăng nhập
 	const checkUser = (user) => {
 		const items = [
 			{
@@ -88,6 +94,7 @@ const HeaderSection = () => {
 				</div>
 			</Link>
 	}
+	// xử lý đăng xuất
 	const handleLogout = () => {
 		logout().then((data) => {
 			if (data.status === 200) {
@@ -97,6 +104,14 @@ const HeaderSection = () => {
 		});
 	}
 
+	// Xử lý dữ liệu giỏ hàng
+
+	useEffect(() => {
+		const cartItems = JSON.parse(localStorage.getItem('cart'));
+		instance.post(`/cart`, cartItems).then(({ data }) => {
+			setCart(data)
+		})
+	}, [])
 
 	return (
 		<>
@@ -153,9 +168,16 @@ const HeaderSection = () => {
 									<HeartOutlined style={{ fontSize: '24px' }} />
 								</Badge>
 							</li>
-							<li style={{ marginRight: '20px' }}>
-								<Badge count={10} color='var(--primary-color)' size="small">
-									<ShoppingCartOutlined style={{ fontSize: '24px', color: 'var(--primary-color)' }} />
+							<li style={{ marginRight: '20px', cursor: 'pointer' }}>
+								<Badge
+									count={Array.isArray((JSON.parse(localStorage.getItem('cart')))) 
+									? (JSON.parse(localStorage.getItem('cart'))).length 
+									: 0}
+									color='var(--primary-color)'
+									size="small">
+									<Popover placement="bottom" title={"Giỏ hàng"} content={<CartTable data={cart} />}>
+										<ShoppingCartOutlined style={{ fontSize: '24px', color: 'var(--primary-color)' }} />
+									</Popover>
 								</Badge>
 							</li>
 						</ul>

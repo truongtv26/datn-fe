@@ -64,8 +64,9 @@
 
 /* swiper */
 .cus-swiper {
-  height: 415px;
+  height: 100%px;
   margin-bottom: 8px;
+  background-image: cover;
 }
 
 .cus-swiper-2 {
