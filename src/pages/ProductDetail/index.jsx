@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Breadcrumb, Row, Col, Flex, Space, Button, Radio } from "antd";
+import { Breadcrumb, Row, Col, Flex, Space, Button, Radio, InputNumber } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import styles from "./page.module.css";
 import { CarouselImgs } from "./CarouselImgs";
@@ -8,6 +8,9 @@ import { Description } from "./ProductDescription";
 import { SimilarProduct } from "./SimilarProduct";
 import { Tips } from "./Tips";
 import instance from "../../core/api";
+import { number } from "joi";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const ProductDetailPage = () => {
@@ -17,12 +20,14 @@ const ProductDetailPage = () => {
 	const [product, setProduct] = useState({});
 	const [variant, setVariant] = useState({});
 	const [attributes, setAttributes] = useState([]);
+
 	const [optionSelected, setOptionSelected] = useState({});
+
 	const [isLoading, setIsLoading] = useState(true);
 
 	// lấy chi tiết sản phẩm
 	useEffect(() => {
-		instance.get(`/product-detail/${slug}`).then(({ data}) => {
+		instance.get(`/product-detail/${slug}`).then(({ data }) => {
 			setProduct(data);
 			setIsLoading(false);
 		})
@@ -58,11 +63,19 @@ const ProductDetailPage = () => {
 		}
 	}, [optionSelected])
 
-	// gio hang
-	const hanldeCart = ()=> {
-		const cartItem = {
-			
-		}	
+	// xử lý giỏ hàng
+	const hanldeCart = () => {
+		const item = {
+			product_id: product.id,
+			variant_id: variant.id,
+			quantity: optionSelected.quantity ?? 0,
+		}
+
+		if (item.quantity > 0) {
+			toast.success('Added to cart successfully');
+		} else {
+			toast.error('Quantity must be greater than zero');
+		}
 	}
 
 	return isLoading
@@ -89,7 +102,7 @@ const ProductDetailPage = () => {
 			<div className="w-full mt-5">
 				<Row gutter={[40]} justify="space-between">
 					<Col xs={24} lg={11}>
-						<CarouselImgs listVariant={product.variants} current={variant?.images}/>
+						<CarouselImgs listVariant={product.variants} current={variant?.images} />
 					</Col>
 
 					<Col xs={24} lg={11}>
@@ -152,14 +165,31 @@ const ProductDetailPage = () => {
 									optionType="button" />
 							</Flex>
 						</Flex>
+						<Flex gap={40} className={styles["size-box"]} style={{ border: "none", alignItems: 'center' }}>
+							<p className={styles["label"]}>Quantity</p>
+							<InputNumber min={1} max={variant.quantity} defaultValue={0}
+								disabled={variant.id && variant.quantity > 0 ? false : true}
+								onChange={(number) => {
+									setOptionSelected({
+										...optionSelected,
+										quantity: number
+									})
+								}} />
+
+							{Object.keys(variant).length > 0 ?
+								<>
+									<span style={{ fontSize: '16px' }}>{variant.quantity} Sản phẩm có sẵn</span>
+								</>
+								: ''}
+						</Flex>
 						<Flex gap={5}>
 							<button onClick={Object.keys(variant).length > 0 ? hanldeCart : null}
-								className={`${styles["action-btn"]} ${styles["add-btn"]} ${Object.keys(variant).length > 0 ? styles["active"]:''}`}
+								className={`${styles["action-btn"]} ${styles["add-btn"]} ${Object.keys(variant).length > 0 ? styles["active"] : ''}`}
 							>
 								Thêm vào giỏ hàng
 							</button>
 							<button
-								className={`${styles["action-btn"]} ${styles["buy-btn"]} ${Object.keys(variant).length > 0 ? styles["active"]:''}`}
+								className={`${styles["action-btn"]} ${styles["buy-btn"]} ${Object.keys(variant).length > 0 ? styles["active"] : ''}`}
 							>
 								Mua ngay
 							</button>
