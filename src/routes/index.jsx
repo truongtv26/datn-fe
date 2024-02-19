@@ -21,7 +21,8 @@ import ProductDetailPage from '../pages/ProductDetail'
 import ListProduct from '../pages/ListProduct'
 import CartPage from '../pages/CartPage'
 import CheckPage from '../pages/CheckPage'
-
+import Promotion from '../pages/promotion/Promotion'
+import AddPromotion from '../pages/promotion/AddPromotion'
 const Routers = () => {
 	const { user } = useAppContext();
 	return (
@@ -30,64 +31,69 @@ const Routers = () => {
 				{/* client route */}
 
 
-					<Route path="/" element={<BaseLayout />}>
-						<Route index element={<HomePage />} />
-						<Route path="list-product" element={<ListProduct />} />
-						<Route path="product/:slug" element={<ProductDetailPage />} />
-						<Route path="blog" element={<BlogPage />} />
-						<Route path="blog/:slug" element={<BlogDetailPage />} />
-						<Route path="cart" element={<CartPage />} />
-						<Route path="checkout/:slug" element={<CheckPage />} />
-						{/* auth */}
-						<Route path="login" element={<Login />} />
-						<Route path="register" element={<Register />} />
-					</Route>
+				<Route path="/" element={<BaseLayout />}>
+					<Route index element={<HomePage />} />
+					<Route path="list-product" element={<ListProduct />} />
+					<Route path="product/:slug" element={<ProductDetailPage />} />
+					<Route path="blog" element={<BlogPage />} />
+					<Route path="blog/:slug" element={<BlogDetailPage />} />
+					<Route path="cart" element={<CartPage />} />
+					<Route path="checkout/:slug" element={<CheckPage />} />
+					{/* auth */}
+					<Route path="login" element={<Login />} />
+					<Route path="register" element={<Register />} />
+				</Route>
 
-					{/* admin route */}
-					<Route
-						path="admin"
-						element={
-							// roles có thể truy cập admin
-							<PrivateRoute
-								isAllowed={() => isUserAllowed(user, ["owner", "staff"])}
-							>
-								<AdminLayout />
-							</PrivateRoute>
-						}
-					>
-						<Route path="dashboard" element={<Dashboard />} />
-						<Route path="product" element={<ListProductManage />} />
-						<Route path="product/add" element={<AddProduct />} />
-					</Route>
-
-					{/* route chỉ dành cho owner */}
-					<Route
-						path="admin"
-						element={
-							<PrivateRoute isAllowed={() => isUserAllowed(user, ["owner"])}>
-								<AdminLayout />
-							</PrivateRoute>
-						}
-					>
-						<Route path="owner" element={<OwnerPage />} />
-						<Route path='dashboard' element={<Dashboard />} />
-						<Route path='product' element={<ListProductManage />} />
-						<Route path='product/add' element={<AddProduct />} />
-						<Route path='product/:id/edit' element={<EditProduct />} />
-					</Route>
-
-					{/* route chỉ dành cho owner */}
-					<Route path='admin' element={
-						<PrivateRoute isAllowed={() => isUserAllowed(user, ['owner'])}>
+				{/* admin route */}
+				<Route
+					path="admin"
+					element={
+						// roles có thể truy cập admin
+						<PrivateRoute
+							isAllowed={() => isUserAllowed(user, ["owner", "staff"])}
+						>
 							<AdminLayout />
-						</PrivateRoute>}>
-						<Route path='owner' element={<OwnerPage />} />
+						</PrivateRoute>
+					}
+				>
+					<Route path="dashboard" element={<Dashboard />} />
+					<Route path="product" element={<ListProductManage />} />
+					<Route path="product/add" element={<AddProduct />} />
+				</Route>
 
-					</Route>
+				{/* route chỉ dành cho owner */}
+				<Route
+					path="admin"
+					element={
+						<PrivateRoute isAllowed={() => isUserAllowed(user, ["owner"])}>
+							<AdminLayout />
+						</PrivateRoute>
+					}
+				>
+					<Route path="owner" element={<OwnerPage />} />
+					<Route path='dashboard' element={<Dashboard />} />
+					<Route path='product' element={<ListProductManage />} />
+					<Route path='product/add' element={<AddProduct />} />
+					<Route path='product/:id/edit' element={<EditProduct />} />
+				</Route>
 
-					<Route path='/404' element={<PageNotFound />} />
-					<Route path='*' element={<PageNotFound />} />
-			</Routes>
+				{/* route chỉ dành cho owner */}
+				<Route path='admin' element={
+					<PrivateRoute isAllowed={() => isUserAllowed(user, ['owner'])}>
+						<AdminLayout />
+					</PrivateRoute>}>
+					<Route path='owner' element={<OwnerPage />} />
+					<Route path='dashboard' element={<Dashboard />} />
+					<Route path='product' element={<ListProductManage />} />
+					<Route path='product/add' element={<AddProduct />} />
+					<Route path='product/:id/edit' element={<EditProduct />} />
+					<Route path='promotion' element={<Promotion />} />
+					<Route path='promotion/create' element={<AddPromotion />} />
+				</Route>
+
+			<Route path='/404' element={<PageNotFound />} />
+			<Route path='*' element={<PageNotFound />} />
+		</Routes >
 		</>
 	)
 }
