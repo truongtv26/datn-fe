@@ -19,6 +19,7 @@ import EditProduct from '../components/admin/Product/EditProduct'
 import EditProductDetail from '../components/admin/Product/EditProductDetail'
 import Promotion from '../pages/promotion/Promotion'
 import AddPromotion from '../pages/promotion/AddPromotion'
+import PromotionDetail from '../pages/promotion/update/PromotionDetail'
 const Routers = () => {
     const { user } = useAppContext();
     return (
@@ -51,6 +52,7 @@ const Routers = () => {
                     <Route path='product/:id/edit' element={<EditProduct />} />
                     <Route path='promotion' element={<Promotion />} />
                     <Route path='promotion/create' element={<AddPromotion />} />
+                    <Route path='promotion/:id' element={<PromotionDetail />} />
                 </Route>
 
                 {/* route chỉ dành cho owner */}
@@ -70,3 +72,5 @@ const Routers = () => {
 }
 
 export default Routers;
+
+
