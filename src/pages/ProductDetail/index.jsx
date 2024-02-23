@@ -68,23 +68,28 @@ const ProductDetailPage = () => {
 		const cartItem = {
 			product_id: product.id,
 			variant_id: variant.id,
+			color_id: variant.color_id,
+			size_id: variant.size_id,
 			quantity: optionSelected.quantity ?? 0,
 		}
 
 		const oldCart = JSON.parse(localStorage.getItem('cart')) ?? [];
 
-		if (oldCart.some(item =>
-			item.product_id === cartItem.product_id &&
-			item.variant_id === cartItem.variant_id &&
-			item.quantity >=1
-		)) {
-			cartItem.quantity < 1 ? toast.error('Vui lòng chọn số lượng sản phẩm!') 
-			: toast.error('Sản phẩm đã có trong giỏ hàng!');;
+		if (cartItem.quantity >= 1) {
+			if (oldCart.some(item =>
+				item.product_id === cartItem.product_id &&
+				item.variant_id === cartItem.variant_id
+			)) {
+				toast.error('Sản phẩm đã có trong giỏ hàng!')
+			} else {
+				const updatedCart = [...oldCart, cartItem];
+				localStorage.setItem("cart", JSON.stringify(updatedCart));
+				toast.success('Sản phẩm đã được thêm vào giỏ hàng!');
+			}
 		} else {
-			const updatedCart = [...oldCart, cartItem];
-			localStorage.setItem("cart", JSON.stringify(updatedCart));
-			toast.success('Sản phẩm đã được thêm vào giỏ hàng!');
+			toast.error('Vui lòng chọn số lượng sản phẩm!')
 		}
+
 	}
 
 	return isLoading

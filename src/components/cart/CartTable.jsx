@@ -7,24 +7,28 @@ import { Link } from 'react-router-dom';
 const CartTable = ({ data }) => {
 
      const VITE_URL = import.meta.env.VITE_URL;
-     console.log(data);
+     
      const columns = [
           {
                title: 'Image',
                dataIndex: 'image',
                key: 'image',
-               render: (text, record) => <img src={record.image} alt="Product" style={{ width: '50px', height: '50px' }} />,
+               render: (_, record) => <img src={record.image} alt="Product" style={{ width: '50px', height: '50px' }} />,
           },
           {
                title: 'Name',
                dataIndex: 'name',
                key: 'name',
-               render: (text, record) => <Link to={`/product/${record.link}`}>{record.name}</Link>,
+               render: (_, record) => <Link to={`/product/${record.link}`}>{record.name}</Link>,
           },
           {
                title: 'Price',
                dataIndex: 'price',
                key: 'price',
+               render: (_, record) => new Intl.NumberFormat("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+               }).format(record.price)
           },
      ]
 
@@ -34,10 +38,7 @@ const CartTable = ({ data }) => {
                image: VITE_URL+ "storage/" + cartItem?.images[0]?.folder + "/" + cartItem?.images[0]?.url,
                name: cartItem.product.name,
                link: cartItem.product.slug,
-               price: new Intl.NumberFormat("vi-VN", {
-                    style: "currency",
-                    currency: "VND",
-               }).format(cartItem.price)
+               price: cartItem.price,
           }
      })
 

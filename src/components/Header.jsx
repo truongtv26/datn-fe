@@ -18,6 +18,7 @@ import { logout } from '../services/auth';
 import Cookies from 'js-cookie';
 import CartTable from './cart/CartTable';
 import instance from '../core/api';
+
 const items = new Array(3).fill(null).map((_, index) => ({
 	key: String(index + 1),
 	label: `nav ${index + 1}`,
