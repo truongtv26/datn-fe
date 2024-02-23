@@ -74,7 +74,7 @@ const AddPromotion = () => {
                             </Col>
                             <Col xl={12}>
                                 <Form.Item
-                                    label={"Giá trị (%)"}
+                                    label={"Giá trị"}
                                     name={"value"}
                                     rules={[
                                         { required: true, message: "Giá trị không được để trống!" },
@@ -91,7 +91,7 @@ const AddPromotion = () => {
                                         },
                                     ]}
                                 >
-                                    <Input placeholder="Nhập % khuyến mại..." />
+                                    <Input placeholder="Nhập phần trăm khuyến mại..." suffix="%" />
                                 </Form.Item>
                             </Col>
                             <Col xl={12}>
