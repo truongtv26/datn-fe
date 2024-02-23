@@ -105,7 +105,7 @@ const AdminLayout = () => {
         {
           key: 'qlPhieuGiamGia',
           label: 'Quản lý phiếu giảm giá',
-          link: '/admin/customers',
+          link: '/admin/voucher',
         }
       ]
     },
