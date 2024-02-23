@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Input, Table } from 'antd';
 import instance from '../../core/api';
 
-const TableShoe = ({ setProductIds, resetSelectedRowKeys  }) => {
+const TableShoe = ({ setProductIds, resetSelectedRowKeys , listShoes}) => {
     const [productList, setProductList] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -12,7 +12,7 @@ const TableShoe = ({ setProductIds, resetSelectedRowKeys  }) => {
     }, []);
 
     useEffect(() => {
-        setSelectedRowKeys([]);
+        setSelectedRowKeys(listShoes);
     }, [resetSelectedRowKeys]);
 
     const columns = [

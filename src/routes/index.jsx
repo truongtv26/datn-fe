@@ -23,6 +23,7 @@ import CartPage from '../pages/CartPage'
 import CheckPage from '../pages/CheckPage'
 import Promotion from '../pages/promotion/Promotion'
 import AddPromotion from '../pages/promotion/AddPromotion'
+import PromotionDetail from '../pages/promotion/update/PromotionDetail'
 const Routers = () => {
 	const { user } = useAppContext();
 	return (
@@ -89,7 +90,14 @@ const Routers = () => {
 					<Route path='product/:id/edit' element={<EditProduct />} />
 					<Route path='promotion' element={<Promotion />} />
 					<Route path='promotion/create' element={<AddPromotion />} />
-				</Route>
+                    <Route path='dashboard' element={<Dashboard />} />
+                    <Route path='product' element={<ListProductManage />} />
+                    <Route path='product/add' element={<AddProduct />} />
+                    <Route path='product/:id/edit' element={<EditProduct />} />
+                    <Route path='promotion' element={<Promotion />} />
+                    <Route path='promotion/create' element={<AddPromotion />} />
+                    <Route path='promotion/:id' element={<PromotionDetail />} />
+                </Route>
 
 			<Route path='/404' element={<PageNotFound />} />
 			<Route path='*' element={<PageNotFound />} />
@@ -99,3 +107,4 @@ const Routers = () => {
 }
 
 export default Routers;
+
