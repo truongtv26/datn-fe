@@ -541,6 +541,10 @@
      color: #E53E3E;
 }
 
+.coupon-code.disable {
+     opacity: .3;
+}
+
 .discount .description {
      font-size: 1.125rem;
      color: #E53E3E;

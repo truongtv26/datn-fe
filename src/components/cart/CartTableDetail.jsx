@@ -280,7 +280,9 @@ const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 						setCartItemAction={setCartItemAction} />
 					<Flex gap={4} wrap='wrap'>
 						Phiếu giảm giá có sẵn:
-						{record.action.promotions.map((coupon, index) => <div key={index} className='coupon-code'>{coupon.code}</div>)}
+						{record.action.promotions.map((coupon, index) => {
+							return coupon.status === "happenning" ? <div key={index} className='coupon-code'>{coupon.code}</div> : <div key={index} className='coupon-code disable'>{coupon.code}</div>
+						})}
 					</Flex>
 				</Flex>
 

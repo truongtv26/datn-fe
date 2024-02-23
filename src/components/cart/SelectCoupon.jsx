@@ -97,6 +97,7 @@ const SelectCoupon = ({ data, coupons, couponSelected, setCouponSelected, cartIt
                          <Flex gap={12}>
                               <Radio.Group options={
                                    coupons.map((coupon) => {
+                                        console.log(coupon);
                                         return {
                                              id: coupon.id,
                                              title: coupon.code,
@@ -105,6 +106,7 @@ const SelectCoupon = ({ data, coupons, couponSelected, setCouponSelected, cartIt
                                                   {coupon.code}
                                              </Flex>,
                                              value: coupon.value,
+                                             disabled: coupon.status === "happenning" ? false : true,
                                         }
                                    })
                               }
