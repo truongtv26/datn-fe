@@ -6,6 +6,7 @@ import { Content } from 'antd/es/layout/layout';
 import HeaderSection from '../components/Header';
 import { useAppContext } from '../provider/AppProvider';
 import { LoadingOutlined } from '@ant-design/icons';
+import { ToastContainer } from 'react-toastify';
 
 const layoutStyles = {
 	margin: ' 0 auto',
@@ -35,6 +36,7 @@ const BaseLayout = () => {
 					}
 				/>
 			</div>}
+			<ToastContainer />
 		</Layout>
 	)
 }

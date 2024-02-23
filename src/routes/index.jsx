@@ -39,7 +39,7 @@ const Routers = () => {
 					<Route path="blog" element={<BlogPage />} />
 					<Route path="blog/:slug" element={<BlogDetailPage />} />
 					<Route path="cart" element={<CartPage />} />
-					<Route path="checkout/:slug" element={<CheckPage />} />
+					<Route path="checkout" element={<CheckPage />} />
 					{/* auth */}
 					<Route path="login" element={<Login />} />
 					<Route path="register" element={<Register />} />

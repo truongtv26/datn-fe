@@ -530,6 +530,21 @@
      color: #E53E3E;
 }
 
+.coupon-code {
+     background-color: #FFEBEB;
+     width: fit-content;
+     height: 100%;
+     font-size: 1rem;
+     border: 1px dashed #E53E3E;
+     border-radius: 5px;
+     padding: 0 10px;
+     color: #E53E3E;
+}
+
+.coupon-code.disable {
+     opacity: .3;
+}
+
 .discount .description {
      font-size: 1.125rem;
      color: #E53E3E;
@@ -1453,15 +1468,15 @@
 .content-cart{
      display: flex;
      justify-content: start;
-     gap: 5%;
+     gap: 10px;
 }
 
 .content-cart .left-content{
-     width: 70%;
+     flex: 0 0 70%;
 }
 
 .content-cart .right-content{
-     width: 25%;
+     flex: 0 0 30%;
 }
 
 /* Css Thông báo để được FreeShip ....... */
@@ -1755,6 +1770,7 @@
 }
 
 .cart-total .totals .totalall{
+     width: 100%;
      display: flex;
      justify-content: space-between;
      padding-top: 20px;
@@ -2382,4 +2398,8 @@
 
 .cart-total .totals .shipping-checkout form input:hover{
      cursor: pointer;
+}
+
+.table-cart .ant-table-row-expand-icon-cell {
+     display: none;
 }
