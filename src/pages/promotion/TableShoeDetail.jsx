@@ -3,10 +3,13 @@ import { Carousel, InputNumber, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import instance from '../../core/api';
 
-const TableShoeDetail = ({ idProduct, setSelectedProductDetail }) => {
+const TableShoeDetail = ({ idProduct, setSelectedProductDetail, setRowKeys }) => {
   const [listProductDetail, setListProductDetail] = useState([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState(setRowKeys);
 
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  useEffect(() => {
+    setSelectedRowKeys(setRowKeys);
+  }, [setRowKeys]);
 
   const onSelectChange = (selectedRowKeys, selectedRows) => {
     const selectedIds = selectedRows.map(row => row.id);
@@ -18,7 +21,6 @@ const TableShoeDetail = ({ idProduct, setSelectedProductDetail }) => {
     selectedRowKeys,
     onChange: onSelectChange,
   };
-
   const columns = [
     {
       title: "STT",
@@ -116,7 +118,7 @@ const TableShoeDetail = ({ idProduct, setSelectedProductDetail }) => {
 
   return (
     <Table
-      rowKey="key"
+      rowKey="id"
       rowSelection={rowSelection}
       dataSource={dataSource}
       columns={columns}
