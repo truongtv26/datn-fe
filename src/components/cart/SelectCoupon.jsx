@@ -7,7 +7,7 @@ const SelectCoupon = ({ data, coupons, couponSelected, setCouponSelected, cartIt
      // trạng thái mã giảm giá
      const [open, setOpen] = useState(false);
      const [confirmLoading, setConfirmLoading] = useState(false);
-     const [modalText, setModalText] = useState('Chọn mã giảm giá');
+     const [modalText, setModalText] = useState('Chọn phiếu giảm giá');
      const [couponSelected2, setCouponSelected2] = useState({})
 
      // xử lý modal giảm giá
@@ -96,8 +96,7 @@ const SelectCoupon = ({ data, coupons, couponSelected, setCouponSelected, cartIt
                          <p >Coupons code</p>
                          <Flex gap={12}>
                               <Radio.Group options={
-                                   coupons.map((coupon) => {
-                                        console.log(coupon);
+                                   coupons.map((coupon, index) => {
                                         return {
                                              id: coupon.id,
                                              title: coupon.code,

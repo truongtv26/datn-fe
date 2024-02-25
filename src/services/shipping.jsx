@@ -116,7 +116,7 @@ export const getOrderFee = async (orderServices = null, depositor = null, recipi
 export const getLeadtime = async (orderServices = null, depositor = null, recipient = null) =>{
 	try {
 
-		if (orderServices !== null && depositor && depositor.district && recipient.district && recipient.ward) {
+		if (orderServices !== null && depositor && recipient.district && recipient.ward) {
 			const response = await axios.post(`https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/leadtime`, {
 				from_district_id: depositor.district,
 				from_ward_code: depositor.ward,
@@ -133,7 +133,7 @@ export const getLeadtime = async (orderServices = null, depositor = null, recipi
 			});
 			return response.data
 		}
-		return [[]]
+		return []
 
 	} catch (error) {
 		return []

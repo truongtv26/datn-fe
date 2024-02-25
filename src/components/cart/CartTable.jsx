@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const CartTable = ({ data }) => {
 
      const VITE_URL = import.meta.env.VITE_URL;
-     
+
      const columns = [
           {
                title: 'Image',
@@ -32,10 +32,10 @@ const CartTable = ({ data }) => {
           },
      ]
 
-     const cartData = data.map((cartItem, index)=>{
+     const cartData = data.map((cartItem, index) => {
           return {
                key: index,
-               image: VITE_URL+ "storage/" + cartItem?.images[0]?.folder + "/" + cartItem?.images[0]?.url,
+               image: VITE_URL + "storage/" + cartItem?.images[0]?.folder + "/" + cartItem?.images[0]?.url,
                name: cartItem.product.name,
                link: cartItem.product.slug,
                price: cartItem.price,
@@ -47,22 +47,24 @@ const CartTable = ({ data }) => {
           <>
                {
                     Object.keys(data).length > 0 ?
-                         <div style={{ width: "420px", height:"400px", overflowY: "scroll" }}>
-                              <Table columns={columns} dataSource={cartData} pagination={false}/>
+                         <div style={{ width: "420px", height: "400px", overflowY: "scroll" }}>
+                              <Table columns={columns} dataSource={cartData} pagination={false} />
                          </div>
                          :
                          <div>
                               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
                          </div>
                }
-               <Button type="primary"
-                    style={{
-                         width: '100%',
-                         background: 'var(--primary-color)',
-                    }}
-               >
-                    <Link to={"/cart"}>Truy cập giỏ hàng</Link>
-               </Button>
+               <Link to={"/cart"}>
+                    <Button type="primary"
+                         style={{
+                              width: '100%',
+                              background: 'var(--primary-color)',
+                         }}
+                    >
+                         Truy cập giỏ hàng
+                    </Button>
+               </Link>
           </>
      )
 }

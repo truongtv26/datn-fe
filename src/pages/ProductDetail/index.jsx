@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Breadcrumb, Row, Col, Flex, Space, Button, Radio, InputNumber } from "antd";
+import { Breadcrumb, Row, Col, Flex, Space, Button, Radio, InputNumber, Badge } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import styles from "./page.module.css";
 import { CarouselImgs } from "./CarouselImgs";
@@ -8,18 +8,19 @@ import { Description } from "./ProductDescription";
 import { SimilarProduct } from "./SimilarProduct";
 import { Tips } from "./Tips";
 import instance from "../../core/api";
-import { number } from "joi";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { useAppContext } from "../../provider/AppProvider";
 
 
 const ProductDetailPage = () => {
-
+	const { cartItemAction, setCartItemAction } = useAppContext()
 	const { slug } = useParams();
 
 	const [product, setProduct] = useState({});
 	const [variant, setVariant] = useState({});
 	const [attributes, setAttributes] = useState([]);
+	const [coupon, setCoupon] = useState({});
 
 	const [optionSelected, setOptionSelected] = useState({});
 
@@ -59,11 +60,14 @@ const ProductDetailPage = () => {
 			const variant = product.variants.filter((variant) =>
 				variant.size_id === Number(optionSelected.size) && variant.color_id === Number(optionSelected.color));
 
-			variant.length > 0 ? setVariant(...variant) : setVariant({})
+			variant.length > 0 ? setVariant(...variant) : null
 		}
 	}, [optionSelected])
 
-	// xử lý giỏ hàng
+	useEffect(() => {
+		variant.promotions && setCoupon(...variant.promotions.filter(p => p.status === "happenning") ?? {})
+	}, [variant])
+	// xử lý giỏ hàng	
 	const hanldeCart = () => {
 		const cartItem = {
 			product_id: product.id,
@@ -80,14 +84,21 @@ const ProductDetailPage = () => {
 				item.product_id === cartItem.product_id &&
 				item.variant_id === cartItem.variant_id
 			)) {
-				toast.error('Sản phẩm đã có trong giỏ hàng!')
+				toast.error('Sản phẩm đã có trong giỏ hàng!',{
+					position: toast.POSITION.TOP_CENTER,
+				})
 			} else {
 				const updatedCart = [...oldCart, cartItem];
 				localStorage.setItem("cart", JSON.stringify(updatedCart));
-				toast.success('Sản phẩm đã được thêm vào giỏ hàng!');
+				setCartItemAction(!cartItemAction)
+				toast.success('Sản phẩm đã được thêm vào giỏ hàng!',{
+					position: toast.POSITION.TOP_CENTER,
+				});
 			}
 		} else {
-			toast.error('Vui lòng chọn số lượng sản phẩm!')
+			toast.error('Vui lòng chọn số lượng sản phẩm!',{
+				position: toast.POSITION.TOP_CENTER,
+			})
 		}
 
 	}
@@ -108,6 +119,10 @@ const ProductDetailPage = () => {
 					},
 					{
 						href: "",
+						title: `product`,
+					},
+					{
+						href: "",
 						title: `${slug}`,
 					},
 				]}
@@ -125,31 +140,55 @@ const ProductDetailPage = () => {
 						</h3>
 						<Flex align="flex-end" gap={8} className={styles["price"]}>
 							<p className={styles["new-price"]}>
-								{Object.keys(variant).length ?
-									new Intl.NumberFormat("vi-VN", {
-										style: "currency",
-										currency: "VND",
-									}).format(variant.price)
+
+								{Object.keys(variant).length && coupon && coupon.value ?
+									<>
+										{
+											new Intl.NumberFormat("vi-VN", {
+												style: "currency",
+												currency: "VND",
+											}).format(variant.price * (1 - (coupon.value / 100)))
+										}
+									</>
 									:
 									<>
-										{new Intl.NumberFormat("vi-VN", {
-											style: "currency",
-											currency: "VND",
-										}).format(Math.min(...product.variants.map(variant => variant.price)))}
-										-
-										{new Intl.NumberFormat("vi-VN", {
-											style: "currency",
-											currency: "VND",
-										}).format(Math.max(...product.variants.map(variant => variant.price)))}
+										{Object.keys(variant).length ?
+											<>
+												{new Intl.NumberFormat("vi-VN", {
+													style: "currency",
+													currency: "VND",
+												}).format(variant.price)}
+											</>
+											:
+											<>
+												<>
+													{new Intl.NumberFormat("vi-VN", {
+														style: "currency",
+														currency: "VND",
+													}).format(Math.min(...product.variants.map(variant => variant.price)))}
+												</>
+												-
+												<>
+													{new Intl.NumberFormat("vi-VN", {
+														style: "currency",
+														currency: "VND",
+													}).format(Math.max(...product.variants.map(variant => variant.price)))}
+												</>
+											</>}
 									</>
 								}
 							</p>
 							<p className={styles["old-price"]}>
-								{new Intl.NumberFormat("vi-VN", {
-									style: "currency",
-									currency: "VND",
-								}).format(300000)}
+								{
+									coupon && coupon.value ? <>
+										{new Intl.NumberFormat("vi-VN", {
+											style: "currency",
+											currency: "VND",
+										}).format(variant.price)}
+									</> : null
+								}
 							</p>
+							{coupon && coupon.value ? <Badge count={`-${coupon.value}%`} style={{ opacity: "1" }} /> : null}
 						</Flex>
 						<Flex gap={40} className={styles["size-box"]}>
 							<p className={styles["label"]}>Size</p>

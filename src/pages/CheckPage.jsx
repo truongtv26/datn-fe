@@ -37,6 +37,11 @@ const CheckPage = () => {
     useEffect(() => {
         getCity().then(({ data }) => {
             setCities(data)
+            setDistrict([])
+            setRecipient({
+                ...recipient,
+                district: null,
+            })
         })
     }, [])
 
@@ -44,8 +49,13 @@ const CheckPage = () => {
     useEffect(() => {
         getDistrict(recipient.city).then(({ data }) => {
             setDistrict(data)
+            setWard([])
+            setRecipient({
+                ...recipient,
+                ward: null,
+            })
         })
-    }, [recipient.city])
+    }, [recipient.city, cities])
 
     // lấy thông tin phường xã
     useEffect(() => {
@@ -62,7 +72,7 @@ const CheckPage = () => {
                 .then(({ data }) => {
                     setOrderServices(data[0])
                 })
-    }, [recipient.district])
+    }, [recipient.district, district])
 
 
     // lấy phí vận chuyển
