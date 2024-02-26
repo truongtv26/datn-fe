@@ -132,7 +132,7 @@ const CheckPage = () => {
             return value && !regex.test(value) ? Promise.reject('Email không hợp lệ') : Promise.resolve();
         },
         vietnamesePhonenumber: (_, value) => {
-            const regex = /(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/
+            const regex = /(03|05|07|08|09)+([0-9]{8})\b/
             return value && !regex.test(value) ? Promise.reject('Số điện thoại không hợp lệ') : Promise.resolve();
         }
     }
@@ -346,6 +346,7 @@ const CheckPage = () => {
                                     ]}
                                     style={{ flex: "1" }}
                                 >
+                                    {console.log(district)}
                                     <Select
                                         name="district"
                                         onChange={handleAddress}

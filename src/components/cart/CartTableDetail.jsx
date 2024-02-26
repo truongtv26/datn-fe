@@ -17,6 +17,7 @@ const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 	const [keySelected, setKeySelected] = useState([])
 	const [couponSelected, setCouponSelected] = useState([])
 	const [couponOptions, setCouponOptions] = useState([])
+	const [couponAvailable, setCouponAvailable] = useState([])
 
 	const [cost, setCost] = useState({ total: 0, orders: 0, shipping: 0, shippingDiscount: 0, ordersDiscount: 0 });
 
@@ -181,20 +182,16 @@ const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 			}) : null
 		})
 		setCouponSelected(variantHasPromotions)
+		setCouponAvailable(variantHasPromotions)
 
 		// lọc mã giảm giá
-          const finalCoupon = variantHasPromotions.reduce((accumulator, current) => {
-               const existingItemIndex = accumulator.findIndex((item) => item.id === current.id);
-               if (existingItemIndex !== -1) {
-                    accumulator[existingItemIndex] = current;
-               } else {
-                    accumulator.push(current);
-               }
-               return accumulator;
-          }, []);
+		const finalCoupon = variantHasPromotions.reduce((accumulator, current) => {
+			const existingItemIndex = accumulator.findIndex((item) => item.id === current.id);
+			existingItemIndex !== -1 ? accumulator[existingItemIndex] = current : accumulator.push(current);
+			return accumulator;
+		}, []);
 
 		setCouponOptions(finalCoupon)
-		// console.log(finalCoupon);
 	}, [data, cartItemAction])
 
 	// cập nhật lại đơn hàng đã chọn khi có thay đổi về giá hoặc số lượng
@@ -250,10 +247,6 @@ const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 		}
 	})
 
-	// thay đổi thuộc tính sản phẩm
-	const onChangeVariant = ({ key }) => {
-		message.info(`Click on item ${key}`);
-	};
 	function convertCurrency(currency) {
 		return new Intl.NumberFormat("vi-VN", {
 			style: "currency",
@@ -283,10 +276,13 @@ const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 
 	// xử lý chọn phiếu giảm giá
 	const handlePromotionChange = (_, target) => {
-		setCouponSelected(target)
-		setCartItemAction(!cartItemAction)
+		if (target.length) {
+			setCouponSelected(couponAvailable.filter(c => c.id === target.variant_id))
+			setCartItemAction(!cartItemAction)
+		} else {
+			setCouponSelected(target)
+		}
 	};
-
 	// xử lý đặt hàng
 	const handleCheckout = (event) => {
 		event.preventDefault()
@@ -320,17 +316,13 @@ const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 						setCartItemAction={setCartItemAction}
 					/>
 					<Flex gap={4} wrap='wrap'>
-						{record.action.promotions.map((coupon, index) => {
-							return coupon.status === "happenning"
-								? <Flex key={index} gap={4}>
-									Phiếu giảm giá đang được sử dụng:
-									<div className='coupon-code flex items-center gap-1'>
-										<span>{coupon.code}</span>
-										<Badge count={`-${coupon.value}%`} />
-									</div>
-								</Flex>
-								: null
-						})}
+						{couponSelected.filter((coupon, index) => coupon.variant_id === record.variant).length > 0 && <Flex gap={4}>
+							Phiếu giảm giá đang được sử dụng:
+							<div className='coupon-code flex items-center gap-1'>
+								<span>{couponSelected.filter((coupon) => coupon.variant_id === record.variant)[0]?.code}</span>
+								<Badge count={`-${couponSelected.filter((coupon) => coupon.variant_id === record.variant)[0]?.value}%`} />
+							</div>
+						</Flex>}
 					</Flex>
 				</Flex>
 
