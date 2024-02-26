@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BellOutlined } from "@ant-design/icons";
-import { Badge, Button, Descriptions, Flex, Form, Input, Select, Space, Table, Typography } from "antd";
+import { Badge, Button, Col, Descriptions, Flex, Form, Input, Row, Select, Space, Table, Typography } from "antd";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getCity, getDistrict, getLeadtime, getOrderFee, getOrderServices, getWard } from "../services/shipping";
@@ -37,7 +37,6 @@ const CheckPage = () => {
     useEffect(() => {
         getCity().then(({ data }) => {
             setCities(data)
-            setDistrict([])
             setRecipient({
                 ...recipient,
                 district: null,
@@ -49,7 +48,6 @@ const CheckPage = () => {
     useEffect(() => {
         getDistrict(recipient.city).then(({ data }) => {
             setDistrict(data)
-            setWard([])
             setRecipient({
                 ...recipient,
                 ward: null,
@@ -79,12 +77,9 @@ const CheckPage = () => {
     useEffect(() => {
         getOrderFee(orderServices, depositor, recipient)
             .then(({ data }) => {
-                data?.total ? setCost({
-                    ...cost,
-                    shipping: data.total
-                }) : null
+                data?.total ? setCost(prevCost => ({ ...prevCost, shipping: data.total })) : setCost(prevCost => ({ ...prevCost, shipping: 0 }))
             })
-    }, [orderServices])
+    }, [orderServices, recipient])
 
     // tính giá trị đơn hàng
     useEffect(() => {
@@ -102,22 +97,45 @@ const CheckPage = () => {
 
     // tính thời gian giao hàng dự kiến
     useEffect(() => {
-        orderServices && depositor && recipient && recipient.district && recipient.ward &&
+        if (orderServices && depositor && recipient && recipient.district && recipient.ward) {
             getLeadtime(orderServices, depositor, recipient)
                 .then(({ data }) => {
                     const date = new Date(data.leadtime * 1000);
                     const formattedDate = `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}`;
                     setLeadtimeService(formattedDate)
                 })
+        } else {
+            setLeadtimeService("")
+        }
+
     }, [cost, recipient])
+
     // cập nhật thông tin giao hàng qua form
-    const handleAddress = (_, value) => {
-        setRecipient({
-            ...recipient,
-            [value.name]: value.value,
-            [`${value.name}Name`]: value.label
-        })
+    const handleAddress = (_, address) => {
+        if (address.name === 'city') {
+            setRecipient({
+                ...recipient,
+                [address.name]: address.value,
+                [`${address.name}Name`]: address.label,
+                district: undefined,
+                districtName: "",
+                ward: undefined,
+                wardName: ""
+            })
+            // đặt district và ward về mặc định
+            form.setFieldsValue({
+                district: { value: "", label: "Chọn Quận/Huyện" },
+                ward: { value: "", label: "Chọn Phường/Xã" },
+            });
+        } else {
+            setRecipient({
+                ...recipient,
+                [address.name]: address.value,
+                [`${address.name}Name`]: address.label
+            })
+        }
     }
+
     const handleDetailAddress = ({ target }) => {
         setRecipient({
             ...recipient,
@@ -127,11 +145,14 @@ const CheckPage = () => {
 
     // validate form
     const formValidator = {
+        addressRequired: (_,value) =>{
+            return String(value.value).length <= 0 ? Promise.reject('Không hợp lệ!') : Promise.resolve();
+        },
         email: (_, value) => {
             const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
             return value && !regex.test(value) ? Promise.reject('Email không hợp lệ') : Promise.resolve();
         },
-        vietnamesePhonenumber: (_, value) => {
+        vietnamesePhoneNumber: (_, value) => {
             const regex = /(03|05|07|08|09)+([0-9]{8})\b/
             return value && !regex.test(value) ? Promise.reject('Số điện thoại không hợp lệ') : Promise.resolve();
         }
@@ -230,6 +251,7 @@ const CheckPage = () => {
 
     // thao tác trên form
     const onFinish = () => {
+        
         toast.success("Đặt hàng thành công!")
     };
     const onFinishFailed = () => {
@@ -242,7 +264,7 @@ const CheckPage = () => {
             currency: "VND",
         }).format(currency)
     }
-
+    
     return (
         <div className="container mx-auto">
 
@@ -262,195 +284,204 @@ const CheckPage = () => {
                     onFinishFailed={onFinishFailed}
                     style={{ width: "100%" }}
                 >
-                    <Flex gap={10}>
-                        <div style={{ flex: "0 0 60%" }}>
-                    <Title level={2}>Thông tin khách hàng</Title>
-                            <Flex gap={10}>
-                                <Form.Item
-                                    name="recipient"
-                                    label="Họ tên người nhận"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: "Vui lòng nhập họ tên"
-                                        },
-                                        {
-                                            type: 'string',
-                                            max: 50,
-                                        },
-                                    ]}
-                                    style={{ flex: "1" }}
-                                >
-                                    <Input onChange={handleDetailAddress} name="recipient" placeholder="Họ tên người nhận" />
+                    <Row gutter={[40]} justify="space-between">
+                        <Col xs={24} lg={14}>
+                            <div style={{ flex: "0 0 60%" }}>
+                                <Title level={2}>Thông tin khách hàng</Title>
+                                <Flex gap={10}>
+                                    <Form.Item
+                                        name="recipient"
+                                        label="Họ tên người nhận"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: "Vui lòng nhập họ tên"
+                                            },
+                                            {
+                                                type: 'string',
+                                                max: 50,
+                                            },
+                                        ]}
+                                        style={{ flex: "1" }}
+                                    >
+                                        <Input onChange={handleDetailAddress} name="recipient" placeholder="Họ tên người nhận" />
 
-                                </Form.Item>
-                                <Form.Item
-                                    name="phone"
-                                    label="Số điện thoại người nhận"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: "Vui lòng nhập số điện thoại"
-                                        },
-                                        {
-                                            validator: formValidator.vietnamesePhonenumber
-                                        }
-                                    ]}
-                                    style={{ flex: "1" }}
-                                >
-                                    <Input onChange={handleDetailAddress} name="phone" placeholder="Số điện thoại người nhận" />
+                                    </Form.Item>
+                                    <Form.Item
+                                        name="phone"
+                                        label="Số điện thoại người nhận"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: "Vui lòng nhập số điện thoại"
+                                            },
+                                            {
+                                                validator: formValidator.vietnamesePhoneNumber
+                                            }
+                                        ]}
+                                        style={{ flex: "1" }}
+                                    >
+                                        <Input onChange={handleDetailAddress} name="phone" placeholder="Số điện thoại người nhận" />
 
-                                </Form.Item>
-                            </Flex>
-                            <Form.Item
-                                name="email"
-                                label="Email"
-                                rules={[{
-                                    validator: formValidator.email
-                                }]}
-                                style={{ flex: "1" }}
-                            >
-                                <Input onChange={handleDetailAddress} name="email" placeholder="Enter Email" />
-
-                            </Form.Item>
-                            <Flex gap={10}>
-                                <Form.Item
-                                    name="city"
-                                    label="Tỉnh/Thành Phố"
-                                    initialValue={""}
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: "Tỉnh/Thành Phố không được bỏ trống"
-                                        }
-                                    ]}
-                                    style={{ flex: "1" }}
-                                >
-                                    <Select
-                                        name="city"
-                                        onChange={handleAddress}
-                                        options={cities && cities.length > 0
-                                            ? cities.map(city => { return { name: "city", label: city.ProvinceName, value: city.ProvinceID } })
-                                            : [{ label: "Chọn Tỉnh/Thành Phố", value: "" }]}
-                                    />
-                                </Form.Item>
-                                <Form.Item
-                                    name="district"
-                                    label="Quận/Huyện"
-                                    initialValue={""}
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: "Quận/Huyện không được bỏ trống"
-                                        }
-                                    ]}
-                                    style={{ flex: "1" }}
-                                >
-                                    {console.log(district)}
-                                    <Select
-                                        name="district"
-                                        onChange={handleAddress}
-                                        options={district && district.length > 0
-                                            ? district.map(district => { return { name: "district", label: district.DistrictName, value: district.DistrictID } })
-                                            : [{ label: "Chọn Quận/Huyện", value: "" }]}
-                                    />
-
-                                </Form.Item>
-                                <Form.Item
-                                    name="ward"
-                                    label="Phường/Xã"
-                                    initialValue={""}
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: "Phường/Xã không được bỏ trống"
-                                        }
-                                    ]}
-                                    style={{ flex: "1" }}
-                                >
-                                    <Select
-                                        name="ward"
-                                        onChange={handleAddress}
-                                        options={ward && ward.length > 0
-                                            ? ward.map(ward => { return { name: "ward", label: ward.WardName, value: ward.WardCode } })
-                                            : [{ label: "Chọn Phường/Xã", value: "" }]}
-                                    />
-
-                                </Form.Item>
-                            </Flex>
-                            <Form.Item
-                                name="detail"
-                                label="Số nhà/Địa chỉ cụ thể"
-                                rules={[{
-                                    required: true,
-                                    message: "Vui lòng nhập địa chỉ cụ thể"
-                                }]}
-                                style={{ flex: "1" }}
-                            >
-                                <Input onChange={handleDetailAddress} name="detail" placeholder="Địa chỉ" />
-
-                            </Form.Item>
-                            <div
-                                style={{ background: "#e9edf5", padding: "10px", borderRadius: "5px" }}
-                            >
-                                <span>Đơn hàng của bạn sẽ được vận chuyển từ:</span>
-                                <Flex gap={5}>
-                                    <strong>{depositor?.detail} - {depositor?.wardName} - {depositor?.districtName} - {depositor?.cityName}</strong> tới
-                                    <strong>{recipient?.detail} - {recipient?.wardName} - {recipient?.districtName} - {recipient?.cityName}</strong>
+                                    </Form.Item>
                                 </Flex>
-                                <div>
-                                    Vận chuyển bởi: <strong>Giao hàng nhanh</strong>
-                                </div>
-                                <div>
-                                    Ngày nhận hàng dự tính: <strong>{leadtimeService}</strong>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <Title level={2}>Thông tin đơn hàng</Title>
-                            <div
-                                style={{ background: "#e9edf5", padding: "10px", borderRadius: "5px" }}
-                            >
-                                {Object.keys(cartItemSelected).length > 0
-                                    ? <Table
-                                        showHeader={false}
-                                        columns={columnsSelected}
-                                        dataSource={dataSelected}
-                                        pagination={{
-                                            pageSize: 4,
-                                        }}
-                                    />
-                                    : 'Chưa có sản phẩm nào'}
+                                <Form.Item
+                                    name="email"
+                                    label="Email"
+                                    rules={[{
+                                        validator: formValidator.email
+                                    }]}
+                                    style={{ flex: "1" }}
+                                >
+                                    <Input onChange={handleDetailAddress} name="email" placeholder="Enter Email" />
 
-                                {Object.keys(cartItemSelected).length > 0
-                                    ? <Descriptions column={1} bordered>
-                                        {items.map((description, index) =>
-                                            description.title ? (
-                                                <Descriptions.Item
-                                                    key={index}
-                                                    label={description.title}
-                                                    labelStyle={{ width: '30%' }}
-                                                >
-                                                    {description.value}
-                                                </Descriptions.Item>
-                                            ) : (
-                                                <div key={index}>{description.value}</div>
-                                            )
-                                        )}
-                                    </Descriptions>
-                                    : ""}
-                            </div>
-                            <div style={{ marginTop: "10px" }}>
-                                <Form.Item>
-                                    <Space>
-                                        <Button type="primary" htmlType="submit">
-                                            Đặt hàng
-                                        </Button>
-                                    </Space>
                                 </Form.Item>
+                                <Flex gap={10}>
+                                    <Form.Item
+                                        name="city"
+                                        label="Tỉnh/Thành Phố"
+                                        initialValue={""}
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: "Tỉnh/Thành Phố không được bỏ trống"
+                                            }
+                                        ]}
+                                        style={{ flex: "1" }}
+                                    >
+                                        <Select
+                                            name="city"
+                                            onChange={handleAddress}
+                                            options={cities && cities.length > 0
+                                                ? cities.map(city => { return { name: "city", label: city.ProvinceName, value: city.ProvinceID } })
+                                                : [{ label: "Chọn Tỉnh/Thành Phố", value: "" }]}
+                                        />
+                                    </Form.Item>
+                                    <Form.Item
+                                        name="district"
+                                        label="Quận/Huyện"
+                                        initialValue={""}
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: "Quận/Huyện không được bỏ trống"
+                                            },
+                                            {
+                                                validator: formValidator.addressRequired
+                                            }
+                                        ]}
+                                        style={{ flex: "1" }}
+                                    >
+                                        <Select
+                                            name="district"
+                                            onChange={handleAddress}
+                                            options={district && district.length > 0
+                                                ? district.map(district => { return { name: "district", label: district.DistrictName, value: district.DistrictID } })
+                                                : [{ label: "Chọn Quận/Huyện", value: "" }]}
+                                        />
+
+                                    </Form.Item>
+                                    <Form.Item
+                                        name="ward"
+                                        label="Phường/Xã"
+                                        initialValue={""}
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: "Phường/Xã không được bỏ trống"
+                                            },
+                                            {
+                                                validator: formValidator.addressRequired
+                                            }
+                                        ]}
+                                        style={{ flex: "1" }}
+                                    >
+                                        <Select
+                                            name="ward"
+                                            onChange={handleAddress}
+                                            options={ward && ward.length > 0
+                                                ? ward.map(ward => { return { name: "ward", label: ward.WardName, value: ward.WardCode } })
+                                                : [{ label: "Chọn Phường/Xã", value: "" }]}
+                                        />
+
+                                    </Form.Item>
+                                </Flex>
+                                <Form.Item
+                                    name="detail"
+                                    label="Số nhà/Địa chỉ cụ thể"
+                                    rules={[{
+                                        required: true,
+                                        message: "Vui lòng nhập địa chỉ cụ thể"
+                                    }]}
+                                    style={{ flex: "1" }}
+                                >
+                                    <Input onChange={handleDetailAddress} name="detail" placeholder="Địa chỉ" />
+
+                                </Form.Item>
+                                <div
+                                    style={{ background: "#e9edf5", padding: "10px", borderRadius: "5px" }}
+                                >
+                                    <span>Đơn hàng của bạn sẽ được vận chuyển từ:</span>
+                                    <Flex gap={5}>
+                                        <strong>{depositor?.detail} - {depositor?.wardName} - {depositor?.districtName} - {depositor?.cityName}</strong> tới
+                                        <strong>{recipient?.detail} - {recipient?.wardName} - {recipient?.districtName} - {recipient?.cityName}</strong>
+                                    </Flex>
+                                    <div>
+                                        Vận chuyển bởi: <strong>Giao hàng nhanh</strong>
+                                    </div>
+                                    <div>
+                                        Ngày nhận hàng dự tính: <strong>{leadtimeService}</strong>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </Flex>
+                        </Col>
+                        <Col xs={24} lg={10}>
+                            <div style={{ width: "100%" }}>
+                                <Title level={2}>Thông tin đơn hàng</Title>
+                                <div
+                                    style={{ background: "#e9edf5", padding: "10px", borderRadius: "5px" }}
+                                >
+                                    {Object.keys(cartItemSelected).length > 0
+                                        ? <Table
+                                            showHeader={false}
+                                            columns={columnsSelected}
+                                            dataSource={dataSelected}
+                                            pagination={{
+                                                pageSize: 4,
+                                            }}
+                                        />
+                                        : 'Chưa có sản phẩm nào'}
+
+                                    {Object.keys(cartItemSelected).length > 0
+                                        ? <Descriptions column={1} bordered>
+                                            {items.map((description, index) =>
+                                                description.title ? (
+                                                    <Descriptions.Item
+                                                        key={index}
+                                                        label={description.title}
+                                                        labelStyle={{ width: '30%' }}
+                                                    >
+                                                        {description.value}
+                                                    </Descriptions.Item>
+                                                ) : (
+                                                    <div key={index}>{description.value}</div>
+                                                )
+                                            )}
+                                        </Descriptions>
+                                        : ""}
+                                </div>
+                                <div style={{ marginTop: "10px" }}>
+                                    <Form.Item>
+                                        <Space>
+                                            <Button type="primary" htmlType="submit">
+                                                Đặt hàng
+                                            </Button>
+                                        </Space>
+                                    </Form.Item>
+                                </div>
+                            </div>
+                        </Col>
+                    </Row>
                 </Form>
             </div>
         </div >
