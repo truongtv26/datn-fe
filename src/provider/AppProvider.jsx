@@ -5,6 +5,7 @@ import SkeletonUI from "../layouts/SkeletonUI";
 const AppContext = createContext();
 const AppProvider = ({ children }) => {
      const [user, setUser] = useState({})
+     const [cartItemAction, setCartItemAction] = useState(false)
 
      const { isLoading, isError } = useQuery('get_user', getUser, {
           onSuccess: (user) => setUser(user),
@@ -18,6 +19,8 @@ const AppProvider = ({ children }) => {
           <AppContext.Provider value={{
                user,
                setUser,
+               cartItemAction,
+               setCartItemAction,
           }}>
                {children}
           </AppContext.Provider>

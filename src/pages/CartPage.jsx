@@ -2,11 +2,12 @@ import { Empty } from "antd";
 import React, { useEffect, useState } from "react";
 import instance from "../core/api"
 import CartTableDetail from "../components/cart/CartTableDetail";
+import { useAppContext } from "../provider/AppProvider";
 
 const CartPage = () => {
 
     const [cartItems, setCartItems] = useState([])
-    const [cartItemAction, setCartItemAction] = useState(false)
+    const { cartItemAction, setCartItemAction } = useAppContext()
 
     // lấy dữ liệu giỏ hàng
     useEffect(() => {

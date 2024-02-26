@@ -80,8 +80,7 @@ export const getOrderServices = async (data) => {
 
 export const getOrderFee = async (orderServices = null, depositor = null, recipient = null) => {
 	try {
-
-		if (orderServices !== null && depositor && depositor.district && recipient.district) {
+		if (orderServices !== null && depositor && depositor.district && recipient && recipient.district && recipient.ward) {
 			const response = await axios.post(`https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee`, {
 				service_id: orderServices.service_id, // dịch vụ vận chuyển
 				service_type_id: orderServices.service_type_id, // phương thức vận chuyển
@@ -106,17 +105,17 @@ export const getOrderFee = async (orderServices = null, depositor = null, recipi
 			});
 			return response.data
 		}
-		return []
+		return {}
 
 	} catch (error) {
-		return []
+		return {}
 	}
 }
 
 export const getLeadtime = async (orderServices = null, depositor = null, recipient = null) =>{
 	try {
 
-		if (orderServices !== null && depositor && depositor.district && recipient.district && recipient.ward) {
+		if (orderServices !== null && depositor && recipient.district && recipient.ward) {
 			const response = await axios.post(`https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/leadtime`, {
 				from_district_id: depositor.district,
 				from_ward_code: depositor.ward,
@@ -133,7 +132,7 @@ export const getLeadtime = async (orderServices = null, depositor = null, recipi
 			});
 			return response.data
 		}
-		return [[]]
+		return []
 
 	} catch (error) {
 		return []

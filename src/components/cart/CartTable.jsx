@@ -1,13 +1,16 @@
+import { DeleteOutlined } from '@ant-design/icons';
 import { Button, Empty, Flex, Table } from 'antd';
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom';
+import { useAppContext } from '../../provider/AppProvider';
 
 
 
 const CartTable = ({ data }) => {
 
      const VITE_URL = import.meta.env.VITE_URL;
-     
+     const { cartItemAction, setCartItemAction } = useAppContext()
+
      const columns = [
           {
                title: 'Image',
@@ -25,44 +28,61 @@ const CartTable = ({ data }) => {
                title: 'Price',
                dataIndex: 'price',
                key: 'price',
-               render: (_, record) => new Intl.NumberFormat("vi-VN", {
-                    style: "currency",
-                    currency: "VND",
-               }).format(record.price)
+               render: (_, record) => {
+                    return <Flex gap={4}>
+                         {new Intl.NumberFormat("vi-VN", {
+                              style: "currency",
+                              currency: "VND",
+                         }).format(record.price)}
+                         <DeleteOutlined onClick={()=>{onDeleteCartItem(record)}} style={{color: "red", cursor: "pointer"}}/>
+                    </Flex>
+               }
           },
      ]
 
-     const cartData = data.map((cartItem, index)=>{
+     const cartData = data.map((cartItem, index) => {
           return {
                key: index,
-               image: VITE_URL+ "storage/" + cartItem?.images[0]?.folder + "/" + cartItem?.images[0]?.url,
+               id: cartItem.id,
+               product_id: cartItem.product.id,
+               image: VITE_URL + "storage/" + cartItem?.images[0]?.folder + "/" + cartItem?.images[0]?.url,
                name: cartItem.product.name,
                link: cartItem.product.slug,
                price: cartItem.price,
           }
      })
 
+     const onDeleteCartItem = (item) => {
+          console.log(item);
+		const oldCartData = JSON.parse(localStorage.getItem('cart')) || [];
+		const newCartData = oldCartData.filter(oldItem => oldItem.product_id === item.product_id && oldItem.variant_id === item.id ? false : true)
+		localStorage.setItem('cart', JSON.stringify(newCartData))
+          setCartItemAction(!cartItemAction)
+	};
+
 
      return (
           <>
                {
                     Object.keys(data).length > 0 ?
-                         <div style={{ width: "420px", height:"400px", overflowY: "scroll" }}>
-                              <Table columns={columns} dataSource={cartData} pagination={false}/>
+                         <div style={{ width: "420px", height: "400px", overflowY: "scroll" }}>
+                              <Table columns={columns} dataSource={cartData} pagination={false} />
                          </div>
                          :
                          <div>
                               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
                          </div>
                }
-               <Button type="primary"
-                    style={{
-                         width: '100%',
-                         background: 'var(--primary-color)',
-                    }}
-               >
-                    <Link to={"/cart"}>Truy cập giỏ hàng</Link>
-               </Button>
+               <Link to={"/cart"}>
+                    <Button type="primary"
+                         style={{
+                              width: '100%',
+                              background: 'var(--primary-color)',
+                         }}
+                    >
+                         Truy cập giỏ hàng
+                    </Button>
+               </Link>
           </>
      )
 }

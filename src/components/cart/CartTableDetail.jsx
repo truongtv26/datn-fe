@@ -1,5 +1,5 @@
-import { BellOutlined, DeleteOutlined, DownOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Descriptions, Dropdown, Flex, Input, InputNumber, Modal, Radio, Space, Table } from 'antd'
+import { DeleteOutlined } from '@ant-design/icons';
+import { Badge, Button, Descriptions, Flex, Select, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -16,6 +16,8 @@ const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 	const [cartItemSelected, setCartItemSelected] = useState([]);
 	const [keySelected, setKeySelected] = useState([])
 	const [couponSelected, setCouponSelected] = useState([])
+	const [couponOptions, setCouponOptions] = useState([])
+	const [couponAvailable, setCouponAvailable] = useState([])
 
 	const [cost, setCost] = useState({ total: 0, orders: 0, shipping: 0, shippingDiscount: 0, ordersDiscount: 0 });
 
@@ -165,6 +167,33 @@ const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 		}
 	};
 
+	// chọn phiếu giảm giá khi biến thể đang được giảm giá
+	useEffect(() => {
+		let variantHasPromotions = [];
+		data.forEach((variant, i) => {
+			const promotionAvailable = variant.promotions.filter((p) => p.status === 'happenning')
+			promotionAvailable.length > 0 ? variantHasPromotions.push({
+				key: i,
+				id: promotionAvailable[0].id,
+				variant_id: variant.id,
+				value: promotionAvailable[0].value,
+				label: promotionAvailable[0].name,
+				code: promotionAvailable[0].code
+			}) : null
+		})
+		setCouponSelected(variantHasPromotions)
+		setCouponAvailable(variantHasPromotions)
+
+		// lọc mã giảm giá
+		const finalCoupon = variantHasPromotions.reduce((accumulator, current) => {
+			const existingItemIndex = accumulator.findIndex((item) => item.id === current.id);
+			existingItemIndex !== -1 ? accumulator[existingItemIndex] = current : accumulator.push(current);
+			return accumulator;
+		}, []);
+
+		setCouponOptions(finalCoupon)
+	}, [data, cartItemAction])
+
 	// cập nhật lại đơn hàng đã chọn khi có thay đổi về giá hoặc số lượng
 	useEffect(() => {
 		const reSelected = cartData.filter(item => keySelected.some(key => item.key === key))
@@ -218,10 +247,6 @@ const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 		}
 	})
 
-	// thay đổi thuộc tính sản phẩm
-	const onChangeVariant = ({ key }) => {
-		message.info(`Click on item ${key}`);
-	};
 	function convertCurrency(currency) {
 		return new Intl.NumberFormat("vi-VN", {
 			style: "currency",
@@ -249,46 +274,62 @@ const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 		{ title: "Tạm tính", value: convertCurrency(cost.orders + cost.shipping + cost.shippingDiscount + cost.ordersDiscount) }
 	];
 
+	// xử lý chọn phiếu giảm giá
+	const handlePromotionChange = (_, target) => {
+		if (target.length) {
+			setCouponSelected(couponAvailable.filter(c => c.id === target.variant_id))
+			setCartItemAction(!cartItemAction)
+		} else {
+			setCouponSelected(target)
+		}
+	};
 	// xử lý đặt hàng
 	const handleCheckout = (event) => {
 		event.preventDefault()
 		if (Object.keys(cartItemSelected).length < 1) {
-			toast.error('Vui lòng chọn sản phẩm!')
+			toast.error('Vui lòng chọn sản phẩm!', {
+				position: toast.POSITION.TOP_CENTER,
+			})
 		} else {
 			// điều hướng khi ấn đặt hàng
 			navigate('/checkout',
-			{
-				state:{
-					cartItemSelected,
-					couponSelected,
-				}
-			})
+				{
+					state: {
+						cartItemSelected,
+						couponSelected,
+					}
+				})
 		}
 	}
 
+
 	const expandedRowRender = (record) => {
-		// Trả về nội dung của hàng được mở rộng
 		return Object.keys(record.action.promotions).length > 0
 			? <>
-				<Flex align={"center"} >
+				<Flex align={"center"}>
 					<SelectCoupon
 						data={record}
 						coupons={record.action.promotions}
 						couponSelected={couponSelected}
 						setCouponSelected={setCouponSelected}
 						cartItemAction={cartItemAction}
-						setCartItemAction={setCartItemAction} />
+						setCartItemAction={setCartItemAction}
+					/>
 					<Flex gap={4} wrap='wrap'>
-						Phiếu giảm giá có sẵn:
-						{record.action.promotions.map((coupon, index) => {
-							return coupon.status === "happenning" ? <div key={index} className='coupon-code'>{coupon.code}</div> : <div key={index} className='coupon-code disable'>{coupon.code}</div>
-						})}
+						{couponSelected.filter((coupon, index) => coupon.variant_id === record.variant).length > 0 && <Flex gap={4}>
+							Phiếu giảm giá đang được sử dụng:
+							<div className='coupon-code flex items-center gap-1'>
+								<span>{couponSelected.filter((coupon) => coupon.variant_id === record.variant)[0]?.code}</span>
+								<Badge count={`-${couponSelected.filter((coupon) => coupon.variant_id === record.variant)[0]?.value}%`} />
+							</div>
+						</Flex>}
 					</Flex>
 				</Flex>
 
 			</>
 			: "Sản phẩm này hiện không có phiếu giảm giá"
 	};
+
 
 	return (
 		<>
@@ -308,23 +349,22 @@ const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 							expandedRowRender,
 							defaultExpandAllRows: () => true,
 							expandIcon: () => null,
-							expandIconAsCell: () => false,
 						}}
 					/>
 					<div className="code-sale">
-						<form action="" method="post">
-
-							<div className="sale">
-								<div className="couponcode">
-									<label htmlFor="">Giảm giá:</label>
-									<Input placeholder="Nhập mã giảm giá" />
-								</div>
-
-								<Button type="primary">
-									Áp dụng
-								</Button>
-							</div>
-						</form>
+						Khuyến mãi đang sử dụng
+						{couponOptions.length > 0 && <Select
+							mode="multiple"
+							allowClear
+							size='Large'
+							style={{
+								width: '100%',
+							}}
+							placeholder="Chọn phiếu khuyến mãi"
+							onChange={handlePromotionChange}
+							defaultValue={couponOptions.map(c => c)}
+							options={couponOptions}
+						/>}
 					</div>
 				</div>
 			</div>

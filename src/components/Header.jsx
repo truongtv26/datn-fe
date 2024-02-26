@@ -28,7 +28,7 @@ const onSearch = (value, _e, info) => console.log(info?.source, value);
 
 
 const HeaderSection = () => {
-	const { user, setUser } = useAppContext()
+	const { user, setUser, cartItemAction } = useAppContext()
 
 	const [cart, setCart] = useState([]);
 
@@ -112,7 +112,7 @@ const HeaderSection = () => {
 		instance.post(`/cart`, cartItems).then(({ data }) => {
 			setCart(data)
 		})
-	}, [])
+	}, [cartItemAction])
 
 	return (
 		<>
