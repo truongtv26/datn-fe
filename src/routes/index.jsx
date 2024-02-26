@@ -24,6 +24,9 @@ import CheckPage from '../pages/CheckPage'
 import Promotion from '../pages/promotion/Promotion'
 import AddPromotion from '../pages/promotion/AddPromotion'
 import PromotionDetail from '../pages/promotion/update/PromotionDetail'
+import Voucher from '../pages/voucher/Voucher'
+import AddVoucher from '../pages/voucher/AddVoucher'
+import VoucherDetail from '../pages/voucher/VoucherDetail'
 const Routers = () => {
 	const { user } = useAppContext();
 	return (
@@ -97,6 +100,9 @@ const Routers = () => {
                     <Route path='promotion' element={<Promotion />} />
                     <Route path='promotion/create' element={<AddPromotion />} />
                     <Route path='promotion/:id' element={<PromotionDetail />} />
+                    <Route path='voucher' element={<Voucher />} />
+                    <Route path='voucher/add' element={<AddVoucher />} />
+                    <Route path='voucher/:id' element={<VoucherDetail />} />
                 </Route>
 
 			<Route path='/404' element={<PageNotFound />} />

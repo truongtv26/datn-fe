@@ -2,26 +2,24 @@ import { DeleteOutlined, EditOutlined, HomeOutlined, PlusCircleFilled } from '@a
 import { Breadcrumb, Button, Col, Input, Radio, Row, Table, Tooltip } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import VoucherStatus from './VoucherStatus'
 import instance from '../../core/api'
-import FormatDate from '../../utils/FormatDate'
-import VoucherStatus from '../voucher/VoucherStatus'
 
-const Promotion = () => {
-    const [promotions, setPromotions] = useState([]);
-    const [statusPromotion, setStatusPromotion] = useState("");
+const Voucher = () => {
+    const [vouchers, setVouchers] = useState([]);
+    const [statusVoucher, setStatusVoucher] = useState("");
 
     useEffect(() => {
-        instance.get('/promotion', {
+        instance.get('/voucher', {
             params: {
-                status: statusPromotion
+                status: statusVoucher
             }
         }).then(({ data }) => {
-            setPromotions(data);
+            setVouchers(data);
         }).catch(e => {
             console.log(e);
         })
-    }, [statusPromotion])
-
+    }, [statusVoucher])
     const columns = [
         {
             title: '#',
@@ -40,21 +38,19 @@ const Promotion = () => {
             key: 'name',
         },
         {
-            title: 'Giá trị (%)',
+            title: 'Đơn tối thiếu',
+            dataIndex: 'min_bill_value',
+            key: 'min_bill_value',
+        },
+        {
+            title: 'Giảm (%)',
             dataIndex: 'value',
             key: 'value',
         },
         {
-            title: 'Ngày bắt đầu',
-            dataIndex: 'start_date',
-            key: 'start_date',
-            render: (x) => <FormatDate date={x} />
-        },
-        {
-            title: 'Ngày kết thúc',
-            dataIndex: 'end_date',
-            key: 'end_date',
-            render: (x) => <FormatDate date={x} />
+            title: 'Số lượng',
+            dataIndex: 'quantity',
+            key: 'quantity',
         },
         {
             title: 'Trạng thái',
@@ -69,7 +65,7 @@ const Promotion = () => {
             render: (x) => (
                 <>
                     <Tooltip placement="bottom" title="Sửa">
-                        <Link to={`/admin/promotion/${x}`}>
+                        <Link to={`/admin/voucher/${x}`}>
                             <Button type="primary" style={{ marginRight: '4px', backgroundColor: '#ffc107', color: "#fff" }}>
                                 <EditOutlined />
                             </Button>
@@ -83,7 +79,6 @@ const Promotion = () => {
             )
         },
     ]
-
     return (
         <>
             <Breadcrumb
@@ -93,43 +88,50 @@ const Promotion = () => {
                         title: <HomeOutlined />,
                     },
                     {
-                        title: 'Danh sách khuyến mại',
+                        title: 'Danh sách phiếu giảm giá',
                     },
                 ]}
             />
             <Row gutter={12}>
                 <Col span={8}>
-                    <label className="mb-1">Tìm kiếm </label>
+                    <label className="mb-1">Tìm kiếm</label>
                     <Input
-                        // onChange={(event) => setSearchValue(event.target.value)}
-                        placeholder="Tìm kiếm khuyến mại theo tên, mã ..."
+                        onChange={(event) => setSearchValue(event.target.value)}
+                        placeholder="Tìm kiếm giảm giá theo tên, mã ..."
                     />
                 </Col>
                 <Col span={12}>
                     <div className="mb-1">Trạng thái</div>
                     <label className="mb-1">ㅤ</label>
-                    <Radio.Group defaultValue={""} onChange={(event) => setStatusPromotion(event.target.value)}>
+                    <Radio.Group
+                        defaultValue={""}
+                        onChange={(event) => {
+                            setStatusVoucher(event.target.value);
+                        }}
+                    >
                         <Radio value={""}>Tất cả</Radio>
                         <Radio value={0}>Sắp diễn ra</Radio>
                         <Radio value={1}>Đang diễn ra</Radio>
                         <Radio value={2}>Đã kết thúc</Radio>
                     </Radio.Group>
                 </Col>
+
                 <Col span={4}>
                     <div className="mb-1">‍</div>
-                    <Link to={"/admin/promotion/create"}>
+                    <Link to={"/admin/voucher/add"}>
                         <Button
                             type="primary"
+                            className="bg-warning"
+                            style={{ textAlign: "center" }}
                         >
-                            <PlusCircleFilled />
-                            Thêm khuyến mại
+                            <PlusCircleFilled />Thêm phiếu giảm giá
                         </Button>
                     </Link>
                 </Col>
             </Row>
-            <Table columns={columns} dataSource={promotions} />
+            <Table columns={columns} dataSource={vouchers} />
         </>
     )
 }
 
-export default Promotion
+export default Voucher
