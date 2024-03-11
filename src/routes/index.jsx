@@ -27,6 +27,13 @@ import PromotionDetail from '../pages/promotion/update/PromotionDetail'
 import Voucher from '../pages/voucher/Voucher'
 import AddVoucher from '../pages/voucher/AddVoucher'
 import VoucherDetail from '../pages/voucher/VoucherDetail'
+import OrderPage from '../pages/OrderPage'
+import ListOrder from '../pages/admin/order/ListOrder'
+import OrderDetail from '../pages/admin/order/OrderDetail'
+import PaymentPage from '../pages/PaymentPage'
+import CreateOrder from '../pages/admin/order/CreateOrder'
+import EditOrder from '../pages/admin/order/EditOrder'
+
 const Routers = () => {
 	const { user } = useAppContext();
 	return (
@@ -43,6 +50,7 @@ const Routers = () => {
 					<Route path="blog/:slug" element={<BlogDetailPage />} />
 					<Route path="cart" element={<CartPage />} />
 					<Route path="checkout" element={<CheckPage />} />
+					<Route path='order' element={<OrderPage />} />
 					{/* auth */}
 					<Route path="login" element={<Login />} />
 					<Route path="register" element={<Register />} />
@@ -93,21 +101,28 @@ const Routers = () => {
 					<Route path='product/:id/edit' element={<EditProduct />} />
 					<Route path='promotion' element={<Promotion />} />
 					<Route path='promotion/create' element={<AddPromotion />} />
-                    <Route path='dashboard' element={<Dashboard />} />
-                    <Route path='product' element={<ListProductManage />} />
-                    <Route path='product/add' element={<AddProduct />} />
-                    <Route path='product/:id/edit' element={<EditProduct />} />
-                    <Route path='promotion' element={<Promotion />} />
-                    <Route path='promotion/create' element={<AddPromotion />} />
-                    <Route path='promotion/:id' element={<PromotionDetail />} />
-                    <Route path='voucher' element={<Voucher />} />
-                    <Route path='voucher/add' element={<AddVoucher />} />
-                    <Route path='voucher/:id' element={<VoucherDetail />} />
-                </Route>
+					<Route path='dashboard' element={<Dashboard />} />
+					<Route path='product' element={<ListProductManage />} />
+					<Route path='product/add' element={<AddProduct />} />
+					<Route path='product/:id/edit' element={<EditProduct />} />
+					<Route path='promotion' element={<Promotion />} />
+					<Route path='promotion/create' element={<AddPromotion />} />
+					<Route path='promotion/:id' element={<PromotionDetail />} />
+					<Route path='voucher' element={<Voucher />} />
+					<Route path='voucher/add' element={<AddVoucher />} />
+					<Route path='voucher/:id' element={<VoucherDetail />} />
 
-			<Route path='/404' element={<PageNotFound />} />
-			<Route path='*' element={<PageNotFound />} />
-		</Routes >
+					{/* admin order */}
+					<Route path='order' element={<ListOrder />}/>
+					<Route path='order/:id' element={<OrderDetail/>}/>
+					<Route path='order/generate' element={<CreateOrder/>}/>
+					<Route path='order/:id/edit' element={<EditOrder/>}/>
+				</Route>
+
+				<Route path='payment' element={<PaymentPage />} />
+				<Route path='/404' element={<PageNotFound />} />
+				<Route path='*' element={<PageNotFound />} />
+			</Routes >
 		</>
 	)
 }

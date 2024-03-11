@@ -13,19 +13,19 @@ const CartTable = ({ data }) => {
 
      const columns = [
           {
-               title: 'Image',
+               title: 'Ảnh',
                dataIndex: 'image',
                key: 'image',
                render: (_, record) => <img src={record.image} alt="Product" style={{ width: '50px', height: '50px' }} />,
           },
           {
-               title: 'Name',
+               title: 'Sản phẩm',
                dataIndex: 'name',
                key: 'name',
                render: (_, record) => <Link to={`/product/${record.link}`}>{record.name}</Link>,
           },
           {
-               title: 'Price',
+               title: 'Giá',
                dataIndex: 'price',
                key: 'price',
                render: (_, record) => {
@@ -40,20 +40,19 @@ const CartTable = ({ data }) => {
           },
      ]
 
-     const cartData = data.map((cartItem, index) => {
+     const cartData = data?.map((cartItem, index) => {
           return {
                key: index,
-               id: cartItem.id,
-               product_id: cartItem.product.id,
+               id: cartItem?.id,
+               product_id: cartItem?.product.id,
                image: VITE_URL + "storage/" + cartItem?.images[0]?.folder + "/" + cartItem?.images[0]?.url,
-               name: cartItem.product.name,
-               link: cartItem.product.slug,
-               price: cartItem.price,
+               name: cartItem?.product.name,
+               link: cartItem?.product.slug,
+               price: cartItem?.price,
           }
      })
 
      const onDeleteCartItem = (item) => {
-          console.log(item);
 		const oldCartData = JSON.parse(localStorage.getItem('cart')) || [];
 		const newCartData = oldCartData.filter(oldItem => oldItem.product_id === item.product_id && oldItem.variant_id === item.id ? false : true)
 		localStorage.setItem('cart', JSON.stringify(newCartData))

@@ -41,7 +41,11 @@ const HeaderSection = () => {
 		const items = [
 			{
 				key: '1',
-				label: <Link to={'profile'}>Profile</Link>
+				label: <Link to={'/profile'}>Profile</Link>
+			},
+			{
+				key: '2',
+				label: <Link to={'/order'}>Orders</Link>
 			},
 			{
 				key: '0',
@@ -51,8 +55,8 @@ const HeaderSection = () => {
 
 		if (user.role === 'owner' || user.role === 'staff') {
 			items.unshift({
-				key: '2',
-				label: <Link to={'admin/dashboard'}>Dashboard</Link>
+				key: '3',
+				label: <Link to={'/admin/dashboard'}>Dashboard</Link>
 			})
 		}
 
@@ -101,6 +105,8 @@ const HeaderSection = () => {
 			if (data.status === 200) {
 				setUser({});
 				localStorage.removeItem('authToken');
+				localStorage.removeItem('cart')
+				window.location.reload();
 			}
 		});
 	}
@@ -121,7 +127,7 @@ const HeaderSection = () => {
 				<div className='top-header'>
 					<div className='flex justify-between container mx-auto'>
 						<ul className=''>
-							<li><DropboxOutlined /> <strong>Track Order</strong></li>
+							<Link to={'/order'}><DropboxOutlined /> <strong>Track Order</strong></Link>
 							<li><strong>About Us</strong></li>
 							<li><strong>Contact</strong></li>
 							<li><strong>FAQ</strong></li>

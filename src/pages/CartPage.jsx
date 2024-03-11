@@ -13,7 +13,10 @@ const CartPage = () => {
     useEffect(() => {
         const cartItems = JSON.parse(localStorage.getItem('cart'));
         instance.post(`/cart`, cartItems).then(({ data }) => {
-            setCartItems(data)
+            const allNull = data.every(item => item === null)
+            if (!allNull) {
+                setCartItems(data)
+            }
         })
     }, [cartItemAction])
 

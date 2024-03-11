@@ -34,8 +34,8 @@ const ChangeVariant = ({ data, cartItemAction, setCartItemAction }) => {
 
                variant.length > 0 ? setVariant(...variant) : setVariant({})
           }
+          
      }, [optionSelected])
-
      // xử lý modal
      const showModal = () => {
           setOpen(true);
@@ -50,7 +50,7 @@ const ChangeVariant = ({ data, cartItemAction, setCartItemAction }) => {
 
           const isItemExists = cartData.filter((item) => item.color_id === attributeSelected.color
                && item.size_id === attributeSelected.size)
-
+          
           if (Object.keys(isItemExists).length <= 0) {
                if (attributeSelected && attributeSelected.size && attributeSelected.color) {
                     const newCartData = cartData.map((item) => item.variant_id === data.action.id

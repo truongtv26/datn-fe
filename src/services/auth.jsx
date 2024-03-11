@@ -31,19 +31,22 @@ export const logout = async () => {
 }
 export const getUser = async () => {
     try {
-        const response = await instance.get(`/user`, {
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('authToken')
-          }
-        });
-    
-        if (response.status === 200) {
-          return response.data.data;
+        if (localStorage.getItem('authToken')) {
+            const response = await instance.get(`/user`, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+                }
+            });
+
+            if (response.status === 200) {
+                return response.data.data;
+            }
+
+            return response
         }
-    
-        return response
-      } catch (error) {
         return {}
-      }
+    } catch (error) {
+        return {}
+    }
 }
 
