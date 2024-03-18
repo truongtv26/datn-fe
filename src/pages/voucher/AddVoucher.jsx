@@ -12,7 +12,6 @@ const AddVoucher = () => {
     const [userIds, setUserIds] = useState([]);
     const [resetSelectedRowKeys, setResetSelectedRowKeys] = useState(false);
     const handAddVoucher = async (data) => {
-        console.log(data);
         Modal.confirm({
             title: "Xác nhận",
             maskClosable: true,
@@ -35,7 +34,6 @@ const AddVoucher = () => {
         function sendVoucherRequest(data) {
             instance.post("/voucher", data)
                 .then(({ data }) => {
-                    console.log(data);
                     toast.success(data);
                     setResetSelectedRowKeys(!resetSelectedRowKeys);
                     form.resetFields();

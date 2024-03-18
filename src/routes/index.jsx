@@ -27,6 +27,8 @@ import PromotionDetail from '../pages/promotion/update/PromotionDetail'
 import Voucher from '../pages/voucher/Voucher'
 import AddVoucher from '../pages/voucher/AddVoucher'
 import VoucherDetail from '../pages/voucher/VoucherDetail'
+import Order from '../pages/order/Order'
+import BillDetail from '../pages/bill/BillDetail'
 const Routers = () => {
 	const { user } = useAppContext();
 	return (
@@ -93,21 +95,23 @@ const Routers = () => {
 					<Route path='product/:id/edit' element={<EditProduct />} />
 					<Route path='promotion' element={<Promotion />} />
 					<Route path='promotion/create' element={<AddPromotion />} />
-                    <Route path='dashboard' element={<Dashboard />} />
-                    <Route path='product' element={<ListProductManage />} />
-                    <Route path='product/add' element={<AddProduct />} />
-                    <Route path='product/:id/edit' element={<EditProduct />} />
-                    <Route path='promotion' element={<Promotion />} />
-                    <Route path='promotion/create' element={<AddPromotion />} />
-                    <Route path='promotion/:id' element={<PromotionDetail />} />
-                    <Route path='voucher' element={<Voucher />} />
-                    <Route path='voucher/add' element={<AddVoucher />} />
-                    <Route path='voucher/:id' element={<VoucherDetail />} />
-                </Route>
+					<Route path='dashboard' element={<Dashboard />} />
+					<Route path='product' element={<ListProductManage />} />
+					<Route path='product/add' element={<AddProduct />} />
+					<Route path='product/:id/edit' element={<EditProduct />} />
+					<Route path='promotion' element={<Promotion />} />
+					<Route path='promotion/create' element={<AddPromotion />} />
+					<Route path='promotion/:id' element={<PromotionDetail />} />
+					<Route path='voucher' element={<Voucher />} />
+					<Route path='voucher/add' element={<AddVoucher />} />
+					<Route path='voucher/:id' element={<VoucherDetail />} />
+					<Route path='order' element={<Order />} />
+					<Route path='bill/:id' element={<BillDetail />} />
+				</Route>
 
-			<Route path='/404' element={<PageNotFound />} />
-			<Route path='*' element={<PageNotFound />} />
-		</Routes >
+				<Route path='/404' element={<PageNotFound />} />
+				<Route path='*' element={<PageNotFound />} />
+			</Routes >
 		</>
 	)
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { Badge } from 'antd';
 
 const VoucherStatus = ({ status }) => {
-  if (status === 'happenning') {
+  if (status === 'happenning' || status === 'happening') {
     return <Badge count={'Đang diễn ra'} style={{ backgroundColor: '#52c41a' }}></Badge>;
   } else if (status === 'finished') {
     return <Badge count={'Đã kết thúc'}/>;
