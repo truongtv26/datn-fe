@@ -121,7 +121,7 @@ const HeaderSection = () => {
 				<div className='top-header'>
 					<div className='flex justify-between container mx-auto'>
 						<ul className=''>
-							<li><DropboxOutlined /> <strong>Track Order</strong></li>
+							<Link to={'/order'}><DropboxOutlined /> <strong>Track Order</strong></Link>
 							<li><strong>About Us</strong></li>
 							<li><strong>Contact</strong></li>
 							<li><strong>FAQ</strong></li>
@@ -171,9 +171,9 @@ const HeaderSection = () => {
 							</li>
 							<li style={{ marginRight: '20px', cursor: 'pointer' }}>
 								<Badge
-									count={Array.isArray((JSON.parse(localStorage.getItem('cart')))) 
-									? (JSON.parse(localStorage.getItem('cart'))).length 
-									: 0}
+									count={Array.isArray((JSON.parse(localStorage.getItem('cart'))))
+										? (JSON.parse(localStorage.getItem('cart'))).length
+										: 0}
 									color='var(--primary-color)'
 									size="small">
 									<Popover placement="bottom" title={"Giỏ hàng"} content={<CartTable data={cart} />}>

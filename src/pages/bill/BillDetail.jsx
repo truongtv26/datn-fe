@@ -14,10 +14,12 @@ import { PictureFilled } from "@ant-design/icons";
 import PaymentHistory from "./PaymentHistory";
 const { Title } = Typography;
 import './timeline.css';
+import Status from "../../components/admin/order/Status";
 const BillDetail = () => {
     const [bill, setBill] = useState([]);
     const [billHistory, setBillHistory] = useState([]);
     const [listBillDetail, setListBillDetail] = useState([]);
+    const [billStatus, setBillStatus] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const { id } = useParams();
@@ -58,10 +60,20 @@ const BillDetail = () => {
             });
     };
 
+    const loadBillStatus = () => {
+        instance.get('order-status')
+            .then((res) => {
+                if (res.status === 200) {
+                    setBillStatus(res.data)
+                }
+            })
+    }
+
     useEffect(() => {
         loadBill();
         loadBillDetail();
         loadBillHistory();
+        loadBillStatus();
         setLoading(false);
     }, [id]);
 
@@ -186,7 +198,7 @@ const BillDetail = () => {
                         onChange={(value) => handleChangeQuantity(value, record)}
                         min={1}
                     />
-                ) : bill.timeline == '6'  ? (
+                ) : bill.timeline == '6' ? (
                     <InputNumber
                         defaultValue={quantity}
                         min={1}
@@ -265,31 +277,36 @@ const BillDetail = () => {
             </div>
             <div style={{ display: 'flex' }}>
                 <div style={{ flexGrow: 1 }}>
-                    {bill.timeline != '6' ? (
-                        <>
-                            {bill.timeline <= '4' ? (
+                    {
+                        bill.address_information ?
+                            <Status bill={bill} billStatus={billStatus}/>
+                            :
+                            bill.timeline != '6' ? (
                                 <>
-                                    <Button type="primary" danger style={{ marginRight: '4px' }} onClick={() => handleSubmit('Đã hủy đơn hàng')}>Hủy</Button>
-                                    {bill.timeline == '2' ? (
-                                        <Button type="primary" onClick={() => handleSubmit('Đã xác nhận đơn hàng')}>
-                                            Xác nhận đơn hàng
-                                        </Button>
-                                    ) : (
-                                        <Button type="primary" onClick={() => handleSubmit('Đã bàn giao cho đơn vị vận chuyển')}>
-                                            Giao hàng
-                                        </Button>
-                                    )}
+                                    {bill.timeline <= '4' ? (
+                                        <>
+                                            <Button type="primary" danger style={{ marginRight: '4px' }} onClick={() => handleSubmit('Đã hủy đơn hàng')}>Hủy</Button>
+                                            {bill.timeline == '2' ? (
+                                                <Button type="primary" onClick={() => handleSubmit('Đã xác nhận đơn hàng')}>
+                                                    Xác nhận đơn hàng
+                                                </Button>
+                                            ) : (
+                                                <Button type="primary" onClick={() => handleSubmit('Đã bàn giao cho đơn vị vận chuyển')}>
+                                                    Giao hàng
+                                                </Button>
+                                            )}
 
+                                        </>
+                                    ) : (bill.timeline != '6' && bill.timeline != '7') ? (
+                                        <Button type="primary" onClick={() => handleSubmit('Đơn hàng đã được giao thành công')}>
+                                            Hoàn thành
+                                        </Button>
+                                    ) : null}
                                 </>
-                            ) : (bill.timeline != '6' && bill.timeline != '7') ? (
-                                <Button type="primary" onClick={() => handleSubmit('Đơn hàng đã được giao thành công')}>
-                                    Hoàn thành
-                                </Button>
-                            ) : null}
-                        </>
-                    ) : (
-                        ""
-                    )}
+                            ) : (
+                                ""
+                            )
+                    }
                 </div>
                 <div className="">
                     <BillHistory props={billHistory} />
@@ -304,7 +321,7 @@ const BillDetail = () => {
             <div style={{ display: 'flex', marginTop: '12px', marginBottom: '8px' }}>
                 <Title level={5} style={{ flexGrow: 1, padding: '8px' }}>Sản phẩm</Title>
                 {bill.timeline == '2' | bill.timeline == '4' ? (
-                    <ShowProductModal idBill={bill.id} onClose={() => { loadBillDetail(); loadBill();  loadBillHistory();}} />
+                    <ShowProductModal idBill={bill.id} onClose={() => { loadBillDetail(); loadBill(); loadBillHistory(); }} />
                 ) : ''}
                 {
                     bill.timeline == '6' && selectedRowKeys.length > 0 ? <Button type="primary" >Trả hàng {selectedRowKeys.length} sản phẩm</Button> : ''

@@ -29,6 +29,8 @@ import AddVoucher from '../pages/voucher/AddVoucher'
 import VoucherDetail from '../pages/voucher/VoucherDetail'
 import Order from '../pages/order/Order'
 import BillDetail from '../pages/bill/BillDetail'
+import OrderPage from '../pages/OrderPage'
+import PaymentPage from '../pages/PaymentPage'
 const Routers = () => {
 	const { user } = useAppContext();
 	return (
@@ -45,6 +47,8 @@ const Routers = () => {
 					<Route path="blog/:slug" element={<BlogDetailPage />} />
 					<Route path="cart" element={<CartPage />} />
 					<Route path="checkout" element={<CheckPage />} />
+					<Route path='order' element={<OrderPage />} />
+					<Route path='payment' element={<PaymentPage />} />
 					{/* auth */}
 					<Route path="login" element={<Login />} />
 					<Route path="register" element={<Register />} />

@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 import { getUser } from "../services/auth";
 import { useQuery } from "react-query";
 import SkeletonUI from "../layouts/SkeletonUI";
+import { ConfigProvider } from "antd";
 const AppContext = createContext();
 const AppProvider = ({ children }) => {
      const [user, setUser] = useState({})
@@ -22,7 +23,17 @@ const AppProvider = ({ children }) => {
                cartItemAction,
                setCartItemAction,
           }}>
-               {children}
+               <ConfigProvider
+                    theme={{
+                         components: {
+                              Statistic: {
+                                   contentFontSize: 16,
+                              },
+                         },
+                    }}
+               >
+                    {children}
+               </ConfigProvider>
           </AppContext.Provider>
      )
 
