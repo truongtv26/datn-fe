@@ -22,7 +22,7 @@ export const getDistrict = async (province_id = null) => {
 
 		if (province_id !== null) {
 			const response = await axios.post(`https://online-gateway.ghn.vn/shiip/public-api/master-data/district`, {
-				province_id: province_id
+				province_id: Number(province_id)
 			}, {
 				headers: {
 					'token': token
@@ -42,7 +42,7 @@ export const getWard = async (district_id = null) => {
 
 		if (district_id !== null) {
 			const response = await axios.post(`https://online-gateway.ghn.vn/shiip/public-api/master-data/ward`, {
-				district_id: district_id
+				district_id: Number(district_id)
 			}, {
 				headers: {
 					'token': token
@@ -58,12 +58,14 @@ export const getWard = async (district_id = null) => {
 }
 
 export const getOrderServices = async (data) => {
+	
 	try {
 		if (data && data.from_district && data.to_district) {
+			
 			const response = await axios.post(`https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services`, {
 				shop_id: 4909460,
-				from_district: data.from_district,
-				to_district: data.to_district
+				from_district: Number(data.from_district),
+				to_district: Number(data.to_district)
 			}, {
 				headers: {
 					'token': token
@@ -80,15 +82,15 @@ export const getOrderServices = async (data) => {
 
 export const getOrderFee = async (orderServices = null, depositor = null, recipient = null) => {
 	try {
-		if (orderServices !== null && depositor && depositor.district && recipient && recipient.district && recipient.ward) {
+		if (orderServices !== null && depositor.district && recipient.recipient_district &&  orderServices.service_id) {
 			const response = await axios.post(`https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee`, {
 				service_id: orderServices.service_id, // dịch vụ vận chuyển
 				service_type_id: orderServices.service_type_id, // phương thức vận chuyển
 				insurance_value: null, // giá trị đơn hàng
 				coupon: null, // mã giảm giá của ghn nếu có
 
-				to_ward_code: recipient.ward,
-				to_district_id: recipient.district,
+				to_ward_code: recipient.recipient_ward,
+				to_district_id: Number(recipient.recipient_district),
 
 				from_district_id: depositor.district,
 
@@ -115,13 +117,13 @@ export const getOrderFee = async (orderServices = null, depositor = null, recipi
 export const getLeadtime = async (orderServices = null, depositor = null, recipient = null) =>{
 	try {
 
-		if (orderServices !== null && depositor && recipient.district && recipient.ward) {
+		if (orderServices !== null && depositor && recipient.recipient_district && recipient.recipient_ward) {
 			const response = await axios.post(`https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/leadtime`, {
 				from_district_id: depositor.district,
 				from_ward_code: depositor.ward,
 
-				to_district_id: recipient.district,
-				to_ward_code: recipient.ward,
+				to_district_id: Number(recipient.recipient_district),
+				to_ward_code: recipient.recipient_ward,
 
 				service_id: orderServices.service_id
 			}, {

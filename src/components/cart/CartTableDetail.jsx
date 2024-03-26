@@ -1,26 +1,41 @@
-import { DeleteOutlined } from '@ant-design/icons';
-import { Badge, Button, Descriptions, Flex, Select, Table } from 'antd'
+import { DeleteOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Badge, Button, Descriptions, Flex, Select, Table, Statistic, AutoComplete, Input } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ChangeVariant from './ChangeVariant';
 import ChangeQuantity from './ChangeQuantity';
 import SelectCoupon from './SelectCoupon';
+import FormatCurrency from '../../utils/FormatCurrency';
+import instance from '../../core/api';
+import { useAppContext } from '../../provider/AppProvider';
+const { Countdown } = Statistic;
 
 const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 	const VITE_URL = import.meta.env.VITE_URL;
 	const navigate = useNavigate()
+	const { user } = useAppContext();
 
 	const oldCart = JSON.parse(localStorage.getItem('cart'));
 
 	const [cartItemSelected, setCartItemSelected] = useState([]);
 	const [keySelected, setKeySelected] = useState([])
-	const [couponSelected, setCouponSelected] = useState([])
-	const [couponOptions, setCouponOptions] = useState([])
-	const [couponAvailable, setCouponAvailable] = useState([])
+	const [vouchers, setVouchers] = useState([]);
+	const [voucherSelected, setVoucherSelected] = useState({});
 
-	const [cost, setCost] = useState({ total: 0, orders: 0, shipping: 0, shippingDiscount: 0, ordersDiscount: 0 });
+	const [cost, setCost] = useState({ total: 0, orders: 0, shipping: 0, shippingDiscount: 0, ordersDiscount: 0, voucherDiscount: 0 });
 
+	// lấy phiếu giảm giá
+	useEffect(() => {
+		instance.get('vouchers', {
+			params: {
+				user,
+			}
+		})
+			.then((res) => {
+				setVouchers(res.data)
+			})
+	}, [])
 	// bảng giỏ hàng
 	const columns = [
 		{
@@ -53,36 +68,14 @@ const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 			title: 'Giá',
 			dataIndex: 'price',
 			render: (_, record) => {
-				const currentCoupon = couponSelected.filter(item => item.variant_id === record.variant)
-				return <>
-					{
-						Object.keys(currentCoupon).length > 0
-							? <>
-								<Flex gap={4} vertical>
-									<div>
-										{
-											new Intl.NumberFormat("vi-VN", {
-												style: "currency",
-												currency: "VND",
-											}).format(record.price * (1 - currentCoupon[0].value / 100))
-										}
-									</div>
-									<div style={{ textDecoration: "line-through" }}>
-										{
-											new Intl.NumberFormat("vi-VN", {
-												style: "currency",
-												currency: "VND",
-											}).format(record.price)
-										}
-									</div>
-								</Flex>
-							</>
-							: new Intl.NumberFormat("vi-VN", {
-								style: "currency",
-								currency: "VND",
-							}).format(record.price)
-					}
+				const promotion = record.action.promotions?.filter((item) => item?.status === 'happenning')[0]
+				return promotion ? <>
+					<div><FormatCurrency props={record.price * (1 - (promotion.value / 100))} /></div>
+					<div className='old-price'>
+						<FormatCurrency props={record.price} />
+					</div>
 				</>
+					: <FormatCurrency props={record.price} />
 			}
 		},
 		{
@@ -99,36 +92,15 @@ const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 			title: 'Tổng tiền',
 			dataIndex: 'total',
 			render: (_, record) => {
-				const currentCoupon = couponSelected.filter(item => item.variant_id === record.variant)
-				return <>
-					{
-						Object.keys(currentCoupon).length > 0
-							? <>
-								<Flex gap={4} vertical>
-									<div>
-										{
-											new Intl.NumberFormat("vi-VN", {
-												style: "currency",
-												currency: "VND",
-											}).format(record.total * (1 - currentCoupon[0].value / 100))
-										}
-									</div>
-									<div style={{ textDecoration: "line-through" }}>
-										{
-											new Intl.NumberFormat("vi-VN", {
-												style: "currency",
-												currency: "VND",
-											}).format(record.total)
-										}
-									</div>
-								</Flex>
-							</>
-							: new Intl.NumberFormat("vi-VN", {
-								style: "currency",
-								currency: "VND",
-							}).format(record.total)
-					}
-				</>
+				const promotion = record.action.promotions?.filter((item) => item?.status === 'happenning')[0]
+				return promotion ?
+					<>
+						<div><FormatCurrency props={record.price * (1 - (promotion.value / 100))} /></div>
+						<div className='old-price'>
+							<FormatCurrency props={record.price} />
+						</div>
+					</> :
+					<FormatCurrency props={record.price} />
 			}
 		},
 		{
@@ -167,38 +139,13 @@ const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 		}
 	};
 
-	// chọn phiếu giảm giá khi biến thể đang được giảm giá
-	useEffect(() => {
-		let variantHasPromotions = [];
-		data.forEach((variant, i) => {
-			const promotionAvailable = variant.promotions.filter((p) => p.status === 'happenning')
-			promotionAvailable.length > 0 ? variantHasPromotions.push({
-				key: i,
-				id: promotionAvailable[0].id,
-				variant_id: variant.id,
-				value: promotionAvailable[0].value,
-				label: promotionAvailable[0].name,
-				code: promotionAvailable[0].code
-			}) : null
-		})
-		setCouponSelected(variantHasPromotions)
-		setCouponAvailable(variantHasPromotions)
-
-		// lọc mã giảm giá
-		const finalCoupon = variantHasPromotions.reduce((accumulator, current) => {
-			const existingItemIndex = accumulator.findIndex((item) => item.id === current.id);
-			existingItemIndex !== -1 ? accumulator[existingItemIndex] = current : accumulator.push(current);
-			return accumulator;
-		}, []);
-
-		setCouponOptions(finalCoupon)
-	}, [data, cartItemAction])
 
 	// cập nhật lại đơn hàng đã chọn khi có thay đổi về giá hoặc số lượng
 	useEffect(() => {
 		const reSelected = cartData.filter(item => keySelected.some(key => item.key === key))
 		setCartItemSelected(reSelected)
 	}, [cartItemAction, data])
+
 
 	const onDeleteCartItem = (item) => {
 		const oldCartData = JSON.parse(localStorage.getItem('cart')) || [];
@@ -255,34 +202,27 @@ const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 	}
 	// chi phí đơn hàng
 	useEffect(() => {
-		const ordersDiscount = cartItemSelected.reduce((prev, item) => {
-			const coupon = couponSelected.filter((c) => c.variant_id === item.variant)
-			return Object.keys(coupon).length > 0 ? prev + (item.total * (coupon[0].value / 100)) : prev
+		const orderDiscount = cartItemSelected.reduce((prev, item) => {
+			return item.action.promotions.length > 0 && item.action.promotions[0]?.status === "happenning" ?
+				prev + ((item.price * item.quantity) * (item.action.promotions[0].value / 100)) : prev;
 		}, 0)
 
+		const voucherDiscount = voucherSelected.value ? cost.orders * (voucherSelected.value / 100) : orderDiscount
 		setCost({
 			...cost,
 			orders: cartItemSelected.reduce((total, item) => { return total + item.price * item.quantity; }, 0),
-			ordersDiscount: -ordersDiscount,
+			ordersDiscount: -orderDiscount,
+			voucherDiscount: -voucherDiscount,
 			shippingDiscount: -0
 		})
-	}, [cartItemAction, cartItemSelected])
+	}, [cartItemAction, cartItemSelected, voucherSelected])
 
 	const items = [
 		{ title: "Đơn hàng", value: convertCurrency(cost.orders) },
-		{ title: "Giảm giá đơn hàng", value: convertCurrency(cost.ordersDiscount) },
-		{ title: "Tạm tính", value: convertCurrency(cost.orders + cost.shipping + cost.shippingDiscount + cost.ordersDiscount) }
+		{ title: "Giảm giá đơn hàng", value: convertCurrency(cost.ordersDiscount + cost.voucherDiscount) },
+		{ title: "Tạm tính", value: convertCurrency(cost.orders + cost.shipping + cost.shippingDiscount + cost.ordersDiscount + cost.voucherDiscount) }
 	];
 
-	// xử lý chọn phiếu giảm giá
-	const handlePromotionChange = (_, target) => {
-		if (target.length) {
-			setCouponSelected(couponAvailable.filter(c => c.id === target.variant_id))
-			setCartItemAction(!cartItemAction)
-		} else {
-			setCouponSelected(target)
-		}
-	};
 	// xử lý đặt hàng
 	const handleCheckout = (event) => {
 		event.preventDefault()
@@ -296,41 +236,37 @@ const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 				{
 					state: {
 						cartItemSelected,
-						couponSelected,
+						voucherSelected,
+						oldCost: cost
 					}
 				})
 		}
 	}
 
 
-	const expandedRowRender = (record) => {
-		return Object.keys(record.action.promotions).length > 0
-			? <>
-				<Flex align={"center"}>
-					<SelectCoupon
-						data={record}
-						coupons={record.action.promotions}
-						couponSelected={couponSelected}
-						setCouponSelected={setCouponSelected}
-						cartItemAction={cartItemAction}
-						setCartItemAction={setCartItemAction}
-					/>
-					<Flex gap={4} wrap='wrap'>
-						{couponSelected.filter((coupon, index) => coupon.variant_id === record.variant).length > 0 && <Flex gap={4}>
-							Phiếu giảm giá đang được sử dụng:
-							<div className='coupon-code flex items-center gap-1'>
-								<span>{couponSelected.filter((coupon) => coupon.variant_id === record.variant)[0]?.code}</span>
-								<Badge count={`-${couponSelected.filter((coupon) => coupon.variant_id === record.variant)[0]?.value}%`} />
-							</div>
-						</Flex>}
+	const expandedRowRender = ({ action }) => {
+		const promotion = action.promotions?.filter((item) => item?.status === 'happenning')[0]
+		const deadline = (new Date(promotion?.end_date)).getTime()
+		return promotion &&
+			<>
+				<Flex vertical gap={5}>
+					<Flex gap={5} align='center'>
+						<div className="coupon-code"><ThunderboltOutlined />{promotion.name} <Badge count={`-${promotion.value}%`} /></div>
+						còn lại <div className="coupon-code"><Countdown value={deadline} format="D Ngày H Giờ m Phút s Giây" /></div>
 					</Flex>
 				</Flex>
-
 			</>
-			: "Sản phẩm này hiện không có phiếu giảm giá"
 	};
 
-
+	const onSelectVoucher = (name) => {
+		const voucher = vouchers.find(voucher => voucher.name === name);
+		if (cost.orders >= voucher.min_bill_value) {
+			setVoucherSelected(voucher);
+		} else {
+			toast.error("Không đủ điều kiện áp dụng!")
+		}
+	}
+	
 	return (
 		<>
 			<div className="left-content">
@@ -352,19 +288,24 @@ const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 						}}
 					/>
 					<div className="code-sale">
-						Khuyến mãi đang sử dụng
-						{couponOptions.length > 0 && <Select
-							mode="multiple"
-							allowClear
-							size='Large'
-							style={{
-								width: '100%',
-							}}
-							placeholder="Chọn phiếu khuyến mãi"
-							onChange={handlePromotionChange}
-							defaultValue={couponOptions.map(c => c)}
-							options={couponOptions}
-						/>}
+						Chọn phiếu khuyến mãi
+						<AutoComplete
+							onSelect={onSelectVoucher}
+							style={{ width: "100%" }}
+							options={vouchers.map((item) => ({
+								value: item.name,
+								label: (
+									<>
+										<ul className='list-unstyled'>
+											<li style={{ fontWeight: 600 }}>{item.name} <span style={{ float: 'right', color: 'red' }}>{item.code}</span></li>
+											<li>Phần trăm giảm: {item.value}% <span style={{ float: 'right' }}>Đơn tối thiểu: <span style={{ color: 'red' }}><FormatCurrency props={item.min_bill_value} /></span></span></li>
+										</ul>
+									</>
+								),
+							}))}
+						>
+							<Input placeholder="Tìm kiếm voucher..." />
+						</AutoComplete>
 					</div>
 				</div>
 			</div>
@@ -387,6 +328,7 @@ const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 								{items.map((description, index) =>
 									description.title ? (
 										<Descriptions.Item
+											style={{ textWrap: 'nowrap' }}
 											key={index}
 											label={description.title}
 											labelStyle={{ width: '30%' }}
