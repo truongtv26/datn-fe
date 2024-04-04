@@ -8,14 +8,12 @@ const CartPage = () => {
 
     const [cartItems, setCartItems] = useState([])
     const { cartItemAction, setCartItemAction } = useAppContext()
-
     // lấy dữ liệu giỏ hàng
     useEffect(() => {
         const cartItems = JSON.parse(localStorage.getItem('cart'));
-        instance.post(`/cart`, cartItems).then(({ data }) => {
-            const allNull = data.every(item => item === null)
-            if (!allNull) {
-                setCartItems(data)
+        instance.post(`/cart`, cartItems).then((res) => {
+            if (res.status === 200) {
+                setCartItems(res.data)
             }
         })
     }, [cartItemAction])

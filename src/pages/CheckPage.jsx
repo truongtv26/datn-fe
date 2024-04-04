@@ -19,7 +19,7 @@ const CheckPage = () => {
     // trạng thái sản phẩm và mã giảm giá đã chọn
     const location = useLocation();
     const { cartItemSelected, voucherSelected, oldCost } = location.state || {};
-
+    console.log(oldCost);
     const navigate = useNavigate();
     const [cost, setCost] = useState(oldCost);
     const [paymentMethod, setPaymentMethod] = useState([])
@@ -256,7 +256,7 @@ const CheckPage = () => {
             title: "Giảm giá đơn hàng", value: voucherSelected ? <>
                 <p>
                     Khuyến mãi: <FormatCurrency props={-cartItemSelected.reduce((prev, item) => {
-                        return item.action.promotions.length > 0 && item.action.promotions[0]?.status === "happenning" ?
+                        return item.action?.promotions?.length > 0 && item.action.promotions[0]?.status === "happenning" ?
                             prev + ((item.price * item.quantity) * (item.action.promotions[0].value / 100)) : prev;
                     }, 0)} />
                 </p>

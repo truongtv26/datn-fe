@@ -2,7 +2,7 @@ import { Card, Pagination, Rate } from 'antd';
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-const ProductList = ({data, setProductPage}) => {
+const ProductList = ({data, setProductPage, totalpage}) => {
      const VITE_URL = import.meta.env.VITE_URL;
 
      // trạng thái sản phẩm
@@ -13,13 +13,13 @@ const ProductList = ({data, setProductPage}) => {
   return (
      <div className='product-wrapper'>
 				<div className="flex flex-wrap justify-start">
-                         {data && Object.keys(data).length > 0 ? data.map((product, index) => {
+                         {data && Object.keys(data).length > 0 ? data?.map((product, index) => {
 						const priceRange = product.variants.map(variant => variant.price);
 						const image = product.variants.map(variant => variant.images[0])[0]
 						const productImage = VITE_URL + 'storage/'+ image?.folder + '/' + image?.url;
 						return <div key={index} className='product-items'>
 							<div className="product-badges">20%</div>
-							<Link to={`/product/${product.slug}`}>
+							<Link to={`/product/${product.slug}`} onClick= {() => window.scrollTo(0, 0)}>
 								<Card
 									size='small'
 									hoverable
@@ -57,7 +57,7 @@ const ProductList = ({data, setProductPage}) => {
 						display: 'flex',
 						justifyContent: 'center',
 					}}>
-						<Pagination defaultCurrent={1} total={200} showSizeChanger={false} pageSize={8} onChange={onShowSizeChange} />
+						<Pagination defaultCurrent={1} total={totalpage} showSizeChanger={false} pageSize={8} onChange={onShowSizeChange} />
 					</div>
 				</div >
 			</div>
