@@ -42,18 +42,17 @@ const Routers = () => {
 				<Route path="/" element={<BaseLayout />}>
 					<Route index element={<HomePage />} />
 					<Route path="list-product" element={<ListProduct />} />
-					<Route path="product/:slug" element={<ProductDetailPage />} />
+					<Route path="product/:slug" element={<ProductDetailPage />}/>
 					<Route path="blog" element={<BlogPage />} />
 					<Route path="blog/:slug" element={<BlogDetailPage />} />
 					<Route path="cart" element={<CartPage />} />
 					<Route path="checkout" element={<CheckPage />} />
 					<Route path='order' element={<OrderPage />} />
-					<Route path='payment' element={<PaymentPage />} />
 					{/* auth */}
 					<Route path="login" element={<Login />} />
 					<Route path="register" element={<Register />} />
 				</Route>
-
+				<Route path='payment' element={<PaymentPage />} />
 				{/* admin route */}
 				<Route
 					path="admin"

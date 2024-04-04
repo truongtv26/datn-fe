@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Breadcrumb, Row, Col, Flex, Space, Button, Radio, InputNumber, Badge } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import styles from "./page.module.css";
@@ -14,8 +14,10 @@ import { useAppContext } from "../../provider/AppProvider";
 
 
 const ProductDetailPage = () => {
+	const VITE_URL = import.meta.env.VITE_URL;
 	const { cartItemAction, setCartItemAction } = useAppContext()
 	const { slug } = useParams();
+	const navigate = useNavigate()
 
 	const [product, setProduct] = useState({});
 	const [variant, setVariant] = useState({});
@@ -65,7 +67,12 @@ const ProductDetailPage = () => {
 	}, [optionSelected])
 
 	useEffect(() => {
-		variant.promotions && setCoupon(...variant.promotions.filter(p => p.status === "happenning") ?? {})
+		if (variant.promotions && variant?.promotions?.length > 0) {
+			const promotion = variant.promotions.find((p => p.status === 'happenning'))
+			setCoupon(promotion)
+		} else {
+			setCoupon({})
+		}
 	}, [variant])
 	// xử lý giỏ hàng	
 	const hanldeCart = () => {
@@ -74,33 +81,102 @@ const ProductDetailPage = () => {
 			variant_id: variant.id,
 			color_id: variant.color_id,
 			size_id: variant.size_id,
-			quantity: optionSelected.quantity ?? 0,
+			quantity: optionSelected.quantity ?? 1,
 		}
 
 		const oldCart = JSON.parse(localStorage.getItem('cart')) ?? [];
 
-		if (cartItem.quantity >= 1) {
+		if (cartItem.quantity >= 1 && cartItem.quantity <= variant.quantity) {
 			if (oldCart.some(item =>
 				item.product_id === cartItem.product_id &&
 				item.variant_id === cartItem.variant_id
 			)) {
-				toast.error('Sản phẩm đã có trong giỏ hàng!',{
+				toast.error('Sản phẩm đã có trong giỏ hàng!', {
 					position: toast.POSITION.TOP_CENTER,
 				})
 			} else {
 				const updatedCart = [...oldCart, cartItem];
 				localStorage.setItem("cart", JSON.stringify(updatedCart));
 				setCartItemAction(!cartItemAction)
-				toast.success('Sản phẩm đã được thêm vào giỏ hàng!',{
+				toast.success('Sản phẩm đã được thêm vào giỏ hàng!', {
 					position: toast.POSITION.TOP_CENTER,
 				});
 			}
 		} else {
-			toast.error('Vui lòng chọn số lượng sản phẩm!',{
-				position: toast.POSITION.TOP_CENTER,
-			})
+			if (cartItem.quantity > variant.quantity) {
+				toast.error('Sản phẩm không đủ số lượng!', {
+					position: toast.POSITION.TOP_CENTER,
+				})
+			} else {
+				toast.error('Vui lòng chọn số lượng sản phẩm!', {
+					position: toast.POSITION.TOP_CENTER,
+				})
+			}
 		}
 
+	}
+
+	const handleBuyNow = () => {
+		const cartItem = {
+			product_id: product.id,
+			variant_id: variant.id,
+			color_id: variant.color_id,
+			size_id: variant.size_id,
+			quantity: optionSelected.quantity ?? 1,
+		}
+		if (cartItem.quantity >= 1 && cartItem.quantity <= variant.quantity) {
+			
+			instance.post(`/cart`, [cartItem])
+			.then((res) => {
+				if (res.status === 200) {
+					navigate("/checkout", 
+					{
+						state: {
+							cartItemSelected: [{
+								action: {
+									...res.data[0],
+									promotions: [coupon]
+								},
+								color: res.data[0].color,
+								size: res.data[0].size,
+								name: res.data[0].product.name,
+								image: VITE_URL + 'storage/' + res.data[0].images[0].folder + '/' + res.data[0].images[0].url,
+								key: 0,
+								price: res.data[0].price,
+								quantity: cartItem.quantity,
+								total: res.data[0].price * cartItem.quantity,
+								variant: variant.id
+							}],
+							voucherSelected: {},
+							oldCost: {
+								orders: res.data[0].price * cartItem.quantity,
+								total: 0,
+								shipping: 0,
+								shippingDiscount: -0,
+								ordersDiscount: -(res.data[0].promotions.length > 0 && res.data[0].promotions[0].status === 'happenning' ? (cartItem.quantity * res.data[0].price) * (res.data[0].promotions[0].value / 100)  : 0),
+								voucherDiscount: -0,
+							}
+						}
+					})
+				}
+			 })
+			 .catch(() => {
+				toast.error('Đặt hàng thất bại!', {
+					position: toast.POSITION.TOP_CENTER,
+				})
+			 })
+			
+		} else {
+			if (cartItem.quantity > variant.quantity) {
+				toast.error('Sản phẩm không đủ số lượng!', {
+					position: toast.POSITION.TOP_CENTER,
+				})
+			} else {
+				toast.error('Vui lòng chọn số lượng sản phẩm!', {
+					position: toast.POSITION.TOP_CENTER,
+				})
+			}
+		}
 	}
 
 	return isLoading
@@ -220,7 +296,7 @@ const ProductDetailPage = () => {
 						</Flex>
 						<Flex gap={40} className={styles["size-box"]} style={{ border: "none", alignItems: 'center' }}>
 							<p className={styles["label"]}>Quantity</p>
-							<InputNumber min={1} max={variant.quantity} defaultValue={0}
+							<InputNumber min={1} max={variant.quantity} defaultValue={1}
 								disabled={variant.id && variant.quantity > 0 ? false : true}
 								onChange={(number) => {
 									setOptionSelected({
@@ -236,12 +312,14 @@ const ProductDetailPage = () => {
 								: ''}
 						</Flex>
 						<Flex gap={5}>
-							<button onClick={Object.keys(variant).length > 0 ? hanldeCart : null}
+							<button
+								onClick={Object.keys(variant).length > 0 ? hanldeCart : null}
 								className={`${styles["action-btn"]} ${styles["add-btn"]} ${Object.keys(variant).length > 0 ? styles["active"] : ''}`}
 							>
 								Thêm vào giỏ hàng
 							</button>
 							<button
+								onClick={Object.keys(variant).length > 0 ? handleBuyNow : null}
 								className={`${styles["action-btn"]} ${styles["buy-btn"]} ${Object.keys(variant).length > 0 ? styles["active"] : ''}`}
 							>
 								Mua ngay

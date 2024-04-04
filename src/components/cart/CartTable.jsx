@@ -7,7 +7,6 @@ import { useAppContext } from '../../provider/AppProvider';
 
 
 const CartTable = ({ data }) => {
-
      const VITE_URL = import.meta.env.VITE_URL;
      const { cartItemAction, setCartItemAction } = useAppContext()
 

@@ -95,12 +95,12 @@ const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 				const promotion = record.action.promotions?.filter((item) => item?.status === 'happenning')[0]
 				return promotion ?
 					<>
-						<div><FormatCurrency props={record.price * (1 - (promotion.value / 100))} /></div>
+						<div><FormatCurrency props={(record.price * (1 - (promotion.value / 100))) * record.quantity} /></div>
 						<div className='old-price'>
-							<FormatCurrency props={record.price} />
+							<FormatCurrency props={record.price * record.quantity} />
 						</div>
 					</> :
-					<FormatCurrency props={record.price} />
+					<FormatCurrency props={record.price * record.quantity} />
 			}
 		},
 		{
@@ -207,7 +207,7 @@ const CartTableDetail = ({ data, cartItemAction, setCartItemAction }) => {
 				prev + ((item.price * item.quantity) * (item.action.promotions[0].value / 100)) : prev;
 		}, 0)
 
-		const voucherDiscount = voucherSelected.value ? cost.orders * (voucherSelected.value / 100) : orderDiscount
+		const voucherDiscount = voucherSelected.value ? cost.orders * (voucherSelected.value / 100) : 0
 		setCost({
 			...cost,
 			orders: cartItemSelected.reduce((total, item) => { return total + item.price * item.quantity; }, 0),

@@ -72,13 +72,13 @@ const ListProduct = () => {
 	// 
 
 	// trạng thái danh sách sản phẩm
-	const [products, setProducts] = useState({})
+	const [products, setProducts] = useState([])
 
 	// trạng thái lọc
 	const [productPage, setProductPage] = useState('page');
 	const [priceRange, setPriceRange] = useState([0, 0]);
 	const [priceChange, setPriceChange] = useState([]);
-
+	const [totalPage, setTotalPage] = useState(0)
 	//delay input range
 	const priceRangeSelected = useDebounce(priceChange, 200)
 
@@ -91,8 +91,11 @@ const ListProduct = () => {
 		instance.get(`product-list?
 		${productPage}
 		&min=${priceRangeSelected[0]}&max=${priceRangeSelected[1]}`
-		).then(({ data }) => {
-			setProducts(data)
+		).then((res) => {
+			if (res.status === 200) {
+				setProducts(res.data.products)
+				setTotalPage(res.total)
+			}
 		})
 	}, [productPage, priceRangeSelected])
 
@@ -115,12 +118,6 @@ const ListProduct = () => {
 
 			<Layout>
 				<Sider width={200} style={{ background: colorBgContainer }}>
-					<h2>Product Categories</h2>
-					<Menu> <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
-						Check all
-					</Checkbox>
-						<Divider />
-						<CheckboxGroup options={plainOptions} value={checkedList} onChange={onChange} /></Menu>
 					<h2>Lọc theo giá</h2>
 
 					{/* Tối thiểu và tối đa product price range */}
@@ -155,41 +152,6 @@ const ListProduct = () => {
 						max={priceRange[1]}
 						onChange={handlePriceRangeChange}
 					/>
-
-					{/* brands */}
-					<div style={{ marginTop: '20px' }} >
-
-						<h2 >Brands</h2>
-						<div style={{ marginTop: '20px' }}>
-							<Checkbox style={{ fontSize: '2vh' }} onChange={onChange}>Adidas</Checkbox>
-
-						</div>
-						<div style={{ marginTop: '20px' }}>
-							<Checkbox style={{ fontSize: '2vh' }} onChange={onChange}>Filas</Checkbox>
-						</div>
-						<div style={{ marginTop: '20px' }}>
-							<Checkbox style={{ fontSize: '2vh' }} onChange={onChange}>Converse</Checkbox>
-						</div>
-						<div style={{ marginTop: '20px' }}>
-							<Checkbox style={{ fontSize: '2vh' }} onChange={onChange}>Nike</Checkbox>
-						</div>
-						<div style={{ marginTop: '20px' }}>
-							<Checkbox style={{ fontSize: '2vh' }} onChange={onChange}>Fila</Checkbox>
-						</div>
-					</div>
-
-					{/* status */}
-					<div style={{ marginTop: '20px' }}>
-						<h2>Product Status</h2>
-						<div style={{ marginTop: '20px' }}>
-							<Checkbox style={{ fontSize: '2vh' }} onChange={onChange}>Instock</Checkbox>
-						</div>
-						<div style={{ marginTop: '20px' }}>
-							<Checkbox style={{ fontSize: '2vh' }} onChange={onChange}>Onsale</Checkbox>
-						</div>
-					</div>
-
-
 				</Sider>
 
 				<Layout style={{ padding: '0 24px 24px' }}>
@@ -203,7 +165,7 @@ const ListProduct = () => {
 						}}
 					>
 						{/* product list */}
-						<ProductList data={products} setProductPage={setProductPage}/>
+						<ProductList data={products} totalpage={totalPage} setProductPage={setProductPage}/>
 					</Content>
 
 				</Layout>

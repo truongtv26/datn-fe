@@ -45,8 +45,10 @@ const HomePage = () => {
 	const [productPage, setProductPage] = useState('');
 
 	useEffect(() => {
-		instance.get(`product-list?${productPage}`).then(({ data }) => {
-			setProduct(data)
+		instance.get(`product-list?${productPage}`).then((res) => {
+			if (res.status === 200) {
+				setProduct(res.data.products)
+			}
 		})
 	}, [productPage])
 
