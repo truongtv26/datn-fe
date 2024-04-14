@@ -15,25 +15,25 @@ const GHNInfo = ({ dataAddress, prov, distr, war, disabledValue }) => {
 
     const configApi = {
         headers: {
-            Token: "aef361b5-f26a-11ed-bc91-ba0234fcde32",
+            Token: "e81513ff-d137-11ee-9414-ce214539f696",
             "Content-Type": "application/json",
-            ShopId: 124173,
+            ShopId: 4909460,
         },
     };
 
     useEffect(() => {
-        instance.get("https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province", configApi).then((response) => {
+        instance.get("https://online-gateway.ghn.vn/shiip/public-api/master-data/province", configApi).then((response) => {
             setProvinces(response.data.data);
         }).catch((e) => {
             console.log(e);
         });
         if (distr !== undefined && war !== undefined) {
-            instance.get(`https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${prov}`, configApi).then((response) => {
+            instance.get(`https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${prov}`, configApi).then((response) => {
                 setDistricts(response.data.data);
             }).catch((e) => {
                 console.log(e);
             });
-            instance.get(`https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${distr}`, configApi).then((response) => {
+            instance.get(`https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${distr}`, configApi).then((response) => {
                 setWards(response.data.data);
             }).catch((e) => {
                 console.log(e);
@@ -42,7 +42,7 @@ const GHNInfo = ({ dataAddress, prov, distr, war, disabledValue }) => {
     }, [prov, distr, war]);
 
     const handleProvinceChange = (provinceCode) => {
-        instance.get(`https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${provinceCode}`, configApi).then((response) => {
+        instance.get(`https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${provinceCode}`, configApi).then((response) => {
             setDistricts(response.data.data);
         }).catch((e) => {
             console.log(e);
@@ -51,7 +51,7 @@ const GHNInfo = ({ dataAddress, prov, distr, war, disabledValue }) => {
     };
 
     const handleDistrictChange = (districtCode) => {
-        instance.get(`https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${districtCode}`, configApi).then((response) => {
+        instance.get(`https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${districtCode}`, configApi).then((response) => {
             setWards(response.data.data);
         }).catch((e) => {
             console.log(e);

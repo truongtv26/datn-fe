@@ -15,6 +15,7 @@ import PaymentHistory from "./PaymentHistory";
 const { Title } = Typography;
 import './timeline.css';
 import Status from "../../components/admin/order/Status";
+import ReturnProduct from "./ReturnProduct";
 const BillDetail = () => {
     const [bill, setBill] = useState([]);
     const [billHistory, setBillHistory] = useState([]);
@@ -324,7 +325,7 @@ const BillDetail = () => {
                     <ShowProductModal idBill={bill.id} onClose={() => { loadBillDetail(); loadBill(); loadBillHistory(); }} />
                 ) : ''}
                 {
-                    bill.timeline == '6' && selectedRowKeys.length > 0 ? <Button type="primary" >Trả hàng {selectedRowKeys.length} sản phẩm</Button> : ''
+                    bill.timeline == '6' && selectedRowKeys.length > 0 ? <ReturnProduct selectedRowKeysLength={selectedRowKeys.length} /> : ''
                 }
             </div>
             <Table
