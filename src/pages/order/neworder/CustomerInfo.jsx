@@ -2,7 +2,7 @@ import { AutoComplete, Button, Col, Form, Input, Modal, Row } from 'antd'
 import React, { useEffect, useState } from 'react'
 import instance from '../../../core/api';
 import { toast } from 'react-toastify';
-import GHNInfo from '../../../components/GHNInfo';
+import GHNInfo from '../../../components/GhnInfo';
 
 const CustomerInfo = ({ handleSelect }) => {
     const [customerData, setCustomerData] = useState([]);

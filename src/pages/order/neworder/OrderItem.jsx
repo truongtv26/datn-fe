@@ -7,8 +7,9 @@ import FormatCurrency from '../../../utils/FormatCurrency';
 import { toast } from 'react-toastify';
 import CustomerInfo from './CustomerInfo';
 import ChooseVoucher from './ChooseVoucher';
-import GHNInfo from '../../../components/GHNInfo';
+import GHNInfo from '../../../components/GhnInfo';
 import TextArea from 'antd/es/input/TextArea';
+import axios from 'axios';
 const { Title } = Typography;
 const OrderItem = ({ props, onSuccess, createNewOrder }) => {
   const [loading, setLoading] = useState(true);
@@ -113,7 +114,7 @@ const OrderItem = ({ props, onSuccess, createNewOrder }) => {
   }, [voucher])
 
   useEffect(() => {
-    if (autoFillAddress !== null) {
+    if (autoFillAddress !== null && typeof autoFillAddress === 'object' && !Array.isArray(autoFillAddress)) {
       caculateFee();
       form.setFieldsValue({
         name: autoFillAddress.name,
@@ -127,37 +128,36 @@ const OrderItem = ({ props, onSuccess, createNewOrder }) => {
   }, [autoFillAddress]);
 
   const caculateFee = async () => {
-    await instance
-      .post(
-        "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
-        {
-          service_id: 53320,
-          service_type_id: null,
-          to_district_id: parseInt(autoFillAddress.district),
-          to_ward_code: autoFillAddress.ward,
-          height: 50,
-          length: 20,
-          weight: 200,
-          width: 20,
-          cod_failed_amount: 2000,
-          insurance_value: 10000,
-          coupon: null,
-        },
-        {
-          headers: {
-            Token: "aef361b5-f26a-11ed-bc91-ba0234fcde32",
-            "Content-Type": "application/json",
-            ShopId: 124173,
-          },
-        }
-      )
-      .then((response) => {
-        setFeeShip(response.data.data.total);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+    try {
+        const response = await axios.post(
+            "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
+            {
+                service_id: 53320,
+                service_type_id: null,
+                to_district_id: parseInt(autoFillAddress.district),
+                to_ward_code: autoFillAddress.ward,
+                height: 50,
+                length: 20,
+                weight: 200,
+                width: 20,
+                cod_failed_amount: 2000,
+                insurance_value: 10000,
+                coupon: null,
+            },
+            {
+                headers: {
+                    'Token': 'e81513ff-d137-11ee-9414-ce214539f696',
+                    'ShopId': 4909460,
+                },
+            }
+        );
+        console.log(response);
+        // setFeeShip(response.data.data.total);
+    } catch (error) {
+        console.error("Error while calculating fee:", error);
+        // Handle error here, such as showing an error message to the user
+    }
+};
 
   const handleCreate = () => {
     const data = {};

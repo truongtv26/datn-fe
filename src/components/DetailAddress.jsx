@@ -8,16 +8,16 @@ function DetailAddress({ prov, distr, war }) {
     const [ward, setWard] = useState(null);
     const configApi = {
         headers: {
-            Token: "aef361b5-f26a-11ed-bc91-ba0234fcde32",
+            Token: "e81513ff-d137-11ee-9414-ce214539f696",
             "Content-Type": "application/json",
-            ShopId: 124173,
+            ShopId: 4909460,
         },
     };
 
     useEffect(() => {
         instance
             .get(
-                "https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province",
+                "https://online-gateway.ghn.vn/shiip/public-api/master-data/province",
                 configApi
             )
             .then((response) => {
@@ -29,7 +29,7 @@ function DetailAddress({ prov, distr, war }) {
 
         instance
             .get(
-                `https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${prov}`,
+                `https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${prov}`,
                 configApi
             )
             .then((response) => {
@@ -40,7 +40,7 @@ function DetailAddress({ prov, distr, war }) {
             });
         instance
             .get(
-                `https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${distr}`,
+                `https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${distr}`,
                 configApi
             )
             .then((response) => {
