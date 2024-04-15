@@ -146,7 +146,7 @@ const HeaderSection = () => {
 						<Image
 							preview={false}
 							maxwidth={250}
-							src={'https://754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/10/logo-grocery.png'}
+							srcSet={"/logo_client.png 4x"}
 						/>
 					</div>
 					<div className='search'>

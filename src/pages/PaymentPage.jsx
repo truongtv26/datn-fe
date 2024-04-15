@@ -2,31 +2,38 @@ import { Flex } from 'antd';
 import React, { useEffect, useState } from 'react'
 import instance from '../core/api';
 
+let paymentCalled = false;
+
 const PaymentPage = () => {
 
      const [isPayment, setIsPayment] = useState(false)
      useEffect(() => {
-          const urlSearchParams = new URLSearchParams(window.location.search);
-          const params = {};
+          if (!paymentCalled) {
+               paymentCalled = true; // Set flag to true indicating that the API call has been made
 
-          for (const [key, value] of urlSearchParams.entries()) {
-               params[key] = value;
+               const urlSearchParams = new URLSearchParams(window.location.search);
+               const params = {};
+
+               for (const [key, value] of urlSearchParams.entries()) {
+                    params[key] = value;
+               }
+
+               instance.post('/checking-payment', params)
+                    .then((res) => {
+                         console.log(res);
+                         if (res.status === 200) {
+                              setIsPayment(true);
+                              setTimeout(() => {
+                                   window.close()
+                              }, 2000);
+                         } else {
+                              setIsPayment(false);
+                         }
+                    })
+                    .catch((err) => {
+                         console.log(err);
+                    });
           }
-
-          instance.post('/checking-payment', params)
-               .then((res) => {
-                    if (res.status === 200) {
-                         setIsPayment(true)
-                         setTimeout(()=>{
-                              window.close()
-                         }, 2000)
-                    } else {
-                         setIsPayment(false)
-                    }
-               })
-               .catch((err) => {
-                    console.log(err);
-               })
      }, []);
 
      return (

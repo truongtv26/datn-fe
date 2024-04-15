@@ -103,7 +103,7 @@ const OrderDetail = ({ order, setTabAction, tabAction }) => {
 
      // lấy lịch sử trạng thái đơn hàng
      useEffect(() => {
-          setOrderStatusHistories([...order.status.status_histories].reverse())
+          setOrderStatusHistories([...order.status_histories].reverse())
      }, [isModalOpen])
 
      const handleOrderChange = ({ target }) => {
@@ -223,7 +223,7 @@ const OrderDetail = ({ order, setTabAction, tabAction }) => {
 
      const handlePaymentOrder = () => {
           const data = {
-               id: order.id,
+               id: order.code,
                amount: order.total_money,
                return_payment: VITE_LOCAL_URL + 'payment/',
           }
@@ -255,6 +255,20 @@ const OrderDetail = ({ order, setTabAction, tabAction }) => {
           } else {
                toast.error("Đơn hàng đã được bàn giao cho đơn vị vận chuyển")
           }
+     }
+
+     const handleReturnOrder = () => {
+          instance.post("return_order/" + order.id)
+          .then((res) => {
+               if (res.status === 204) {
+                    toast.success("Yêu cầu trả hàng thành công")
+               } else {
+                    toast.error("Yêu cầu trả hàng thất bại")
+               }
+          })
+          .catch((err) => {
+               toast.error("Yêu cầu trả hàng thất bại")
+          })
      }
 
      // validate
@@ -596,7 +610,7 @@ const OrderDetail = ({ order, setTabAction, tabAction }) => {
                                                        }
                                                        {
                                                             [105].includes(order.status_id) &&
-                                                            <Button type="primary">
+                                                            <Button type="primary" onClick={()=>handleReturnOrder()}>
                                                                  Trả hàng
                                                             </Button>
                                                        }

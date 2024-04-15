@@ -16,6 +16,7 @@ const { Title } = Typography;
 import './timeline.css';
 import Status from "../../components/admin/order/Status";
 import ReturnProduct from "./ReturnProduct";
+import OrderTimeLineStatus from "../../components/admin/order/OrderTimeLineStatus";
 const BillDetail = () => {
     const [bill, setBill] = useState([]);
     const [billHistory, setBillHistory] = useState([]);
@@ -221,7 +222,6 @@ const BillDetail = () => {
         },
     ]
 
-
     return (
         <Spin spinning={loading}>
             <Breadcrumb
@@ -236,53 +236,56 @@ const BillDetail = () => {
                 ]}
             />
             <div style={{ marginBottom: '12px' }} >
-                <Timeline minEvents={billHistory.length} placeholder >
-                    {billHistory.map((item, index) => (
-                        <TimelineEvent
-                            color={item.status == '7' ? 'red' : "#2DC255"}
-                            title={
-                                <Title level={5}>
-                                    {(() => {
-                                        switch (item.status) {
-                                            case '1':
-                                                return "Tạo đơn hàng";
-                                            case '2':
-                                                return "Chờ xác nhận";
-                                            case '3':
-                                                return "Xác nhận thông tin thanh toán";
-                                            case '4':
-                                                return "Chờ giao";
-                                            case '5':
-                                                return "Đang giao";
-                                            case '6':
-                                                return "Hoàn thành";
-                                            case '7':
-                                                return "Hủy";
-                                            default:
-                                                return "";
-                                        }
-                                    })()}
-                                </Title>
-                            }
-                            subtitle={
-                                <>
-                                    {item.note}
-                                    <br />
-                                    <FormatDate date={item.created_at} />
-                                </>
-                            }
-
-                        />
-                    ))}
-                </Timeline>
+                {
+                     bill.address_information 
+                     ? <OrderTimeLineStatus billHistory={billHistory}/>
+                     : <Timeline minEvents={billHistory.length} placeholder >
+                     {billHistory.map((item, index) => (
+                         <TimelineEvent
+                             color={item.status == '7' ? 'red' : "#2DC255"}
+                             title={
+                                 <Title level={5}>
+                                     {(() => {
+                                         switch (item.status) {
+                                             case '1':
+                                                 return "Tạo đơn hàng";
+                                             case '2':
+                                                 return "Chờ xác nhận";
+                                             case '3':
+                                                 return "Xác nhận thông tin thanh toán";
+                                             case '4':
+                                                 return "Chờ giao";
+                                             case '5':
+                                                 return "Đang giao";
+                                             case '6':
+                                                 return "Hoàn thành";
+                                             case '7':
+                                                 return "Hủy";
+                                             default:
+                                                 return "";
+                                         }
+                                     })()}
+                                 </Title>
+                             }
+                             subtitle={
+                                 <>
+                                     {item.note}
+                                     <br />
+                                     <FormatDate date={item.created_at} />
+                                 </>
+                             }
+ 
+                         />
+                     ))}
+                 </Timeline>
+                }
             </div>
             <div style={{ display: 'flex' }}>
                 <div style={{ flexGrow: 1 }}>
                     {
-                        bill.address_information ?
-                            <Status bill={bill} billStatus={billStatus}/>
-                            :
-                            bill.timeline != '6' ? (
+                        bill.address_information 
+                        ? <Status bill={bill} setBillHistory={setBillHistory}/>
+                        : bill.timeline != '6' ? (
                                 <>
                                     {bill.timeline <= '4' ? (
                                         <>

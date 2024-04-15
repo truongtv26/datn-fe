@@ -54,10 +54,10 @@ const OrderTable = ({ data, tabAction, setTabAction }) => {
                                    <FormatCurrency props={0} />
                               }
                               <div style={{ textDecoration: "line-through" }}>
-                                   <FormatCurrency props={order.total_money} />
+                                   <FormatCurrency props={order.total_money - order.money_reduce} />
                               </div>
                          </> :
-                         <FormatCurrency props={order.total_money} />
+                         <FormatCurrency props={order.total_money - order.money_reduce} />
                }
           },
           {
@@ -72,8 +72,8 @@ const OrderTable = ({ data, tabAction, setTabAction }) => {
                render: (_, { order }) => {
                     return <Flex vertical>
                          <strong>{order.status.status}</strong>
-                         <span>{order.status.status_histories.length > 0
-                              ? order.status.status_histories[order.status.status_histories.length - 1].note : null}</span>
+                         <span>{order.status_histories.length > 0
+                              ? order.status_histories[order.status_histories.length - 1].note : null}</span>
                     </Flex>
                }
           },

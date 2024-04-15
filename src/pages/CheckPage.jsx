@@ -19,7 +19,6 @@ const CheckPage = () => {
     // trạng thái sản phẩm và mã giảm giá đã chọn
     const location = useLocation();
     const { cartItemSelected, voucherSelected, oldCost } = location.state || {};
-    console.log(oldCost);
     const navigate = useNavigate();
     const [cost, setCost] = useState(oldCost);
     const [paymentMethod, setPaymentMethod] = useState([])
@@ -77,8 +76,8 @@ const CheckPage = () => {
 
     }, [recipient.recipient_district, district])
 
+    // lấy thông dịch vụ vận chuyển
     useEffect(() => {
-        // lấy thông dịch vụ vận chuyển
         depositor && recipient.recipient_district &&
             getOrderServices({
                 from_district: depositor.district,
@@ -275,7 +274,6 @@ const CheckPage = () => {
 
     // validate
     const onFinish = () => {
-   
         const order_details = cartItemSelected.map((item) => {
             const promotion = item.action.promotions.length > 0 && item.action.promotions[0]?.status === "happenning" ?
                 item.action.promotions[0] : null
@@ -291,26 +289,26 @@ const CheckPage = () => {
         const order = {
             customer_id: user.id ?? null,
             customer_name: recipient.recipient_name,
-            phone_number: recipient.recipient_phone,
-            email: recipient.recipient_email,
+            phone_number: recipient.phone_number ?? recipient.recipient_phone,
+            email: recipient.email ?? recipient.recipient_email,
             address_information: JSON.stringify({
                 city: recipient.recipient_city,
                 district: recipient.recipient_district,
                 ward: recipient.recipient_ward,
                 detail: recipient.recipient_detail,
             }),
-            address:`${recipient.recipient_detail} ${recipient.recipient_ward_name} ${recipient.recipient_district_name} ${recipient.recipient_city_name}`,
+            address: `${recipient.recipient_detail} ${recipient.recipient_ward_name} ${recipient.recipient_district_name} ${recipient.recipient_city_name}`,
             note: recipient.recipient_note,
             shipping_by: "Giao hàng nhanh",
             money_ship: cost.shipping,
             payment: recipient.payment,
             return_payment: APP_URL + 'payment/',
             money_reduce: cost.orders - (cost.orders + cost.shipping + cost.shippingDiscount + cost.ordersDiscount + cost.voucherDiscount),
-            total_money: cost.orders + cost.shipping + cost.shippingDiscount + cost.ordersDiscount + cost.voucherDiscount,
+            total_money: cost.orders,
             voucher_id: voucherSelected.id ?? null,
             order_details,
         }
-   
+    
         recipient.payment ?
             createOrder(order)
                 .then((response) => {
@@ -409,7 +407,10 @@ const CheckPage = () => {
                                         ]}
                                         style={{ flex: "1" }}
                                     >
-                                        <Input onChange={handleDetailAddress} name="phone" placeholder="Số điện thoại người nhận" />
+                                        <Input
+                                            onChange={handleDetailAddress}
+                                            name="phone_number"
+                                            placeholder="Số điện thoại người nhận" />
 
                                     </Form.Item>
                                 </Flex>
@@ -577,7 +578,7 @@ const CheckPage = () => {
                                         }}>
                                             <Space direction="vertical">
                                                 {
-                                                    Object.keys(paymentMethod).length > 0
+                                                    paymentMethod.length > 0
                                                         ? paymentMethod.map((payment, i) => <Radio key={i} value={payment}>{payment.method}</Radio>) : null
                                                 }
                                             </Space>
