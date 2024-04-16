@@ -3,38 +3,33 @@ import { useState } from 'react';
 import instance from '../../core/api';
 import FormatCurrency from '../../utils/FormatCurrency';
 import FormatDate from '../../utils/FormatDate';
-import { Badge, Button, Spin, Table, Tabs, Tag, Tooltip } from 'antd';
-import { Link } from 'react-router-dom';
+import { Badge, Button, Spin, Table, Tabs, Tag, Tooltip, Input } from 'antd';
 import { ContainerOutlined, EditOutlined } from '@ant-design/icons';
+const { Search } = Input;
 
 const Bill = ({ onLoad }) => {
     const [listOrder, setListOrder] = useState([]);
     const [status, setStatus] = useState(null);
     const [loading, setLoading] = useState(true);
-    // const [tabs, setTabs] = useState([]);
 
     const loadOrders = (status, searchValue) => {
+        console.log(typeof (status));
         instance
-            .get(`bill`, {
-                params: {
-                    status: status
-                }
-            }).then(({ data }) => {
+            .get('bill', {
+                params: { status: status }
+            })
+            .then(({ data }) => {
                 setListOrder(data);
                 setLoading(false);
             })
             .catch((e) => {
                 console.log(e);
             });
-
-        // instance.get('/bill/statistic-bill-status').then(response => {
-        //     setTabs(response);
-        // }).catch(e => { console.log(e); })
     };
 
     useEffect(() => {
-        loadOrders();
-    }, [onLoad])
+        loadOrders(status);
+    }, [onLoad, status])
     const columns = [
         {
             title: '#',
@@ -102,19 +97,52 @@ const Bill = ({ onLoad }) => {
             )
         },
     ];
-    // const items = [
-    //     ...tabs.map(item => ({
-    //         key: item.status,
-    //         label: <Badge count={item.totalCount} offset={[8, 0]} size="small">{item.statusName}</Badge>,
-    //     })),
-    // ];
+
+    const items = [
+        {
+            key: '1',
+            label: 'Tất cả',
+        },
+        {
+            key: '2',
+            label: 'Chờ xác nhận',
+        },
+        {
+            key: '4',
+            label: 'Chờ giao',
+        },
+        {
+            key: '6',
+            label: 'Hoàn thành',
+        },
+        {
+            key: '7',
+            label: 'Đã hủy',
+        },
+        {
+            key: '8',
+            label: 'Hoàn 1 phần',
+        },
+    ];
+
+    const onSearch = (value) => {
+        console.log(value);
+    };
+
     return (
         <>
-            {/* <Tabs defaultActiveKey={1} items={items} tabBarGutter={74} onChange={(key) => {
-                setStatus(key);
-            }} /> */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Tabs defaultActiveKey="1" items={items} onChange={(key) => {
+                    setStatus(key);
+                }} />
+                <Search
+                    placeholder="Tìm kiếm ..."
+                    onSearch={onSearch}
+                    style={{ width: 300 }}
+                />
+            </div>
             <Spin spinning={loading}>
-                <Table dataSource={listOrder.map((order) => (
+                <Table dataSource={listOrder && listOrder.map((order) => (
                     {
                         id: order.id,
                         code: order.code,

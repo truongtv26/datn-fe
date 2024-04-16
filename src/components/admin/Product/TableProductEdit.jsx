@@ -101,7 +101,7 @@ const TableProductEdit = ({ props, product, handlePriceChange, handleWeightChang
                 <Typography.Title level={5} style={{ margin: '0' }}>Chi tiết sản phẩm</Typography.Title>
                 <div style={{marginBottom: '8px'}}>
                     <AddVariantProduct product={product} variants={props.variants}/>
-                    {selectedRowKeys.length > 0 && <Button type="primary" onClick={() => handleUpdateFast()} style={{marginLeft: '4px'}}>Cập nhật {selectedRowKeys.length} sản phẩm</Button>}
+                    {selectedRowKeys.length > 0 && <Button type="primary" onClick={() => handleUpdateFast()} style={{marginLeft: '4px'}}>Cập nhật { selectedRowKeys.length} sản phẩm</Button>}
                 </div>
             </div>
             <Table
