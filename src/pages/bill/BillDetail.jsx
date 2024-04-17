@@ -175,6 +175,7 @@ const BillDetail = () => {
                 loadBill();
                 loadBillDetail();
                 loadBillHistory();
+                setSelectedRowKeys([])
             })
             .catch((error) => {
                 console.error("Error creating return product:", error.response);
