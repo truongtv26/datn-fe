@@ -327,34 +327,31 @@ const BillDetail = () => {
             <div style={{ display: 'flex' }}>
                 <div style={{ flexGrow: 1 }}>
                     {
-                        bill.address_information ?
-                            <Status bill={bill} billStatus={billStatus} />
-                            :
-                            bill.timeline != '6' ? (
-                                <>
-                                    {billHistory.find((item) => item.status == '5') == undefined  && bill.timeline <= '4' ? (
-                                        <>
-                                            <Button type="primary" danger style={{ marginRight: '4px' }} onClick={() => handleSubmit('Đã hủy đơn hàng')}>Hủy</Button>
-                                            {bill.timeline == '2' ? (
-                                                <Button type="primary" onClick={() => handleSubmit('Đã xác nhận đơn hàng')}>
-                                                    Xác nhận đơn hàng
-                                                </Button>
-                                            ) : (
-                                                <Button type="primary" onClick={() => handleSubmit('Đã bàn giao cho đơn vị vận chuyển')}>
-                                                    Giao hàng
-                                                </Button>
-                                            )}
+                        bill.timeline != '6' ? (
+                            <>
+                                {billHistory.find((item) => item.status == '5') == undefined && bill.timeline <= '4' ? (
+                                    <>
+                                        <Button type="primary" danger style={{ marginRight: '4px' }} onClick={() => handleSubmit('Đã hủy đơn hàng')}>Hủy</Button>
+                                        {bill.timeline == '2' ? (
+                                            <Button type="primary" onClick={() => handleSubmit('Đã xác nhận đơn hàng')}>
+                                                Xác nhận đơn hàng
+                                            </Button>
+                                        ) : (
+                                            <Button type="primary" onClick={() => handleSubmit('Đã bàn giao cho đơn vị vận chuyển')}>
+                                                Giao hàng
+                                            </Button>
+                                        )}
 
-                                        </>
-                                    ) : (bill.timeline != '6' && bill.timeline != '7' && bill.timeline != '8') ? (
-                                        <Button type="primary" onClick={() => handleSubmit('Đơn hàng đã được giao thành công')}>
-                                            Hoàn thành
-                                        </Button>
-                                    ) : null}
-                                </>
-                            ) : (
-                                ""
-                            )
+                                    </>
+                                ) : (bill.timeline != '6' && bill.timeline != '7' && bill.timeline != '8') ? (
+                                    <Button type="primary" onClick={() => handleSubmit('Đơn hàng đã được giao thành công')}>
+                                        Hoàn thành
+                                    </Button>
+                                ) : null}
+                            </>
+                        ) : (
+                            ""
+                        )
                     }
                 </div>
                 <div className="">
@@ -377,12 +374,12 @@ const BillDetail = () => {
                     <ShowProductModal idBill={bill.id} onClose={() => { loadBillDetail(); loadBill(); loadBillHistory(); }} />
                 ) : ''}
                 {
-                    bill.timeline == '6' && selectedRowKeys.length > 0 ? <ReturnProduct handleCreateReturnProduct={handleCreateReturnProduct}/> : ''
+                    bill.timeline == '6' && selectedRowKeys.length > 0 ? <ReturnProduct handleCreateReturnProduct={handleCreateReturnProduct} /> : ''
                 }
             </div>
             <Table
                 columns={columns}
-                rowSelection={bill.timeline === '6' && listBillDetail.return_products && listBillDetail.return_products.reduce((total, item) => total + (item.price * item.quantity), 0)  == 0 ? rowSelection : null}
+                rowSelection={bill.timeline === '6' && listBillDetail.return_products && listBillDetail.return_products.reduce((total, item) => total + (item.price * item.quantity), 0) == 0 ? rowSelection : null}
                 dataSource={listBillDetail.variants ? listBillDetail.variants.map((item) => ({
                     key: listBillDetail.bill_details.find((bill) => item.id === bill.variant_id)?.id,
                     name: item.product.name,
