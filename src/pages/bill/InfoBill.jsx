@@ -38,6 +38,8 @@ function InfoBill({ props, handleChangeInfo }) {
                                                 return "Hoàn thành";
                                             case '7':
                                                 return "Hủy";
+                                            case '8':
+                                                return "Hoàn 1 phần";
                                             default:
                                                 return "";
                                         }
@@ -48,11 +50,11 @@ function InfoBill({ props, handleChangeInfo }) {
                     </Col>
                     <Col xl={7}>
                         <ul style={{ listStyleType: 'none' }}>
-                            <li className="mb-2">Tổng tiền: 
+                            <li className="mb-2">Tổng tiền:
                                 <span style={{ float: 'right', color: 'red' }}><FormatCurrency props={props.total_money - props.money_reduce} /></span>
-                                <del style={{ color: '#ccc'}}>
+                                <del style={{ color: '#ccc' }}>
                                     <span>  </span>
-                                    {props.money_reduce != 0 ? ( <FormatCurrency props={props.total_money} />) : ''}
+                                    {props.money_reduce != 0 ? (<FormatCurrency props={props.total_money} />) : ''}
                                 </del>
                             </li>
                             {props.type === 'delivery' && (

@@ -127,37 +127,35 @@ const OrderItem = ({ props, onSuccess, createNewOrder }) => {
     }
   }, [autoFillAddress]);
 
+
   const caculateFee = async () => {
     try {
-        const response = await axios.post(
-            "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
-            {
-                service_id: 53320,
-                service_type_id: null,
-                to_district_id: parseInt(autoFillAddress.district),
-                to_ward_code: autoFillAddress.ward,
-                height: 50,
-                length: 20,
-                weight: 200,
-                width: 20,
-                cod_failed_amount: 2000,
-                insurance_value: 10000,
-                coupon: null,
-            },
-            {
-                headers: {
-                    'Token': 'e81513ff-d137-11ee-9414-ce214539f696',
-                    'ShopId': 4909460,
-                },
-            }
-        );
-        console.log(response);
-        // setFeeShip(response.data.data.total);
+      const response = await axios.post(
+        "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
+        {
+          service_id: 53321,
+          service_type_id: null,
+          to_district_id: Number(autoFillAddress.district),
+          to_ward_code: autoFillAddress.ward,
+          height: 50,
+          length: 20,
+          weight: 200,
+          width: 20,
+          from_district_id: 3440,
+        },
+        {
+          headers: {
+            'Token': 'e81513ff-d137-11ee-9414-ce214539f696',
+            'ShopId': 4909460,
+          },
+        }
+      );
+      setFeeShip(response.data.data.total);
     } catch (error) {
-        console.error("Error while calculating fee:", error);
-        // Handle error here, such as showing an error message to the user
+      console.error("Error while calculating fee:", error);
+      // Handle error here, such as showing an error message to the user
     }
-};
+  };
 
   const handleCreate = () => {
     const data = {};
@@ -219,8 +217,8 @@ const OrderItem = ({ props, onSuccess, createNewOrder }) => {
     function updateBill(data) {
       instance.put(`/bill/${props.id}`, data)
         .then(({ data }) => {
-          if(data.url) {
-          window.location.href = data.url
+          if (data.url) {
+            window.location.href = data.url
           } else {
             toast.success(data);
             onSuccess();
@@ -231,7 +229,7 @@ const OrderItem = ({ props, onSuccess, createNewOrder }) => {
           console.error("Error redirecting:", e); // Error handling: Log any errors
         });
     }
-    
+
 
 
   }

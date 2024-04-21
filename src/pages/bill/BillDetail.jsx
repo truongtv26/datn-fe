@@ -112,6 +112,8 @@ const BillDetail = () => {
     }
 
     const handleChangePayment = () => {
+        loadBill();
+        loadBillDetail();
         loadBillHistory();
     }
 
@@ -133,12 +135,55 @@ const BillDetail = () => {
     }
 
     const onSelectChange = (newSelectedRowKeys) => {
-        console.log(newSelectedRowKeys);
         setSelectedRowKeys(newSelectedRowKeys);
     };
     const rowSelection = {
         selectedRowKeys,
         onChange: onSelectChange,
+    };
+    const [listProductReturn, setProductReturn] = useState([]);
+
+    useEffect(() => {
+        const selectedItems = selectedRowKeys.map(selectedRowKey => {
+            return listBillDetail.bill_details.find((detail) => detail.id === selectedRowKey);
+        });
+
+        setProductReturn(selectedItems);
+
+    }, [selectedRowKeys]);
+
+    const handleReturnProduct = (value, record) => {
+        const item = listBillDetail.bill_details.find((detail) => detail.id === record.id);
+        const index = listProductReturn.findIndex((item) => item.id === record.id);
+        if (value > item.quantity) {
+            toast.error("Số lượng hàng trả không hợp lệ");
+        }
+        if (index !== -1) {
+            listProductReturn[index].quantity = value;
+        }
+
+    }
+
+    const handleCreateReturnProduct = (note) => {
+        setLoading(true); // Set loading state to true before making the API call
+        instance.post('/return-product', {
+            id: id,
+            variants: listProductReturn,
+            note: note
+        })
+            .then(({ data }) => {
+                toast.success(data); // Assuming the success message is in the response data
+                loadBill();
+                loadBillDetail();
+                loadBillHistory();
+                setSelectedRowKeys([])
+            })
+            .catch((error) => {
+                console.error("Error creating return product:", error.response);
+            })
+            .finally(() => {
+                setLoading(false); // Set loading state to false after API call is complete
+            });
     };
 
     const columns = [
@@ -203,6 +248,7 @@ const BillDetail = () => {
                 ) : bill.timeline == '6' ? (
                     <InputNumber
                         defaultValue={quantity}
+                        onChange={(value) => handleReturnProduct(value, record)}
                         min={1}
                     />
                 ) : (
@@ -236,80 +282,76 @@ const BillDetail = () => {
                 ]}
             />
             <div style={{ marginBottom: '12px' }} >
-                {
-                     bill.address_information 
-                     ? <OrderTimeLineStatus billHistory={billHistory}/>
-                     : <Timeline minEvents={billHistory.length} placeholder >
-                     {billHistory.map((item, index) => (
-                         <TimelineEvent
-                             color={item.status == '7' ? 'red' : "#2DC255"}
-                             title={
-                                 <Title level={5}>
-                                     {(() => {
-                                         switch (item.status) {
-                                             case '1':
-                                                 return "Tạo đơn hàng";
-                                             case '2':
-                                                 return "Chờ xác nhận";
-                                             case '3':
-                                                 return "Xác nhận thông tin thanh toán";
-                                             case '4':
-                                                 return "Chờ giao";
-                                             case '5':
-                                                 return "Đang giao";
-                                             case '6':
-                                                 return "Hoàn thành";
-                                             case '7':
-                                                 return "Hủy";
-                                             default:
-                                                 return "";
-                                         }
-                                     })()}
-                                 </Title>
-                             }
-                             subtitle={
-                                 <>
-                                     {item.note}
-                                     <br />
-                                     <FormatDate date={item.created_at} />
-                                 </>
-                             }
- 
-                         />
-                     ))}
-                 </Timeline>
-                }
+                <Timeline minEvents={billHistory.length} placeholder >
+                    {billHistory.map((item, index) => (
+                        <TimelineEvent
+                            color={item.status === '7' ? 'red' : (item.status === '8' ? 'orange' : '#2DC255')}
+                            title={
+                                <Title level={5}>
+                                    {(() => {
+                                        switch (item.status) {
+                                            case '1':
+                                                return "Tạo đơn hàng";
+                                            case '2':
+                                                return "Chờ xác nhận";
+                                            case '3':
+                                                return "Xác nhận thông tin thanh toán";
+                                            case '4':
+                                                return "Chờ giao";
+                                            case '5':
+                                                return "Đang giao";
+                                            case '6':
+                                                return "Hoàn thành";
+                                            case '7':
+                                                return "Hủy";
+                                            case '8':
+                                                return "Hoàn 1 phần";
+                                            default:
+                                                return "";
+                                        }
+                                    })()}
+                                </Title>
+                            }
+                            subtitle={
+                                <>
+                                    {item.note}
+                                    <br />
+                                    <FormatDate date={item.created_at} />
+                                </>
+                            }
+
+                        />
+                    ))}
+                </Timeline>
             </div>
             <div style={{ display: 'flex' }}>
                 <div style={{ flexGrow: 1 }}>
                     {
-                        bill.address_information 
-                        ? <Status bill={bill} setBillHistory={setBillHistory}/>
-                        : bill.timeline != '6' ? (
-                                <>
-                                    {bill.timeline <= '4' ? (
-                                        <>
-                                            <Button type="primary" danger style={{ marginRight: '4px' }} onClick={() => handleSubmit('Đã hủy đơn hàng')}>Hủy</Button>
-                                            {bill.timeline == '2' ? (
-                                                <Button type="primary" onClick={() => handleSubmit('Đã xác nhận đơn hàng')}>
-                                                    Xác nhận đơn hàng
-                                                </Button>
-                                            ) : (
-                                                <Button type="primary" onClick={() => handleSubmit('Đã bàn giao cho đơn vị vận chuyển')}>
-                                                    Giao hàng
-                                                </Button>
-                                            )}
+                        bill.timeline != '6' ? (
+                            <>
+                                {billHistory.find((item) => item.status == '5') == undefined && bill.timeline <= '4' ? (
+                                    <>
+                                        <Button type="primary" danger style={{ marginRight: '4px' }} onClick={() => handleSubmit('Đã hủy đơn hàng')}>Hủy</Button>
+                                        {bill.timeline == '2' ? (
+                                            <Button type="primary" onClick={() => handleSubmit('Đã xác nhận đơn hàng')}>
+                                                Xác nhận đơn hàng
+                                            </Button>
+                                        ) : (
+                                            <Button type="primary" onClick={() => handleSubmit('Đã bàn giao cho đơn vị vận chuyển')}>
+                                                Giao hàng
+                                            </Button>
+                                        )}
 
-                                        </>
-                                    ) : (bill.timeline != '6' && bill.timeline != '7') ? (
-                                        <Button type="primary" onClick={() => handleSubmit('Đơn hàng đã được giao thành công')}>
-                                            Hoàn thành
-                                        </Button>
-                                    ) : null}
-                                </>
-                            ) : (
-                                ""
-                            )
+                                    </>
+                                ) : (bill.timeline != '6' && bill.timeline != '7' && bill.timeline != '8') ? (
+                                    <Button type="primary" onClick={() => handleSubmit('Đơn hàng đã được giao thành công')}>
+                                        Hoàn thành
+                                    </Button>
+                                ) : null}
+                            </>
+                        ) : (
+                            ""
+                        )
                     }
                 </div>
                 <div className="">
@@ -320,7 +362,11 @@ const BillDetail = () => {
             {/* Thông tin đơn hàng */}
             <InfoBill props={bill} handleChangeInfo={handleChangeInfo} />
             {/* Lịch sử thanh toán */}
-            <PaymentHistory bill={bill} handleChangePayment={handleChangePayment} />
+            <PaymentHistory bill={bill} handleChangePayment={handleChangePayment} returnMoney={
+                listBillDetail && listBillDetail.return_products
+                    ? listBillDetail.return_products.reduce((total, item) => total + (item.price * item.quantity), 0)
+                    : 0 // Default value if listBillDetail or return_products is undefined
+            } />
             {/* Thông tin đơn hàng */}
             <div style={{ display: 'flex', marginTop: '12px', marginBottom: '8px' }}>
                 <Title level={5} style={{ flexGrow: 1, padding: '8px' }}>Sản phẩm</Title>
@@ -328,14 +374,14 @@ const BillDetail = () => {
                     <ShowProductModal idBill={bill.id} onClose={() => { loadBillDetail(); loadBill(); loadBillHistory(); }} />
                 ) : ''}
                 {
-                    bill.timeline == '6' && selectedRowKeys.length > 0 ? <ReturnProduct selectedRowKeysLength={selectedRowKeys.length} /> : ''
+                    bill.timeline == '6' && selectedRowKeys.length > 0 ? <ReturnProduct handleCreateReturnProduct={handleCreateReturnProduct} /> : ''
                 }
             </div>
             <Table
                 columns={columns}
-                rowSelection={bill.timeline === '6' ? rowSelection : null}
+                rowSelection={bill.timeline === '6' && listBillDetail.return_products && listBillDetail.return_products.reduce((total, item) => total + (item.price * item.quantity), 0) == 0 ? rowSelection : null}
                 dataSource={listBillDetail.variants ? listBillDetail.variants.map((item) => ({
-                    key: item.id,
+                    key: listBillDetail.bill_details.find((bill) => item.id === bill.variant_id)?.id,
                     name: item.product.name,
                     size: item.size.name,
                     color: item.color.name,

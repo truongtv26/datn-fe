@@ -2,7 +2,7 @@ import { Button, Col, Form, Input, Modal, Row } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import instance from '../../core/api';
-import GHNInfo from '../../components/GHNInfo';
+import GHNInfo from '../../components/GhnInfo';
 
 const ChangeBillAddress = ({ props, handleChangeInfo }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,25 +35,23 @@ const ChangeBillAddress = ({ props, handleChangeInfo }) => {
     const calculateFee = async () => {
         try {
             const response = await instance.post(
-                "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
+                "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
                 {
-                    service_id: 53320,
+                    service_id: 53321,
                     service_type_id: null,
-                    to_district_id: parseInt(dataAddress.district),
-                    to_ward_code: dataAddress.ward,
+                    to_district_id: Number(autoFillAddress.district),
+                    to_ward_code: autoFillAddress.ward,
                     height: 50,
                     length: 20,
                     weight: 200,
                     width: 20,
-                    cod_failed_amount: 2000,
-                    insurance_value: 10000,
-                    coupon: null,
+                    from_district_id: 3440,
                 },
                 {
                     headers: {
-                        Token: "aef361b5-f26a-11ed-bc91-ba0234fcde32",
+                        Token: "e81513ff-d137-11ee-9414-ce214539f696",
                         "Content-Type": "application/json",
-                        ShopId: 124173,
+                        ShopId: 4909460,
                     },
                 }
             );
@@ -63,7 +61,7 @@ const ChangeBillAddress = ({ props, handleChangeInfo }) => {
         }
     };
     const handleChange = async (data) => {
-        const feeShip = await calculateFee(); 
+        const feeShip = await calculateFee();
         Modal.confirm({
             title: "Xác nhận",
             maskClosable: true,
