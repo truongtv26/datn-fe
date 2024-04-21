@@ -226,7 +226,7 @@ const CheckPage = () => {
                                             </div>
                                             <div><Badge count={`-${promotion.value}%`} /></div>
                                         </Flex>
-                                        : <FormatCurrency props={record.original.price} />
+                                        : <FormatCurrency props={record.original.price * record.original.quantity} />
                                 }
                             </div>
                         </Flex>
@@ -303,12 +303,11 @@ const CheckPage = () => {
             money_ship: cost.shipping,
             payment: recipient.payment,
             return_payment: APP_URL + 'payment/',
-            money_reduce: cost.orders - (cost.orders + cost.shipping + cost.shippingDiscount + cost.ordersDiscount + cost.voucherDiscount),
+            money_reduce: cost.orders - (cost.orders + cost.ordersDiscount + cost.voucherDiscount),
             total_money: cost.orders,
             voucher_id: voucherSelected.id ?? null,
             order_details,
         }
-    
         recipient.payment ?
             createOrder(order)
                 .then((response) => {

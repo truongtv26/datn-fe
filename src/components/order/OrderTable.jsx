@@ -54,10 +54,10 @@ const OrderTable = ({ data, tabAction, setTabAction }) => {
                                    <FormatCurrency props={0} />
                               }
                               <div style={{ textDecoration: "line-through" }}>
-                                   <FormatCurrency props={order.total_money - order.money_reduce} />
+                                   <FormatCurrency props={order.total_money - order.money_reduce + Number(order.money_ship)} />
                               </div>
                          </> :
-                         <FormatCurrency props={order.total_money - order.money_reduce} />
+                         <FormatCurrency props={order.total_money + Number(order.money_ship) - order.money_reduce } />
                }
           },
           {
