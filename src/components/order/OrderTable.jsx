@@ -71,7 +71,6 @@ const OrderTable = ({ data, tabAction, setTabAction }) => {
                key: 'status',
                render: (_, { order }) => {
                     return <Flex vertical>
-                         <strong>{order.status.status}</strong>
                          <span>{order.status_histories.length > 0
                               ? order.status_histories[order.status_histories.length - 1].note : null}</span>
                     </Flex>

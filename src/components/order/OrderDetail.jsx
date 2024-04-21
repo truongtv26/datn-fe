@@ -259,16 +259,16 @@ const OrderDetail = ({ order, setTabAction, tabAction }) => {
 
      const handleReturnOrder = () => {
           instance.post("return_order/" + order.id)
-          .then((res) => {
-               if (res.status === 204) {
-                    toast.success("Yêu cầu trả hàng thành công")
-               } else {
+               .then((res) => {
+                    if (res.status === 204) {
+                         toast.success("Yêu cầu trả hàng thành công")
+                    } else {
+                         toast.error("Yêu cầu trả hàng thất bại")
+                    }
+               })
+               .catch((err) => {
                     toast.error("Yêu cầu trả hàng thất bại")
-               }
-          })
-          .catch((err) => {
-               toast.error("Yêu cầu trả hàng thất bại")
-          })
+               })
      }
 
      // validate
