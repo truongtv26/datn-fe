@@ -9,7 +9,6 @@ const OrderStatusTimeLine = ({ data }) => {
                     items={data.map(status => {
                          return {
                               children: <>
-                                   <p><strong>{status.status.status}</strong></p>
                                    <p>{status.note}</p>
                                    <p><FormatDate date={status.created_at} /></p>
                               </>

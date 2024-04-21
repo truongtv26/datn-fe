@@ -259,16 +259,16 @@ const OrderDetail = ({ order, setTabAction, tabAction }) => {
 
      const handleReturnOrder = () => {
           instance.post("return_order/" + order.id)
-          .then((res) => {
-               if (res.status === 204) {
-                    toast.success("Yêu cầu trả hàng thành công")
-               } else {
+               .then((res) => {
+                    if (res.status === 204) {
+                         toast.success("Yêu cầu trả hàng thành công")
+                    } else {
+                         toast.error("Yêu cầu trả hàng thất bại")
+                    }
+               })
+               .catch((err) => {
                     toast.error("Yêu cầu trả hàng thất bại")
-               }
-          })
-          .catch((err) => {
-               toast.error("Yêu cầu trả hàng thất bại")
-          })
+               })
      }
 
      // validate
@@ -560,10 +560,10 @@ const OrderDetail = ({ order, setTabAction, tabAction }) => {
                                                        <div>
                                                             <strong>Thanh toán</strong>
                                                             <Flex gap={5} vertical>
-                                                                 <span>Đơn hàng: <strong><FormatCurrency props={Number(order.total_money) + Number(order.money_reduce)} /></strong></span>
+                                                                 <span>Đơn hàng: <strong><FormatCurrency props={Number(order.total_money) + Number(order.money_ship) - Number(order.money_reduce)} /></strong></span>
 
                                                                  <span>Vận chuyển: <strong><FormatCurrency props={order.money_ship} /></strong></span>
-                                                                 <span>Giảm giá: <strong><FormatCurrency props={-((Number(order.total_money) + Number(order.money_reduce) + Number(order.money_ship)) - order.total_money)} /></strong></span>
+                                                                 <span>Giảm giá: <strong><FormatCurrency props={Number(order.money_reduce)} /></strong></span>
                                                                  <Flex gap={5}>Tổng thanh toán :{
                                                                       order.payment_id === 101 && order.is_payment ?
                                                                            <Flex gap={5}>
@@ -571,10 +571,10 @@ const OrderDetail = ({ order, setTabAction, tabAction }) => {
                                                                                      <strong><FormatCurrency props={0} /></strong>
                                                                                 </div>
                                                                                 <div style={{ textDecoration: "line-through" }}>
-                                                                                     <FormatCurrency props={order.total_money} />
+                                                                                     <FormatCurrency props={Number(order.total_money) + Number(order.money_ship) - Number(order.money_reduce)} />
                                                                                 </div>
                                                                            </Flex> :
-                                                                           <strong><FormatCurrency props={order.total_money} /></strong>
+                                                                           <strong><FormatCurrency props={Number(order.total_money) + Number(order.money_ship) - Number(order.money_reduce)} /></strong>
                                                                  }</Flex>
                                                                  <span>Hình thức thanh toán: <strong>{orderDetail.payment.method} {order.payment_id === 2 && order.status_id === 1 && <>(Chưa thanh toán)</>}</strong></span>
                                                                  <div>
@@ -595,22 +595,25 @@ const OrderDetail = ({ order, setTabAction, tabAction }) => {
                                                   <Space gap={10}>
                                                        {
                                                             [100, 101, 102, 103].includes(order.status_id) && <>
-                                                                 <Button type="primary" htmlType="submit">
-                                                                      Cập nhật
-                                                                 </Button>
-                                                                 {
-                                                                      [100].includes(order.status_id) && <>
-                                                                           <Button onClick={handlePaymentOrder} type="primary">
-                                                                                Thanh toán
-                                                                           </Button></>
-                                                                 }
-                                                                 <Button onClick={handleDeleteOrder} type="primary" danger>
-                                                                      Hủy đơn hàng
-                                                                 </Button></>
+                                                                 {order.timeline < 5 && <>
+                                                                      <Button type="primary" htmlType="submit">
+                                                                           Cập nhật
+                                                                      </Button>
+                                                                      {
+                                                                           [100].includes(order.status_id) && <>
+                                                                                <Button onClick={handlePaymentOrder} type="primary">
+                                                                                     Thanh toán
+                                                                                </Button></>
+                                                                      }
+                                                                      <Button onClick={handleDeleteOrder} type="primary" danger>
+                                                                           Hủy đơn hàng
+                                                                      </Button>
+                                                                 </>}
+                                                            </>
                                                        }
                                                        {
                                                             [105].includes(order.status_id) &&
-                                                            <Button type="primary" onClick={()=>handleReturnOrder()}>
+                                                            <Button type="primary" onClick={() => handleReturnOrder()}>
                                                                  Trả hàng
                                                             </Button>
                                                        }
