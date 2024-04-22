@@ -607,6 +607,9 @@ const OrderDetail = ({ order, setTabAction, tabAction }) => {
                                                                       Hủy đơn hàng
                                                                  </Button></>
                                                        }
+                                                       {
+                                                           order.status_id == 108 && order.is_payment == 1 && order.payment_id == 101 && (<p>Vui lòng liên hệ zalo: <b>0982968640</b> để được hoàn tiền cho đơn hàng này!</p>)
+                                                       }
                                                   </Space>
                                              </Flex>
                                         </Form.Item>
