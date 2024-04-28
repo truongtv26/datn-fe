@@ -26,6 +26,7 @@ const CheckPage = () => {
     const [form] = Form.useForm();
     const [orderServices, setOrderServices] = useState([])
     const [leadtimeService, setLeadtimeService] = useState(null)
+    const [isCreateOrderAction, setIsCreateOrderAction] = useState(false)
 
     // trạng thái người gửi hàng
     const [depositor, setDepositor] = useState(
@@ -274,6 +275,7 @@ const CheckPage = () => {
 
     // validate
     const onFinish = () => {
+        setIsCreateOrderAction(true)
         const order_details = cartItemSelected.map((item) => {
             const promotion = item.action.promotions.length > 0 && item.action.promotions[0]?.status === "happenning" ?
                 item.action.promotions[0] : null
@@ -308,6 +310,7 @@ const CheckPage = () => {
             voucher_id: voucherSelected.id ?? null,
             order_details,
         }
+        
         recipient.payment ?
             createOrder(order)
                 .then((response) => {
@@ -318,13 +321,17 @@ const CheckPage = () => {
                         }
                         navigate('/order')
                     } else {
-                        toast.error(response.message.message)
+                        toast.error(response.data.message)
                     }
                 })
                 .catch((error) => {
                     toast.error("Đặt hàng thất bại!");
                 })
+                .finally(()=> {
+                    setIsCreateOrderAction(false)
+                })
             : toast.error("Vui lòng chọn phương thức thanh toán!")
+
 
     };
 
@@ -587,7 +594,7 @@ const CheckPage = () => {
                                 <div style={{ marginTop: "10px" }}>
                                     <Form.Item>
                                         <Space>
-                                            <Button type="primary" htmlType="submit">
+                                            <Button type="primary" htmlType="submit" disabled={isCreateOrderAction}>
                                                 Đặt hàng
                                             </Button>
                                         </Space>

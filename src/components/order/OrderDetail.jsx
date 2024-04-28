@@ -152,31 +152,31 @@ const OrderDetail = ({ order, setTabAction, tabAction }) => {
                                    <Flex vertical>
                                         <InputNumber
                                              name='product'
-                                             onChange={(value) => {
-                                                  const updatedOrderDetail = [...orderDetailChange];
+                                             // onChange={(value) => {
+                                             //      const updatedOrderDetail = [...orderDetailChange];
 
-                                                  // Kiểm tra sự tồn tại cẩu variant
-                                                  const existingItemIndex = updatedOrderDetail.findIndex((item) => item.id === product.id);
+                                             //      // Kiểm tra sự tồn tại cẩu variant
+                                             //      const existingItemIndex = updatedOrderDetail.findIndex((item) => item.id === product.id);
 
-                                                  // Nếu tồn tại cập nhật quantity
-                                                  if (existingItemIndex !== -1) {
-                                                       updatedOrderDetail[existingItemIndex] = {
-                                                            id: product.id,
-                                                            quantity: value
-                                                       };
-                                                  } else {
-                                                       // Không tồn tại thêm mới
-                                                       updatedOrderDetail.push({
-                                                            id: product.id,
-                                                            quantity: value
-                                                       });
-                                                  }
-                                                  setOrderDetailChange(updatedOrderDetail);
-                                             }}
+                                             //      // Nếu tồn tại cập nhật quantity
+                                             //      if (existingItemIndex !== -1) {
+                                             //           updatedOrderDetail[existingItemIndex] = {
+                                             //                id: product.id,
+                                             //                quantity: value
+                                             //           };
+                                             //      } else {
+                                             //           // Không tồn tại thêm mới
+                                             //           updatedOrderDetail.push({
+                                             //                id: product.id,
+                                             //                quantity: value
+                                             //           });
+                                             //      }
+                                             //      setOrderDetailChange(updatedOrderDetail);
+                                             // }}
                                              size="small"
                                              min={1}
                                              max={product.variant.quantity + product.quantity}
-                                             defaultValue={product.quantity} />
+                                             value={product.quantity} />
                                         <h5>{product.variant.quantity} sản phẩn có sẵn</h5>
                                    </Flex>
                                    <Flex>
@@ -290,9 +290,8 @@ const OrderDetail = ({ order, setTabAction, tabAction }) => {
                          address,
                          address_information
                     }
-                    instance.put(`/order/${order.id}`, { orderData, orderDetailChange })
+                    instance.put(`/order/${order.id}`, { orderData })
                          .then((res) => {
-                              console.log(res);
                               if (res.status === 200) {
                                    toast.success("Cập nhật đơn hàng thành công!")
                                    setTimeout(() => {

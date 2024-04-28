@@ -7,9 +7,11 @@ let paymentCalled = false;
 const PaymentPage = () => {
 
      const [isPayment, setIsPayment] = useState(false)
+     const [paymentMessage, setPaymentMessage] = useState(null)
+     const [countdown, setCountdown] = useState(5);
      useEffect(() => {
           if (!paymentCalled) {
-               paymentCalled = true; // Set flag to true indicating that the API call has been made
+               paymentCalled = true;
 
                const urlSearchParams = new URLSearchParams(window.location.search);
                const params = {};
@@ -23,25 +25,38 @@ const PaymentPage = () => {
                          console.log(res);
                          if (res.status === 200) {
                               setIsPayment(true);
-                              setTimeout(() => {
-                                   window.close()
-                              }, 2000);
+                              startCountdown();
+                              setPaymentMessage(res.data.message)
                          } else {
                               setIsPayment(false);
                          }
+                         setPaymentMessage(res.data.message)
                     })
                     .catch((err) => {
-                         console.log(err);
+                         setPaymentMessage(err.data.message)
                     });
           }
      }, []);
 
-     return (
-          <div className="container mx-auto" style={{width: "100%", height: "100%"}}>
-               <Flex vertical justify='center' align='center'>
-                    {
-                         isPayment ? <>Đơn hàng đã được thanh toán thành công</> : <>Chờ thanh toán</>
+     const startCountdown = () => {
+          const timer = setInterval(() => {
+               setCountdown((prev) => {
+                    if (prev === 0) {
+                         clearInterval(timer);
+                         setIsPayment(false);
+                         window.close()
                     }
+                    return prev - 1;
+               });
+          }, 1000);
+     };
+
+     return (
+          <div className="container mx-auto" style={{ width: "100vh", height: "100vh" }}>
+               <Flex vertical justify='center' align='center' style={{ margin: "0 auto", height: "100%" }}>
+                    <p style={{ fontWeight: "bold" }}>{isPayment ? paymentMessage : <>Chờ thanh toán</>}</p>
+                    <p style={{ fontWeight: "bold", cursor: "pointer" }} onClick={() => window.close()}>Đóng</p>
+                    { isPayment ? <p>Đóng trong {countdown} giây</p> : null }
                </Flex>
 
           </div>
