@@ -25,10 +25,10 @@ const options = {
     legend: {
       position: 'top',
     },
-    title: {
-      display: true,
-      text: 'Thống kê đơn hàng',
-    },
+    // title: {
+    //   display: true,
+    //   text: 'Thống kê đơn hàng',
+    // },
     
   },
 };

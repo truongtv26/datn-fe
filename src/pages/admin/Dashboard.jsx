@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Flex, Row, Col, Select } from "antd";
+import { Flex, Row, Col, Select, Typography, Table } from "antd";
 import {
   DropboxOutlined,
   InboxOutlined,
@@ -10,6 +10,7 @@ import OrderStatistic from "../../components/statistic/OrderStatistic";
 import instance from "../../core/api";
 import FormatCurrency from "../../utils/FormatCurrency";
 import DefaultRenderEmpty from "antd/es/config-provider/defaultRenderEmpty";
+import { Chart } from "react-google-charts";
 
 const statisticOptions = [
   {
@@ -29,6 +30,8 @@ const statisticOptions = [
     label: "Năm nay",
   },
 ];
+const { Title } = Typography;
+
 const Dashboard = () => {
   const [orderData, setOrderData] = useState({
     labels: [],
@@ -39,6 +42,8 @@ const Dashboard = () => {
     sales: 0,
   });
   const [selectOption, setSelectOption] = useState(statisticOptions[0].value);
+  const [topProduct, setTopProduct] = useState([]);
+  const [statusBillToday, setstatusBillToday] = useState([]);
 
   useEffect(() => {
     instance
@@ -60,7 +65,7 @@ const Dashboard = () => {
           setOrderData({ ...orderData, ...data });
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, [selectOption]);
   useEffect(() => {
     instance.post("dashboard-statistic").then((res) => {
@@ -78,6 +83,75 @@ const Dashboard = () => {
   const handleChange = (option) => {
     setSelectOption(option);
   };
+
+  useEffect(() => {
+    instance.get("/get-top-bill").then(({ data }) => {
+      setTopProduct(data);
+    });
+  }, []);
+
+  useEffect(() => {
+    instance.get("/get-status-bill-today").then(({ data }) => {
+      const temp = data.map(item => {
+        let name = "";
+        switch (item.timeline) {
+          case '2':
+            name = "Chờ xác nhận";
+            break;
+          case '3':
+            name = "Xác nhận thanh toán";
+            break;
+          case '4':
+            name = "Chờ giao";
+            break;
+          case '5':
+            name = "Đang giao";
+            break;
+          case '6':
+            name = "Hoàn thành";
+            break;
+          case '7':
+            name = "Hủy";
+            break;
+          case '8':
+            name = "Hoàn 1 phần";
+            break;
+          default:
+            name = "";
+        }
+        return {
+          name: name,
+          total_quantity: item.total_quantity
+        };
+      });
+      setstatusBillToday(temp);
+    });
+  }, []);
+
+  const columns = [
+    {
+      title: '#',
+      dataIndex: 'index',
+      key: 'index',
+      render: (_, __, index) => (
+        index + 1
+      ),
+    },
+    {
+      title: 'Sản phẩm',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Số lượng bán ra',
+      dataIndex: 'total_quantity',
+      key: 'total_quantity',
+    },
+  ];
+
+  const pieChartData = statusBillToday.map(item => [item.name, item.total_quantity]);
+
+
   return (
     <Flex vertical>
       <Row gutter={24}>
@@ -203,21 +277,51 @@ const Dashboard = () => {
         </Col>
       </Row>
       <Row style={{ marginTop: "40px" }}>
-        <Flex vertical style={{ width: "100%" }}>
-          <p style={{ fontSize: "30px", fontStyle: "italic" }}>
-            Thống kê đơn hàng
-          </p>
-          <Select
-            defaultValue="Hôm nay"
-            style={{
-              width: 120,
-            }}
-            onChange={handleChange}
-            options={statisticOptions}
+        <Flex vertical style={{ width: "50%" }}>
+          <div>
+            <Title level={5}>Thống kê sản phẩm bán chạy</Title>
+            <Table
+              dataSource={topProduct ? topProduct.map((item, index) => ({
+                name: `${item.product.name} [${item.color.name}-${item.size.name}]`,
+                total_quantity: item.total_quantity,
+              })) : []} // Adding a conditional check here
+              columns={columns}
+              pagination={false}
+            />
+          </div>
+        </Flex>
+        <Flex vertical style={{ width: "50%" }}>
+          <Title level={5}>Thống kê trạng thái đơn hàng hôm nay</Title>
+          <Chart
+            chartType="PieChart"
+            data={[
+              ['Task', 'Hours per Day'],
+              ...pieChartData,
+            ]}
+            width="100%"
+            height="400px"
+            legendToggle
           />
-          {orderData && <OrderStatistic chartData={orderData} />}
         </Flex>
       </Row>
+      <div style={{ marginTop: "40px", width: "100% !important" }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div>
+            <Title level={5}>Thống kê đơn hàng</Title>
+          </div>
+          <div>
+            <Select
+              defaultValue="Hôm nay"
+              style={{
+                width: 120,
+              }}
+              onChange={handleChange}
+              options={statisticOptions}
+            />
+          </div>
+        </div>
+        {orderData && <OrderStatistic chartData={orderData} />}
+      </div>
     </Flex>
   );
 };
