@@ -51,7 +51,11 @@ const onChange = (e) => {
 
 
 const categories = [
+<<<<<<< HEAD
 	{ image: 'https://sportshoeapparel.com/wp-content/uploads/2019/04/footwear-mens-banner-2.jpg' },
+=======
+	{ image: 'https://supersports.com.vn/cdn/shop/files/PAYDAY_25-30.04_1545_500_V.jpg?v=1714041328&width=1400' },
+>>>>>>> develop
 ];
 
 const ListProduct = () => {
@@ -118,8 +122,7 @@ const ListProduct = () => {
 
 			<Layout>
 				<Sider width={200} style={{ background: colorBgContainer }}>
-					<h2>Lọc theo giá</h2>
-
+					<h2 style={{marginTop: '24px'}}>Lọc sản phẩm</h2>
 					{/* Tối thiểu và tối đa product price range */}
 					<div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px', fontSize: '16px' }}>
 						<div style={{ marginTop: '10px', marginRight: '5px' }} >

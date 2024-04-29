@@ -46,25 +46,25 @@ const Register = () => {
 
      return (
           <Form form={form} name="vertical_login" layout="inline" onFinish={onFinish} className='mx-auto flex flex-col items-center w-[240px] sm:w-[350px] md:w-[400px]'>
-               <p style={{ fontSize: '24px' }} className='mb-5' >Login</p>
+               <p style={{ fontSize: '24px' }} className='mb-5' >Đăng ký</p>
                <Form.Item
                     name="name"
                     rules={[
                          {
                               required: true,
-                              message: 'Please input your username!',
+                              message: 'Vui lòng điền tên người dùng!',
                          }
                     ]}
                     style={{ marginBottom: '20px', width: '100%' }}
                >
-                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Tên người dùng" />
                </Form.Item>
                <Form.Item
                     name="email"
                     rules={[
                          {
                               required: true,
-                              message: 'Please input your email!',
+                              message: 'Vui lòng điền email!',
                          },
                          {
                               validator: validateEmail,
@@ -79,7 +79,7 @@ const Register = () => {
                     rules={[
                          {
                               required: true,
-                              message: 'Please input your password!',
+                              message: 'Vui lòng điền mật khẩu!',
                          },
                     ]}
                     style={{marginBottom: '20px', width: '100%' }}
@@ -87,7 +87,7 @@ const Register = () => {
                     <Input
                          prefix={<LockOutlined className="site-form-item-icon" />}
                          type="password"
-                         placeholder="Password"
+                         placeholder="Mật khẩu"
                     />
                </Form.Item>
                <Form.Item
@@ -97,14 +97,14 @@ const Register = () => {
                     rules={[
                          {
                               required: true,
-                              message: 'Please confirm your password!',
+                              message: 'Vui lòng nhập lại mật khẩu!',
                          },
                          ({ getFieldValue }) => ({
                               validator(_, value) {
                                    if (!value || getFieldValue('password') === value) {
                                         return Promise.resolve();
                                    }
-                                   return Promise.reject('The passwords do not match!');
+                                   return Promise.reject('Mật khẩu không trùng khớp!');
                               },
                          }),
                     ]}
@@ -113,10 +113,11 @@ const Register = () => {
                     <Input
                          prefix={<LockOutlined className="site-form-item-icon" />}
                          type="password"
-                         placeholder="Confirm Password"
+                         placeholder="Xác nhận mật khẩu"
                     />
                </Form.Item>
-               <Link to={'/login'} className='self-end'>Login</Link>
+               <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '8px'}}>
+               <Link to={'/login'} className='self-end'  style={{marginRight: '8px'}}>Đăng nhập</Link>
                <span className='text-red-500 mb-'>{errorMessage ?? ''}</span>
                <Form.Item shouldUpdate>
                     {() => (
@@ -131,10 +132,11 @@ const Register = () => {
                               className='bg-[#4096FF]'
                          >
                               {isRegister && <Spin indicator={<LoadingOutlined style={{fontSize: 24, color: '#fff', marginRight: '5px'}} spin />}/>}
-                              Register
+                              Đăng ký
                          </Button>
                     )}
                </Form.Item>
+               </div>
           </Form>
      );
 };

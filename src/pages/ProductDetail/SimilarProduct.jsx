@@ -46,37 +46,38 @@ const data = [
 
 export const SimilarProduct = () => {
   return (
-    <div className={styles["similar-wrapper"]}>
-      <h3 className="text-center text-3xl" style={{ marginBottom: 20 }}>
-        Sản phẩm tương tự
-      </h3>
+    // <div className={styles["similar-wrapper"]}>
+    //   <h3 className="text-center text-3xl" style={{ marginBottom: 20 }}>
+    //     Sản phẩm tương tự
+    //   </h3>
 
-      <Row gutter={[16]}>
-        {data.map(({ id, image, name, price }) => (
-          <Col key={id} xs={24} lg={6}>
-            <a href="">
-              <div className={styles["card"]}>
-                <img src={image} alt="" width="100%" />
-                <h4 className={`${styles["card-name"]} text-center`}>{name}</h4>
-                <Flex justify="center" className="price">
-                  <p className="new-price">
-                    {new Intl.NumberFormat("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                    }).format(price)}
-                  </p>
-                  <p className="old-price">
-                    {new Intl.NumberFormat("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                    }).format(price)}
-                  </p>
-                </Flex>
-              </div>
-            </a>
-          </Col>
-        ))}
-      </Row>
-    </div>
+    //   <Row gutter={[16]}>
+    //     {data.map(({ id, image, name, price }) => (
+    //       <Col key={id} xs={24} lg={6}>
+    //         <a href="">
+    //           <div className={styles["card"]}>
+    //             <img src={image} alt="" width="100%" />
+    //             <h4 className={`${styles["card-name"]} text-center`}>{name}</h4>
+    //             <Flex justify="center" className="price">
+    //               <p className="new-price">
+    //                 {new Intl.NumberFormat("vi-VN", {
+    //                   style: "currency",
+    //                   currency: "VND",
+    //                 }).format(price)}
+    //               </p>
+    //               <p className="old-price">
+    //                 {new Intl.NumberFormat("vi-VN", {
+    //                   style: "currency",
+    //                   currency: "VND",
+    //                 }).format(price)}
+    //               </p>
+    //             </Flex>
+    //           </div>
+    //         </a>
+    //       </Col>
+    //     ))}
+    //   </Row>
+    // </div>
+    <></>
   );
 };

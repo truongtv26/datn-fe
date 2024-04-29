@@ -206,10 +206,6 @@ const ProductDetailPage = () => {
 					},
 					{
 						href: "",
-						title: `product`,
-					},
-					{
-						href: "",
 						title: `${slug}`,
 					},
 				]}
@@ -278,7 +274,7 @@ const ProductDetailPage = () => {
 							{coupon && coupon.value ? <Badge count={`-${coupon.value}%`} style={{ opacity: "1" }} /> : null}
 						</Flex>
 						<Flex gap={40} className={styles["size-box"]}>
-							<p className={styles["label"]}>Size</p>
+							<p style={{textTransform: 'capitalize', fontWeight: 'bold'}}>Size</p>
 							<Flex gap={12}>
 								<Radio.Group options={
 									attributes?.sizes?.map(size => ({
@@ -292,7 +288,7 @@ const ProductDetailPage = () => {
 							</Flex>
 						</Flex>
 						<Flex gap={40} className={styles["size-box"]}>
-							<p className={styles["label"]}>Colors</p>
+							<p style={{textTransform: 'capitalize', fontWeight: 'bold'}}>Màu sắc</p>
 							<Flex gap={12}>
 								<Radio.Group options={
 									attributes?.colors?.map(color => ({
@@ -306,7 +302,7 @@ const ProductDetailPage = () => {
 							</Flex>
 						</Flex>
 						<Flex gap={40} className={styles["size-box"]} style={{ border: "none", alignItems: 'center' }}>
-							<p className={styles["label"]}>Quantity</p>
+							<p style={{textTransform: 'capitalize', fontWeight: 'bold'}}>Số lượng</p>
 							<InputNumber min={1} max={variant.quantity} defaultValue={1}
 								disabled={variant.id && variant.quantity > 0 ? false : true}
 								onChange={(number) => {

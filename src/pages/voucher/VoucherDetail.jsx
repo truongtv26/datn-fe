@@ -212,7 +212,7 @@ const VoucherDetail = () => {
                             <UserTable setUserIds={setUserIds} resetSelectedRowKeys={resetSelectedRowKeys} listUser={userIds}></UserTable>
                         </Col>
                         <Col xl={24}>
-                            <Button type="primary" htmlType="submit">Thêm phiếu giảm giá</Button>
+                            <Button type="primary" htmlType="submit">Cập nhật phiếu giảm giá</Button>
                         </Col>
                     </Row>
                 </Form >

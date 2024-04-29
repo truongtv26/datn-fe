@@ -9,32 +9,36 @@ const Footer = () => {
 			<div className='footer container mx-auto'>
 				<div className='main-footer'>
 					<div className='footer-items'>
-						<p className='title'>Bạn cần giúp đỡ?</p>
-						<ul className='mt-2'>
-							<li>Email: fshoes@gmail.com</li>
-							<li>Phone: 0982968640</li>
+						<p className='title'>Bạn cần giúp đỡ ?</p>
+						<ul>
+							<li>Chúng tôi sẽ giải đáp những thắc mắc và yêu cầu của bạn qua</li>
+							<li>Email: info@example.com</li>
+							<li>Điện thoại: 0987654321</li>
 						</ul>
 					</div>
 					<div style={{ border: '1px solid var(--secondary-color)', margin: '0 40px' }}></div>
 					<div className='footer-items'>
-						<p className='title'>Trung tâm Trợ giúp</p>
-						<ul className='mt-2'>
-							<li><Link to={'/order'} style={{color: "black"}}>Đơn hàng của bạn</Link></li>
-							<li>Đổi trả & Thay thế</li>
-							<li>Chính sách vận chuyển</li>
-							<li>Chính sách hoàn tiền</li>
+						<p className='title'>Hãy để chúng tôi giúp bạn</p>
+						<ul>
+							<li>Về khả năng truy cập</li>
+							<li>Đơn đặt hàng của bạn</li>
+							<li>Trả lại & Thay thế</li>
+							<li>Giá & Chính sách vận chuyển</li>
+							<li>Chính sách hoàn tiền và trả lại</li>
 							<li>Chính sách bảo mật</li>
-							<li>Điều khoản và điều kiện</li>
+							<li>Các điều khoản và điều kiện</li>
 							<li>Trung tâm trợ giúp</li>
 						</ul>
 					</div>
 					<div style={{ border: '1px solid var(--secondary-color)', margin: '0 40px' }}></div>
 					<div className='footer-items'>
-						<p className='title'>Về chúng tôi</p>
-						<ul className='mt-3'>
-							<li>Tìm hiểu về chúng tôi</li>
-							<li>Đánh giá từ khách hàng</li>
-							<li>Inverstor Relations</li>
+						<p className='title'>Làm sao để hiểu F Shoes</p>
+						<ul>
+							<li>Sự nghiệp cho F Shoes</li>
+							<li>Giới thiệu về F Shoes</li>
+							<li>Quan hệ đầu tư</li>
+							<li>Phản hồi khách hàng</li>
+							<li>Trách nhiệm xã hội</li>
 							<li>Địa điểm cửa hàng</li>
 						</ul>
 					</div>
@@ -42,16 +46,18 @@ const Footer = () => {
 				<div style={{ border: '1px solid var(--secondary-color)', margin: '0 40px' }}></div>
 				<div className='bottom-footer'>
 					<ul className='items'>
-						{/* <li style={{ fontWeight: 'bold', fontSize: '16px' }}>Follow us: </li>
+						<li style={{ fontWeight: 'bold', fontSize: '16px' }}>Theo dõi chúng tôi: </li>
 						<li><TwitterOutlined /></li>
 						<li><YoutubeFilled /></li>
 						<li><InstagramFilled /></li> */}
 					</ul>
-					<ul className='items' style={{display: "flex", gap: "15px"}}>
-						<li style={{ fontWeight: 'bold', fontSize: '16px' }}>Phương thức thanh toán </li>
-						<li><img width="36" height="12" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0pp5uI4G0zmb28iTUKMClIPx-rCY65GfS2wiol-f6&s" alt="payment" data-lazy-src="../../../754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/11/visa.png" data-ll-status="loaded" className="entered lazyloaded" /></li>
-						<li><img width="24" height="16" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgptLtdy8VJK58ew45RdsyjUUltFG4zYl0_SuUPTSLxw&s" alt="payment" data-lazy-src="../../../754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/11/visa.png" data-ll-status="loaded" className="entered lazyloaded" /></li>
-					</ul>
+					{/* <ul className='items'>
+						<li style={{ fontWeight: 'bold', fontSize: '16px' }}>We accept:</li>
+						<li><img width="36" height="12" src="https://static-00.iconduck.com/assets.00/visa-icon-2048x628-6yzgq2vq.png" alt="payment" data-lazy-src="../../../754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/11/visa.png" data-ll-status="loaded" className="entered lazyloaded" /></li>
+						<li><img width="24" height="16" src="https://cdn.iconscout.com/icon/free/png-256/free-mastercard-3521564-2944982.png" alt="payment" data-lazy-src="../../../754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/11/visa.png" data-ll-status="loaded" className="entered lazyloaded" /></li>
+						<li><img width="36" height="12" src="https://static-00.iconduck.com/assets.00/visa-icon-2048x628-6yzgq2vq.png" alt="payment" data-lazy-src="../../../754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/11/visa.png" data-ll-status="loaded" className="entered lazyloaded" /></li>
+						<li><img width="24" height="16" src="https://cdn.iconscout.com/icon/free/png-256/free-mastercard-3521564-2944982.png" alt="payment" data-lazy-src="../../../754969b0.rocketcdn.me/blonwe/grocery/wp-content/uploads/sites/5/2023/11/visa.png" data-ll-status="loaded" className="entered lazyloaded" /></li>
+					</ul> */}
 				</div>
 			</div>
 		</>

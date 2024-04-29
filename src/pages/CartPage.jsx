@@ -21,7 +21,7 @@ const CartPage = () => {
     return (
         <div className="container mx-auto">
             <div className="top-content">
-                <a href="">Home {`>`} </a><span>Cart</span>
+                <a href="">Trang chủ {`/`} </a><span>Giỏ hàng</span>
             </div>
             <div className="content-cart">
                 {
