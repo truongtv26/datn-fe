@@ -304,24 +304,48 @@ const Dashboard = () => {
           />
         </Flex>
       </Row>
-      <div style={{ marginTop: "40px", width: "100% !important" }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div>
-            <Title level={5}>Thống kê đơn hàng</Title>
+      <Row style={{width: "100%", display: "flex"}} gutter={24}>
+        <Col span={12}>
+          <div style={{ marginTop: "40px", width: "100% !important" }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div>
+                <Title level={5}>Thống kê đơn hàng</Title>
+              </div>
+              <div>
+                <Select
+                  defaultValue="Hôm nay"
+                  style={{
+                    width: 120,
+                  }}
+                  onChange={handleChange}
+                  options={statisticOptions}
+                />
+              </div>
+            </div>
+            {orderData && <OrderStatistic chartData={orderData} />}
           </div>
-          <div>
-            <Select
-              defaultValue="Hôm nay"
-              style={{
-                width: 120,
-              }}
-              onChange={handleChange}
-              options={statisticOptions}
-            />
+        </Col>
+        <Col span={12}>
+        <div style={{ marginTop: "40px", width: "100% !important" }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div>
+                <Title level={5}>Thống kê doanh thu</Title>
+              </div>
+              <div>
+                <Select
+                  defaultValue="Hôm nay"
+                  style={{
+                    width: 120,
+                  }}
+                  onChange={handleChange}
+                  options={statisticOptions}
+                />
+              </div>
+            </div>
+            {orderData && <OrderStatistic chartData={orderData} />}
           </div>
-        </div>
-        {orderData && <OrderStatistic chartData={orderData} />}
-      </div>
+        </Col>
+      </Row>
     </Flex>
   );
 };
