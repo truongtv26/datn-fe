@@ -121,12 +121,14 @@ const CarouselSection = () => {
                               autoplaySpeed={3000}
                               draggable
                          >
-                              <div>
+                             <div>
                                    <div >
                                         <Image
                                              preview={false}
                                              className='w-full md:h-[178px]'
-                                             src={'https://graphicsfamily.com/wp-content/uploads/2020/07/Shoes-Advertising-Banner-Design-Template-scaled.jpg'} />
+                                             width={'100%'}
+                                             height={'178px'}
+                                             src={'https://lambanner.com/wp-content/uploads/2022/10/MNT-DESIGN-BANNER-GIAY-11.jpg'} />
                                    </div>
                               </div>
                               <div>
@@ -134,7 +136,9 @@ const CarouselSection = () => {
                                         <Image
                                              preview={false}
                                              className='w-full md:h-[178px]'
-                                             src={'https://graphicsfamily.com/wp-content/uploads/2020/07/Shoes-Advertising-Banner-Design-Template-scaled.jpg'} />
+                                             width={'100%'}
+                                             height={'178px'}
+                                             src={'https://tse1.mm.bing.net/th?id=OIP.OA-ERPVPk1tDdyudaGJ2RwHaC5&pid=Api&P=0&h=220'} />
                                    </div>
                               </div>
                               <div>
@@ -142,7 +146,9 @@ const CarouselSection = () => {
                                         <Image
                                              preview={false}
                                              className='w-full md:h-[178px]'
-                                             src={'https://graphicsfamily.com/wp-content/uploads/2020/07/Shoes-Advertising-Banner-Design-Template-scaled.jpg'} />
+                                             width={'100%'}
+                                             height={'178px'}
+                                             src={'https://thietke6d.com/wp-content/uploads/2021/05/banner-quang-cao-giay-3.webp'} />
                                    </div>
                               </div>
                          </Carousel>
