@@ -14,11 +14,13 @@ const ProductList = ({data, setProductPage, totalpage}) => {
      <div className='product-wrapper'>
 				<div className="flex flex-wrap justify-start">
                          {data && Object.keys(data).length > 0 ? data?.map((product, index) => {
+							const promotion = product.variants.filter((variant) =>variant?.promotions.length > 0).filter((variant) =>variant?.promotions[0].status === 'happenning')[0]?.promotions[0]
 						const priceRange = product.variants.map(variant => variant.price);
 						const image = product.variants.map(variant => variant.images[0])[0]
 						const productImage = VITE_URL + 'storage/'+ image?.folder + '/' + image?.url;
 						return <div key={index} className='product-items'>
-							<div className="product-badges">20%</div>
+							{promotion? <div className="product-badges">{promotion?.value}%</div>: null}
+							
 							<Link to={`/product/${product.slug}`} onClick= {() => window.scrollTo(0, 0)}>
 								<Card
 									size='small'
@@ -27,7 +29,7 @@ const ProductList = ({data, setProductPage, totalpage}) => {
                                              bordered={false}
                                              style={{ boxShadow: 'none' }}
 								>
-									<Rate disabled allowHalf defaultValue={product.rate} className='rate' />
+									{/* <Rate disabled allowHalf defaultValue={product.rate} className='rate' /> */}
 									<p className='product-name'>{product.name}</p>
 									<div className='price'>
 										<p className="new-price">
