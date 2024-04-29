@@ -42,6 +42,11 @@ const Dashboard = () => {
     sales: 0,
   });
   const [selectOption, setSelectOption] = useState(statisticOptions[0].value);
+  const [revenueOption, setRevenueOption] = useState(statisticOptions[0].value);
+  const [revenueData, setRevenueData] = useState({
+    labels: [],
+    datasets: [],
+  })
   const [topProduct, setTopProduct] = useState([]);
   const [statusBillToday, setstatusBillToday] = useState([]);
 
@@ -67,6 +72,26 @@ const Dashboard = () => {
       })
       .catch((err) => { });
   }, [selectOption]);
+
+  useEffect(()=>{
+    instance.post('/revenue', { by: revenueOption})
+    .then((res) => {
+      if (res.status === 200) {
+        const data = {
+          labels: Object.keys(res.data),
+          datasets: [
+            {
+              label: "Doanh thu",
+              data: Object.keys(res.data).map((key) => res.data[key]),
+              backgroundColor: "#2643b5",
+            },
+          ],
+        };
+        setRevenueData({ ...revenueData, ...data });
+      }
+    })
+  }, [revenueOption])
+
   useEffect(() => {
     instance.post("dashboard-statistic").then((res) => {
       if (res.status === 200) {
@@ -83,6 +108,10 @@ const Dashboard = () => {
   const handleChange = (option) => {
     setSelectOption(option);
   };
+
+  const handleRevenueChange = (option) => {
+    setRevenueOption(option);
+  }
 
   useEffect(() => {
     instance.get("/get-top-bill").then(({ data }) => {
@@ -337,12 +366,12 @@ const Dashboard = () => {
                   style={{
                     width: 120,
                   }}
-                  onChange={handleChange}
+                  onChange={handleRevenueChange}
                   options={statisticOptions}
                 />
               </div>
             </div>
-            {orderData && <OrderStatistic chartData={orderData} />}
+            {revenueData && <OrderStatistic chartData={revenueData} />}
           </div>
         </Col>
       </Row>
