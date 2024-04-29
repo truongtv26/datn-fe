@@ -49,7 +49,7 @@ const Footer = () => {
 						<li style={{ fontWeight: 'bold', fontSize: '16px' }}>Theo dõi chúng tôi: </li>
 						<li><TwitterOutlined /></li>
 						<li><YoutubeFilled /></li>
-						<li><InstagramFilled /></li> */}
+						<li><InstagramFilled /></li>
 					</ul>
 					{/* <ul className='items'>
 						<li style={{ fontWeight: 'bold', fontSize: '16px' }}>We accept:</li>
