@@ -2,7 +2,7 @@ import { Card, Pagination, Rate } from 'antd';
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-const ProductList = ({data, setProductPage, totalpage}) => {
+const ProductList = ({data, setProductPage, totalpage, pagination = true}) => {
      const VITE_URL = import.meta.env.VITE_URL;
 
      // trạng thái sản phẩm
@@ -59,7 +59,7 @@ const ProductList = ({data, setProductPage, totalpage}) => {
 						display: 'flex',
 						justifyContent: 'center',
 					}}>
-						<Pagination defaultCurrent={1} total={totalpage} showSizeChanger={false} pageSize={8} onChange={onShowSizeChange} />
+						{pagination && <Pagination defaultCurrent={1} total={totalpage} showSizeChanger={false} pageSize={8} onChange={onShowSizeChange} />}
 					</div>
 				</div >
 			</div>

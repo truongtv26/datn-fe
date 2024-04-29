@@ -11,6 +11,7 @@ import instance from "../../core/api";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useAppContext } from "../../provider/AppProvider";
+import ProductList from "../../components/product/ProductList";
 
 
 const ProductDetailPage = () => {
@@ -20,6 +21,7 @@ const ProductDetailPage = () => {
 	const navigate = useNavigate()
 
 	const [product, setProduct] = useState({});
+	const [productList, setProductList] = useState([]);
 	const [variant, setVariant] = useState({});
 	const [attributes, setAttributes] = useState([]);
 	const [coupon, setCoupon] = useState({});
@@ -27,6 +29,15 @@ const ProductDetailPage = () => {
 	const [optionSelected, setOptionSelected] = useState({});
 
 	const [isLoading, setIsLoading] = useState(true);
+
+	useEffect(()=>{
+		instance.get(`product-list`).then(res=>{
+			if (res.status === 200) {
+				const products = res.data.products.filter(p=>p.slug!==slug)
+				setProductList(products)
+			}
+		})
+	},[])
 
 	// lấy chi tiết sản phẩm
 	useEffect(() => {
@@ -326,7 +337,7 @@ const ProductDetailPage = () => {
 							</button>
 						</Flex>
 
-						<Space direction="vertical" size="middle" className="mt-5">
+						{/* <Space direction="vertical" size="middle" className="mt-5">
 							<p className="font-bold">
 								Mã: <span className="font-normal">NAJ60</span>
 							</p>
@@ -336,14 +347,17 @@ const ProductDetailPage = () => {
 							<p className="font-bold">
 								Từ khóa: <span className="font-normal">nike travis scott</span>
 							</p>
-						</Space>
+						</Space> */}
 					</Col>
 				</Row>
 			</div>
 
-			<Description />
+			{/* <Description />
 			<SimilarProduct />
-			<Tips />
+			<Tips /> */}
+			<h2 style={{ margin:'40px auto', }}>Sản Phẩm Đang Kinh Doanh!</h2>
+			<ProductList pagination={false} data={productList} setProductPage={()=>{}}/>
+
 		</div>
 };
 

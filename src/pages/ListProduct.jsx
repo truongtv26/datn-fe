@@ -51,7 +51,7 @@ const onChange = (e) => {
 
 
 const categories = [
-	{ image: 'https://klbtheme.com/blonwe/grocery/wp-content/uploads/sites/5/2023/07/grocery-banner.jpg' },
+	{ image: 'https://sportshoeapparel.com/wp-content/uploads/2019/04/footwear-mens-banner-2.jpg' },
 ];
 
 const ListProduct = () => {
@@ -112,7 +112,7 @@ const ListProduct = () => {
 
 			{categories.map((category, index) => (
 				<div key={index}>
-					<img className="custom-image" src={category.image} alt="Shop" />
+					<img className="custom-image" src={category.image} alt="Shop" style={{ maxHeight:'250px',width:'100%' }} />
 				</div>
 			))}
 
