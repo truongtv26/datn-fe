@@ -51,11 +51,7 @@ const onChange = (e) => {
 
 
 const categories = [
-<<<<<<< HEAD
-	{ image: 'https://sportshoeapparel.com/wp-content/uploads/2019/04/footwear-mens-banner-2.jpg' },
-=======
 	{ image: 'https://supersports.com.vn/cdn/shop/files/PAYDAY_25-30.04_1545_500_V.jpg?v=1714041328&width=1400' },
->>>>>>> develop
 ];
 
 const ListProduct = () => {
