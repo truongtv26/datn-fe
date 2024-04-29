@@ -255,35 +255,6 @@ const HomePage = () => {
 				<p className='description'>Use discount code in the checkout!</p>
 			</div> */}
 
-			{/* product */}
-			<p style={{ fontSize: '24px', fontWeight: 'bold', margin: '10px 0' }}>Sản phẩm có sẵn!</p>
-			<ProductList data={product} setProductPage={setProductPage} />
-
-
-			{/* categories banner */}
-			<div className="category-banner-wrapper">
-				<div className='category-items'>
-					<Image preview={false} src={'https://thietke6d.com/wp-content/uploads/2021/05/banner-quang-cao-giay-3.webp'} />
-					<div className="link">
-					<Link to='/list-product' onClick= {() => window.scrollTo(0, 0)}><button>Shop now</button></Link>
-					</div>
-				</div>
-				<div className='category-items'>
-					<Image preview={false} src={'https://lambanner.com/wp-content/uploads/2022/10/MNT-DESIGN-BANNER-GIAY-07.jpg'} />
-					<div className="link">
-					<Link to='/list-product' onClick= {() => window.scrollTo(0, 0)}><button>Shop now</button></Link>
-					</div>
-				</div>
-				<div className='category-items'>
-					<Image preview={false} src={'https://thietke6d.com/wp-content/uploads/2021/05/banner-quang-cao-giay-6.webp'} />
-					<div className="link">
-						<Link to='/list-product' onClick= {() => window.scrollTo(0, 0)}><button>Shop now</button></Link>
-					</div>
-				</div>
-			</div>
-
-
-
 			{/* blog */}
 			<div className="blog-wrapper">
 				<h2>Tin tức của chúng tôi</h2>
