@@ -215,28 +215,22 @@ const HomePage = () => {
 			{/* categories banner */}
 			<div className="category-banner-wrapper">
 				<div className='category-items'>
-					<Image preview={false} src={'https://graphicsfamily.com/wp-content/uploads/2020/07/Shoes-Advertising-Banner-Design-Template-scaled.jpg'} />
-					<Link to={'/list-product'} onClick={() => window.scrollTo(0, 0)}>
-						<div className="link">
-							<button>Shop now</button>
-						</div>
-					</Link>
+					<Image preview={false} src={'https://thietke6d.com/wp-content/uploads/2021/05/banner-quang-cao-giay-3.webp'} />
+					<div className="link">
+					<Link to='/list-product'><button>Shop now</button></Link>
+					</div>
 				</div>
 				<div className='category-items'>
-					<Image preview={false} src={'https://graphicsfamily.com/wp-content/uploads/2020/07/Shoes-Advertising-Banner-Design-Template-scaled.jpg'} />
-					<Link to={'/list-product'} onClick={() => window.scrollTo(0, 0)}>
-						<div className="link">
-							<button>Shop now</button>
-						</div>
-					</Link>
+					<Image preview={false} src={'https://lambanner.com/wp-content/uploads/2022/10/MNT-DESIGN-BANNER-GIAY-07.jpg'} />
+					<div className="link">
+					<Link to='/list-product'><button>Shop now</button></Link>
+					</div>
 				</div>
 				<div className='category-items'>
-					<Image preview={false} src={'https://graphicsfamily.com/wp-content/uploads/2020/07/Shoes-Advertising-Banner-Design-Template-scaled.jpg'} />
-					<Link to={'/list-product'} onClick={() => window.scrollTo(0, 0)}>
-						<div className="link">
-							<button>Shop now</button>
-						</div>
-					</Link>
+					<Image preview={false} src={'https://thietke6d.com/wp-content/uploads/2021/05/banner-quang-cao-giay-6.webp'} />
+					<div className="link">
+						<Link to='/list-product'><button>Shop now</button></Link>
+					</div>
 				</div>
 			</div>
 
