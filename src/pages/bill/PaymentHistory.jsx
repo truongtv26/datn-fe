@@ -40,7 +40,7 @@ function PaymentHistory({ bill, handleChangePayment, returnMoney }) {
     const handleCreatePaymentMethod = (data) => {
         data.methodPayment = method;
         data.bill_id = bill.id;
-        
+
         if (Number(data.total_money) < Number(bill.total_money) + Number(bill?.money_ship) - Number(bill?.money_reduce)) {
             toast.error("Vui lòng nhập đủ tiền!");
         } else if (data.return_money != undefined && Number(data.return_money) != 0 && Number(data.return_money) != Number(returnMoney)) {
@@ -161,9 +161,13 @@ function PaymentHistory({ bill, handleChangePayment, returnMoney }) {
                                         />
                                     </Form.Item>
                                 ) : method === 1 && bill.timeline !== '8' ? (
-                                    <Form.Item label="Mã giao dịch" name={"trading_code"} rules={[{ required: true, message: "Mã giao dịch không được để trống!", },]}>
-                                        <Input />
-                                    </Form.Item>
+                                    <>
+                                        <Form.Item label="Mã giao dịch" name={"trading_code"} rules={[{ required: true, message: "Mã giao dịch không được để trống!", },]}>
+                                            <Input />
+                                        </Form.Item>
+                                        <Form.Item name={"total_money"}  initialValue={Number(bill.total_money) + Number(bill.money_ship) - Number(bill.money_reduce)} hidden>
+                                        </Form.Item>
+                                    </>
                                 ) : null}
                                 {bill.timeline === '8' && (
                                     <Form.Item

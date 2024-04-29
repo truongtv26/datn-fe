@@ -243,7 +243,7 @@ const AdminLayout = () => {
             textAlign: 'center',
           }}
         >
-          F Shoes ©2023 Powered by PolyTeam
+          F Shoes ©2024
         </Footer>
       </Layout>
     </Layout >
