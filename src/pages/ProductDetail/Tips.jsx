@@ -60,29 +60,30 @@ const data = [
 
 export const Tips = () => {
   return (
-    <div className={styles["tips-wrapper"]} style={{ marginTop: 120 }}>
-      <h3 className="text-3xl text-center">KIẾN THỨC & MẸO VẶT</h3>
+    // <div className={styles["tips-wrapper"]} style={{ marginTop: 120 }}>
+    //   <h3 className="text-3xl text-center">KIẾN THỨC & MẸO VẶT</h3>
 
-      <Row gutter={[40, 30]} style={{ marginTop: 60 }}>
-        {data.map(({ date, id, image, link, title, desc }) => (
-          <Col key={id} xs={24} lg={12}>
-            <Flex gap={20}>
-              <a href={link} target="_blank">
-                <img src={image} alt="" width={200} />
-              </a>
-              <div>
-                <a href={link} target="_blank">
-                  <h4 className={`${styles["tips-title"]} text-black`}>
-                    {title}
-                  </h4>
-                </a>
-                <p className={styles["tips-desc"]}>{desc}</p>
-                <p className={styles["tips-date"]}>{date}</p>
-              </div>
-            </Flex>
-          </Col>
-        ))}
-      </Row>
-    </div>
+    //   <Row gutter={[40, 30]} style={{ marginTop: 60 }}>
+    //     {data.map(({ date, id, image, link, title, desc }) => (
+    //       <Col key={id} xs={24} lg={12}>
+    //         <Flex gap={20}>
+    //           <a href={link} target="_blank">
+    //             <img src={image} alt="" width={200} />
+    //           </a>
+    //           <div>
+    //             <a href={link} target="_blank">
+    //               <h4 className={`${styles["tips-title"]} text-black`}>
+    //                 {title}
+    //               </h4>
+    //             </a>
+    //             <p className={styles["tips-desc"]}>{desc}</p>
+    //             <p className={styles["tips-date"]}>{date}</p>
+    //           </div>
+    //         </Flex>
+    //       </Col>
+    //     ))}
+    //   </Row>
+    // </div>
+    <></>
   );
 };

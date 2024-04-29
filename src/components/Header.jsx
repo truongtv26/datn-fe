@@ -41,18 +41,18 @@ const HeaderSection = () => {
 		const items = [
 			{
 				key: '1',
-				label: <Link to={'profile'}>Profile</Link>
+				label: <Link to={'profile'}>Thông tin tài khoản</Link>
 			},
 			{
 				key: '0',
-				label: <Link onClick={handleLogout}>Logout</Link>
+				label: <Link onClick={handleLogout}>Đăng xuất</Link>
 			}
 		];
 
 		if (user.role === 'owner' || user.role === 'staff') {
 			items.unshift({
 				key: '2',
-				label: <Link to={'admin/dashboard'}>Dashboard</Link>
+				label: <Link to={'admin/dashboard'}>Trang quản trị</Link>
 			})
 		}
 
@@ -61,7 +61,7 @@ const HeaderSection = () => {
 			<div style={{ display: 'flex', gap: '8px' }}>
 				<UserOutlined style={{ fontSize: '24px' }} />
 				<div style={{ textAlign: 'center', lineHeight: '12px' }}>
-					<div style={{ fontSize: '12px' }}>xin chào</div>
+					<div style={{ fontSize: '12px' }}>Xin chào</div>
 					<div style={{
 						fontWeight: 'bold',
 						maxwidth: '80px',
@@ -89,8 +89,8 @@ const HeaderSection = () => {
 				<div style={{ display: 'flex', gap: '8px' }}>
 					<UserOutlined style={{ fontSize: '24px' }} />
 					<div style={{ textAlign: 'center', lineHeight: '12px' }}>
-						<div style={{ fontSize: '12px' }}>Login</div>
-						<div style={{ fontWeight: 'bold' }}>Account</div>
+						<div style={{ fontSize: '12px' }}>Đăng nhập</div>
+						{/* <div style={{ fontWeight: 'bold' }}>Account</div> */}
 					</div>
 				</div>
 			</Link>
@@ -121,18 +121,18 @@ const HeaderSection = () => {
 				<div className='top-header'>
 					<div className='flex justify-between container mx-auto'>
 						<ul className=''>
-							<Link to={'/order'}><DropboxOutlined /> <strong>Track Order</strong></Link>
-							<li><strong>About Us</strong></li>
-							<li><strong>Contact</strong></li>
-							<li><strong>FAQ</strong></li>
+							<Link to={'/order'}><DropboxOutlined /> <strong>Đơn hàng của bạn</strong></Link>
+							<li><strong>Về chúng tôi</strong></li>
+							<li><strong>Liên hệ</strong></li>
+							<li><strong>Câu hỏi thường gặp</strong></li>
 						</ul>
 						<ul className=''>
-							<li><span><ThunderboltFilled /></span> We deliver to you every day from: <strong style={{
+							<li><span><ThunderboltFilled /></span> Chúng tôi giao hàng cho bạn mỗi ngày từ: <strong style={{
 								padding: '2px 6px',
 								backgroundColor: 'var(--primary-color)',
 								color: 'white',
 								borderRadius: '10px',
-							}}>7:00 to 20:00</strong></li>
+							}}>7:00 tới 20:00</strong></li>
 							<li style={{ borderLeft: '1px solid gray' }}></li>
 							<li><FacebookFilled /></li>
 							<li><TwitterCircleFilled /></li>
@@ -151,9 +151,9 @@ const HeaderSection = () => {
 					</div>
 					<div className='search'>
 						<Search
-							placeholder="input search text"
+							placeholder="Nhập để tìm kiếm ..."
 							allowClear
-							enterButton="Search"
+							enterButton="Tìm kiếm"
 							size="large"
 							onSearch={(value) => {
 								console.log(value);
@@ -164,11 +164,11 @@ const HeaderSection = () => {
 					<div>
 						<ul>
 							<li style={{ textAlign: 'end' }}>{checkUser(user)}</li>
-							<li>
+							{/* <li>
 								<Badge count={10} color='var(--primary-color)' size="small">
 									<HeartOutlined style={{ fontSize: '24px' }} />
 								</Badge>
-							</li>
+							</li> */}
 							<li style={{ marginRight: '20px', cursor: 'pointer' }}>
 								<Badge
 									count={Array.isArray((JSON.parse(localStorage.getItem('cart'))))
@@ -187,20 +187,20 @@ const HeaderSection = () => {
 				{/* bottom header */}
 				<div className='bottom-header container mx-auto'>
 					<ul>
-						<li><Link to={'/'}>Home</Link></li>
+						<li><Link to={'/'}>Trang chủ</Link></li>
 						<li><Link to={'/list-product'}>
-							<Dropdown
+							{/* <Dropdown
 								menu={{
 									items,
 								}}
-							>
-								<Space>
+							> */}
+								{/* <Space> */}
 									Shop
-									<DownOutlined />
-								</Space>
-							</Dropdown>
+									{/* <DownOutlined /> */}
+								{/* </Space> */}
+							{/* </Dropdown> */}
 						</Link></li>
-						<li><Link to={'/blog'}>
+						{/* <li><Link to={'/blog'}>
 							<Dropdown
 								menu={{
 									items,
@@ -211,18 +211,18 @@ const HeaderSection = () => {
 									<DownOutlined />
 								</Space>
 							</Dropdown>
-						</Link></li>
+						</Link></li> */}
 						<li><Link to={'/best-discount'}>
-							<Dropdown
+							{/* <Dropdown
 								menu={{
 									items,
 								}}
 							>
-								<Space>
-									Best Discount
-									<DownOutlined />
-								</Space>
-							</Dropdown>
+								<Space> */}
+									Giảm giá tốt nhất
+									{/* <DownOutlined /> */}
+								{/* </Space> */}
+							{/* </Dropdown> */}
 						</Link></li>
 					</ul>
 				</div>
