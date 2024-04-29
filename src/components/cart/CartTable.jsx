@@ -12,19 +12,19 @@ const CartTable = ({ data }) => {
 
      const columns = [
           {
-               title: 'Image',
+               title: 'Hình ảnh',
                dataIndex: 'image',
                key: 'image',
                render: (_, record) => <img src={record.image} alt="Product" style={{ width: '50px', height: '50px' }} />,
           },
           {
-               title: 'Name',
+               title: 'Tên sản phẩm',
                dataIndex: 'name',
                key: 'name',
                render: (_, record) => <Link to={`/product/${record.link}`}>{record.name}</Link>,
           },
           {
-               title: 'Price',
+               title: 'Giá',
                dataIndex: 'price',
                key: 'price',
                render: (_, record) => {

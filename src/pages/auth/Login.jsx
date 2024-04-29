@@ -51,7 +51,7 @@ const Login = () => {
 
      return (
           <Form form={form} name="vertical_login" layout="inline" onFinish={onFinish} className='flex flex-col mx-auto items-center w-[240px] sm:w-[350px] md:w-[400px]'>
-               <p style={{ fontSize: '24px' }} className='mb-5' >Login</p>
+               <p style={{ fontSize: '24px' }} className='mb-5' >Đăng Nhập</p>
                <Form.Item
                     name="email"
                     rules={[
@@ -81,10 +81,11 @@ const Login = () => {
                     <Input
                          prefix={<LockOutlined className="site-form-item-icon" />}
                          type="password"
-                         placeholder="Password"
+                         placeholder="Mật khẩu"
                     />
                </Form.Item>
-               <Link to={'/register'} className='self-end'>Register</Link>
+               <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '8px'}}>
+               <Link to={'/register'} className='self-end' style={{marginRight: '8px'}}>Đăng ký</Link>
                <span className='text-red-500 mb-'>{errorMessage ?? ''}</span>
                <Form.Item shouldUpdate>
                     {() => (
@@ -99,10 +100,11 @@ const Login = () => {
                               className='bg-[#4096FF]'
                          >
                               {isLogin && <Spin indicator={<LoadingOutlined style={{fontSize: 24, color: '#fff', marginRight: '5px'}} spin />}/>}
-                              Log in
+                              Đăng nhập
                          </Button>
                     )}
                </Form.Item>
+               </div>
           </Form>
      );
 };
