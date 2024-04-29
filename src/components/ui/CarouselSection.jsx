@@ -40,12 +40,15 @@ const CarouselSection = () => {
                          draggable
                          ref={ref}
                     >
-                         <div className=''>
+                        
+                         <div>
                               <div>
                                    <Image
                                         preview={false}
                                         className='w-full h-[180px] sm:h-[280px] md:h-[360px]'
-                                        src={'https://graphicsfamily.com/wp-content/uploads/2020/07/Shoes-Advertising-Banner-Design-Template-scaled.jpg'} />
+                                        width={'100%'}
+                                        height={'360px'}
+                                        src={'https://thietke6d.com/wp-content/uploads/2021/05/banner-quang-cao-giay-4.webp'} />
                               </div>
                          </div>
                          <div>
@@ -53,17 +56,21 @@ const CarouselSection = () => {
                                    <Image
                                         preview={false}
                                         className='w-full h-[180px] sm:h-[280px] md:h-[360px]'
-                                        src={'https://graphicsfamily.com/wp-content/uploads/2020/07/Shoes-Advertising-Banner-Design-Template-scaled.jpg'} />
+                                        width={'100%'}
+                                        height={'360px'}
+                                        src={'https://lambanner.com/wp-content/uploads/2022/10/MNT-DESIGN-BANNER-GIAY-07.jpg'} />
                               </div>
                          </div>
                          <div>
-                              <div>
-                                   <Image
-                                        preview={false}
-                                        className='w-full h-[180px] sm:h-[280px] md:h-[360px]'
-                                        src={'https://graphicsfamily.com/wp-content/uploads/2020/07/Shoes-Advertising-Banner-Design-Template-scaled.jpg'} />
+                                   <div>
+                                        <Image
+                                             preview={false}
+                                             className='w-full md:h-[178px]'
+                                             width={'100%'}
+                                             height={'360px'}
+                                             src={'https://media.licdn.com/dms/image/C5112AQEbrswDJBdyKg/article-inline_image-shrink_1000_1488/0/1520192850086?e=1719446400&v=beta&t=oXx1W0mKCEw0v4IEq0B7NAcD7ABBlnE6BD3XeqoC9Ic'} />
+                                   </div>
                               </div>
-                         </div>
                     </Carousel>
                     <Button style={nextButton} onClick={() => { ref.current.next() }} icon={<RightOutlined />} />
                </div>
