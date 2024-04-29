@@ -39,6 +39,9 @@ const Register = () => {
                     setErrorMessage(data.data.message);
                }
           })
+          .finally(()=>{
+               window.location.reload();
+          })
      };
 
      return (

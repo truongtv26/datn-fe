@@ -62,7 +62,7 @@ const ProductDetailPage = () => {
 			const variant = product.variants.filter((variant) =>
 				variant.size_id === Number(optionSelected.size) && variant.color_id === Number(optionSelected.color));
 
-			variant.length > 0 ? setVariant(...variant) : null
+			variant.length > 0 ? setVariant(...variant) : setVariant({})
 		}
 	}, [optionSelected])
 

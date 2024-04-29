@@ -42,6 +42,9 @@ const Login = () => {
                                    navigate("/")
                               }
                          })
+                         .finally(()=>{
+                              window.location.reload()
+                         })
                     } else {
                          setIsLogin(false)
                          setErrorMessage(data.message)

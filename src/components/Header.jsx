@@ -102,7 +102,9 @@ const HeaderSection = () => {
 				setUser({});
 				localStorage.removeItem('authToken');
 			}
-		});
+		}).finally(() => {
+			window.location.reload();
+		})
 	}
 
 	// Xử lý dữ liệu giỏ hàng
@@ -121,22 +123,22 @@ const HeaderSection = () => {
 				<div className='top-header'>
 					<div className='flex justify-between container mx-auto'>
 						<ul className=''>
-							<Link to={'/order'}><DropboxOutlined /> <strong>Track Order</strong></Link>
-							<li><strong>About Us</strong></li>
-							<li><strong>Contact</strong></li>
-							<li><strong>FAQ</strong></li>
+							<Link to={'/order'}><DropboxOutlined /> <strong>Theo dõi đơn hàng</strong></Link>
+							<li><strong>Về chúng tôi</strong></li>
+							<li><strong>Liên hệ</strong></li>
+							<li><strong>Câu hỏi thường gặp</strong></li>
 						</ul>
 						<ul className=''>
-							<li><span><ThunderboltFilled /></span> We deliver to you every day from: <strong style={{
+							<li><span><ThunderboltFilled /></span> Thời gian giao hàng: <strong style={{
 								padding: '2px 6px',
 								backgroundColor: 'var(--primary-color)',
 								color: 'white',
 								borderRadius: '10px',
 							}}>7:00 to 20:00</strong></li>
-							<li style={{ borderLeft: '1px solid gray' }}></li>
+							{/* <li style={{ borderLeft: '1px solid gray' }}></li>
 							<li><FacebookFilled /></li>
 							<li><TwitterCircleFilled /></li>
-							<li style={{ marginRight: '10px' }}><ShoppingFilled /></li>
+							<li style={{ marginRight: '10px' }}><ShoppingFilled /></li> */}
 						</ul>
 					</div>
 				</div>
@@ -187,8 +189,9 @@ const HeaderSection = () => {
 				{/* bottom header */}
 				<div className='bottom-header container mx-auto'>
 					<ul>
-						<li><Link to={'/'}>Home</Link></li>
-						<li><Link to={'/list-product'}>
+						<li><Link to={'/'}>Trang Chủ</Link></li>
+						<li><Link to={'/list-product'}>Cửa Hàng</Link></li>
+						{/* <li><Link to={'/list-product'}>
 							<Dropdown
 								menu={{
 									items,
@@ -223,7 +226,7 @@ const HeaderSection = () => {
 									<DownOutlined />
 								</Space>
 							</Dropdown>
-						</Link></li>
+						</Link></li> */}
 					</ul>
 				</div>
 			</header>

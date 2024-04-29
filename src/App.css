@@ -729,6 +729,7 @@
 .main-footer .footer-items {
      display: flex;
      flex-direction: column;
+     width: 33.33%;
 }
 
 .main-footer .footer-items ul {
