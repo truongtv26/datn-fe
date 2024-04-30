@@ -355,7 +355,7 @@ const BillDetail = () => {
                     }
                 </div>
                 <div className="">
-                    <BillHistory props={billHistory} />
+                    <BillHistory props={billHistory} billDetail={listBillDetail}/>
                 </div>
             </div>
             <Divider />

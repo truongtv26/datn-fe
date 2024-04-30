@@ -35,6 +35,7 @@ function ChooseVoucher({ onSelectVoucher, userId }) {
     const onSelect = (value) => {
         instance.get(`/find-voucher?name=${value}`).then(({ data }) => {
             onSelectVoucher(data[0]);
+            console.log(data)
         }).catch(e => {
             console.log(e);
         });

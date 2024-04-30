@@ -13,7 +13,6 @@ const Bill = ({ onLoad }) => {
     const [loading, setLoading] = useState(true);
 
     const loadOrders = (status, searchValue) => {
-        console.log(typeof (status));
         instance
             .get('bill', {
                 params: { status: status }
@@ -91,7 +90,7 @@ const Bill = ({ onLoad }) => {
                         </Button>
                     </Tooltip>
                     <Tooltip placement="top" title="In hóa đơn" >
-                        <Button type="primary" danger ><ContainerOutlined /></Button>
+                        <Button type="primary" danger><ContainerOutlined /></Button>
                     </Tooltip >
                 </>
             )
