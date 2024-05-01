@@ -31,6 +31,7 @@ import Order from '../pages/order/Order'
 import BillDetail from '../pages/bill/BillDetail'
 import OrderPage from '../pages/OrderPage'
 import PaymentPage from '../pages/PaymentPage'
+import WishListPage from '../pages/WishListPage'
 const Routers = () => {
 	const { user } = useAppContext();
 	return (
@@ -47,6 +48,7 @@ const Routers = () => {
 					<Route path="cart" element={<CartPage />} />
 					<Route path="checkout" element={<CheckPage />} />
 					<Route path='order' element={<OrderPage />} />
+					<Route path='wishlist' element={<WishListPage />} />
 					{/* auth */}
 					<Route path="login" element={<Login />} />
 					<Route path="register" element={<Register />} />

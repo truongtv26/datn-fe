@@ -32,15 +32,12 @@ const Register = () => {
                     localStorage.setItem('authToken', data.token);
                     getUser().then(data => {
                          setUser(data);
-                         navigate("/")
+                         window.location.href = "/"
                     })
                } else {
                     setIsRegister(false);
                     setErrorMessage(data.data.message);
                }
-          })
-          .finally(()=>{
-               window.location.reload();
           })
      };
 

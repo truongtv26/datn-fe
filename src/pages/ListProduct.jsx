@@ -79,65 +79,93 @@ const ListProduct = () => {
 	const [priceRange, setPriceRange] = useState([0, 0]);
 	const [priceChange, setPriceChange] = useState([]);
 	const [totalPage, setTotalPage] = useState(0)
+	const [colorSelected, setColorsSelected] = useState([]);
+	const [sizeSelected, setSizesSelected] = useState([]);
+
 	//delay input range
 	const priceRangeSelected = useDebounce(priceChange, 200)
 
 	const handlePriceRangeChange = (value) => {
 		setPriceChange(value);
 	};
-	
+
 	// lấy sản phẩm
 	useEffect(() => {
 		instance.get(`product-list?
 		${productPage}
-		&min=${priceRangeSelected[0]}&max=${priceRangeSelected[1]}`
+		&min=${priceRangeSelected[0]}&max=${priceRangeSelected[1]}`, {
+			params: {
+				colors: colorSelected,
+				sizes: sizeSelected,
+			}
+		}
 		).then((res) => {
 			if (res.status === 200) {
 				setProducts(res.data.products)
 				setTotalPage(res.total)
 			}
 		})
-	}, [productPage, priceRangeSelected])
+		
+	}, [productPage, priceRangeSelected, colorSelected, sizeSelected])
 
 	// lấy khoảng giá sản phẩm
-	useEffect(()=> {
-		instance.get('product-range-price').then(({data}) =>{
+	useEffect(() => {
+		instance.get('product-range-price').then(({ data }) => {
 			setPriceRange([0, data.max]);
 		})
 	}, [])
 
+	const [colors, setColors] = useState([])
+	useEffect(() => {
+		instance.get("/colors").then((res) => {
+			if (res.status === 200) {
+				setColors(res.data)
+			}
+		})
+	}, [])
+
+	const [sizes, setSizes] = useState([])
+	useEffect(() =>{
+		instance.get("/sizes").then((res) => {
+			if (res.status === 200) {
+				setSizes(res.data)
+			}
+		})
+	}, [])
+	
+	const colorOptions = colors.map((color) => ({label: color.name, value: color.id}))
+	const sizesOptions = sizes.map((size) => ({label: size.name, value: size.id}))
+
+	const onColorsSelected = (value) => {
+		setColorsSelected(value)
+	}
+
+	const onSizesSelected = (value) => {
+		setSizesSelected(value)
+	}
+
 	return (
 		<div className='container mx-auto'>
-
-
 			{categories.map((category, index) => (
 				<div key={index}>
-					<img className="custom-image" src={category.image} alt="Shop" style={{ maxHeight:'250px',width:'100%' }} />
+					<img className="custom-image" src={category.image} alt="Shop" style={{ maxHeight: '250px', width: '100%' }} />
 				</div>
 			))}
 
 			<Layout>
 				<Sider width={200} style={{ background: colorBgContainer }}>
-					<h2 style={{marginTop: '24px'}}>Lọc sản phẩm</h2>
+					<h2 style={{ marginTop: '24px' }}>Lọc sản phẩm</h2>
 					{/* Tối thiểu và tối đa product price range */}
+					<hr style={{ margin: "20px 0" }} />
+					<h3>Lọc theo giá</h3>
 					<div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px', fontSize: '16px' }}>
 						<div style={{ marginTop: '10px', marginRight: '5px' }} >
 							<span style={{ margin: '10px' }}  >Tối thiểu</span>
-							<Input
-								type="number"
-								placeholder="Min Price"
-								defaultValue={priceRange[0]}
-								onChange={(e) => handlePriceRangeChange([Number(e.target.value), priceRange[1]])}
-							/>
+							<p>{priceRange[0]}</p>
 						</div>
 						<div style={{ marginTop: '10px', marginRight: '5px' }} >
 							<span style={{ margin: '10px' }} >Tối đa</span>
-							<Input
-								type="number"
-								placeholder="Max Price"
-								defaultValue={priceRange[1]}
-								onChange={(e) => handlePriceRangeChange([priceRange[0], Number(e.target.value)])}
-							/>
+							<p>{priceRange[1]}</p>
 						</div>
 					</div>
 					{/* Thanh slider */}
@@ -146,12 +174,20 @@ const ListProduct = () => {
 					</div>
 					<Slider style={{ marginTop: '4vh', marginRight: '1vh' }}
 						range
-						
+
 						min={priceRange[0]}
 						max={priceRange[1]}
 						onChange={handlePriceRangeChange}
 					/>
+
+					<hr style={{ margin: "20px 0" }} />
+					<h3>Lọc theo thuộc tính</h3>
+					<h4 style={{marginTop: 5}}>Màu sắc</h4>
+					<Checkbox.Group options={colorOptions} onChange={onColorsSelected} />
+					<h4 style={{marginTop: 5}}>Kích cỡ</h4>
+					<Checkbox.Group options={sizesOptions} onChange={onSizesSelected} />
 				</Sider>
+
 
 				<Layout style={{ padding: '0 24px 24px' }}>
 					<Content
@@ -164,7 +200,7 @@ const ListProduct = () => {
 						}}
 					>
 						{/* product list */}
-						<ProductList data={products} totalpage={totalPage} setProductPage={setProductPage}/>
+						<ProductList data={products} totalpage={totalPage} setProductPage={setProductPage} />
 					</Content>
 
 				</Layout>

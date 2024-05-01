@@ -37,13 +37,10 @@ const Login = () => {
                          getUser().then(data => {
                               setUser(data);
                               if (data.role === 'owner' || data.role === 'staff') {
-                                   navigate("/admin/dashboard")
+                                   window.location.href = "/admin/dashboard";
                               } else {
-                                   navigate("/")
+                                   window.location.href = "/"
                               }
-                         })
-                         .finally(()=>{
-                              window.location.reload()
                          })
                     } else {
                          setIsLogin(false)

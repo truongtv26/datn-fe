@@ -30,25 +30,12 @@ const ProductDetailPage = () => {
 
 	const [isLoading, setIsLoading] = useState(true);
 
-	useEffect(()=>{
-		instance.get(`product-list`).then(res=>{
-			if (res.status === 200) {
-				const products = res.data.products.filter(p=>p.slug!==slug)
-				setProductList(products)
-			}
-		})
-	},[])
-
-	// lấy chi tiết sản phẩm
 	useEffect(() => {
 		instance.get(`/product-detail/${slug}`).then(({ data }) => {
 			setProduct(data);
 			setIsLoading(false);
 		})
-	}, [])
 
-	// lấy thuộc tính sản phẩm
-	useEffect(() => {
 		instance.get(`/product-attributes/${slug}`).then(({ data }) => {
 			const attributes = {
 				colors: [...new Map(data.colors.map(color => [color.id, color])).values()],
@@ -57,7 +44,34 @@ const ProductDetailPage = () => {
 			setAttributes(attributes)
 			setIsLoading(false);
 		})
-	}, [])
+
+		instance.get(`product-list`).then(res => {
+			if (res.status === 200) {
+				const products = res.data.products.filter(p => p.slug !== slug)
+				setProductList(products)
+			}
+		})
+	}, [slug])
+
+	// // lấy chi tiết sản phẩm
+	// useEffect(() => {
+	// 	instance.get(`/product-detail/${slug}`).then(({ data }) => {
+	// 		setProduct(data);
+	// 		setIsLoading(false);
+	// 	})
+	// }, [])
+
+	// // lấy thuộc tính sản phẩm
+	// useEffect(() => {
+	// 	instance.get(`/product-attributes/${slug}`).then(({ data }) => {
+	// 		const attributes = {
+	// 			colors: [...new Map(data.colors.map(color => [color.id, color])).values()],
+	// 			sizes: [...new Map(data.sizes.map(color => [color.id, color])).values()]
+	// 		}
+	// 		setAttributes(attributes)
+	// 		setIsLoading(false);
+	// 	})
+	// }, [])
 
 	// sự kiện khi chọn option của sản phẩm
 	const onChangeOption = ({ target }) => {
@@ -136,47 +150,47 @@ const ProductDetailPage = () => {
 			quantity: optionSelected.quantity ?? 1,
 		}
 		if (cartItem.quantity >= 1 && cartItem.quantity <= variant.quantity) {
-			
+
 			instance.post(`/cart`, [cartItem])
-			.then((res) => {
-				if (res.status === 200) {
-					navigate("/checkout", 
-					{
-						state: {
-							cartItemSelected: [{
-								action: {
-									...res.data[0],
-									promotions: [coupon]
-								},
-								color: res.data[0].color,
-								size: res.data[0].size,
-								name: res.data[0].product.name,
-								image: VITE_URL + 'storage/' + res.data[0].images[0].folder + '/' + res.data[0].images[0].url,
-								key: 0,
-								price: res.data[0].price,
-								quantity: cartItem.quantity,
-								total: res.data[0].price * cartItem.quantity,
-								variant: variant.id
-							}],
-							voucherSelected: {},
-							oldCost: {
-								orders: res.data[0].price * cartItem.quantity,
-								total: 0,
-								shipping: 0,
-								shippingDiscount: -0,
-								ordersDiscount: -(res.data[0].promotions.length > 0 && res.data[0].promotions[0].status === 'happenning' ? (cartItem.quantity * res.data[0].price) * (res.data[0].promotions[0].value / 100)  : 0),
-								voucherDiscount: -0,
-							}
-						}
-					})
-				}
-			 })
-			 .catch(() => {
-				toast.error('Đặt hàng thất bại!', {
-					position: toast.POSITION.TOP_CENTER,
+				.then((res) => {
+					if (res.status === 200) {
+						navigate("/checkout",
+							{
+								state: {
+									cartItemSelected: [{
+										action: {
+											...res.data[0],
+											promotions: [coupon]
+										},
+										color: res.data[0].color,
+										size: res.data[0].size,
+										name: res.data[0].product.name,
+										image: VITE_URL + 'storage/' + res.data[0].images[0].folder + '/' + res.data[0].images[0].url,
+										key: 0,
+										price: res.data[0].price,
+										quantity: cartItem.quantity,
+										total: res.data[0].price * cartItem.quantity,
+										variant: variant.id
+									}],
+									voucherSelected: {},
+									oldCost: {
+										orders: res.data[0].price * cartItem.quantity,
+										total: 0,
+										shipping: 0,
+										shippingDiscount: -0,
+										ordersDiscount: -(res.data[0].promotions.length > 0 && res.data[0].promotions[0].status === 'happenning' ? (cartItem.quantity * res.data[0].price) * (res.data[0].promotions[0].value / 100) : 0),
+										voucherDiscount: -0,
+									}
+								}
+							})
+					}
 				})
-			 })
-			
+				.catch(() => {
+					toast.error('Đặt hàng thất bại!', {
+						position: toast.POSITION.TOP_CENTER,
+					})
+				})
+
 		} else {
 			if (cartItem.quantity > variant.quantity) {
 				toast.error('Sản phẩm không đủ số lượng!', {
@@ -243,21 +257,29 @@ const ProductDetailPage = () => {
 												}).format(variant.price)}
 											</>
 											:
-											<>
+											Math.min(...product.variants.map(variant => variant.price)) === Math.max(...product.variants.map(variant => variant.price))
+												? new Intl.NumberFormat("vi-VN", {
+													style: "currency",
+													currency: "VND",
+												}).format(Math.max(...product.variants.map(variant => variant.price)))
+												:
 												<>
-													{new Intl.NumberFormat("vi-VN", {
-														style: "currency",
-														currency: "VND",
-													}).format(Math.min(...product.variants.map(variant => variant.price)))}
+
+													<>
+														{new Intl.NumberFormat("vi-VN", {
+															style: "currency",
+															currency: "VND",
+														}).format(Math.min(...product.variants.map(variant => variant.price)))}
+													</>
+													-
+													<>
+														{new Intl.NumberFormat("vi-VN", {
+															style: "currency",
+															currency: "VND",
+														}).format(Math.max(...product.variants.map(variant => variant.price)))}
+													</>
 												</>
-												-
-												<>
-													{new Intl.NumberFormat("vi-VN", {
-														style: "currency",
-														currency: "VND",
-													}).format(Math.max(...product.variants.map(variant => variant.price)))}
-												</>
-											</>}
+										}
 									</>
 								}
 							</p>
@@ -274,7 +296,7 @@ const ProductDetailPage = () => {
 							{coupon && coupon.value ? <Badge count={`-${coupon.value}%`} style={{ opacity: "1" }} /> : null}
 						</Flex>
 						<Flex gap={40} className={styles["size-box"]}>
-							<p style={{textTransform: 'capitalize', fontWeight: 'bold'}}>Size</p>
+							<p style={{ textTransform: 'capitalize', fontWeight: 'bold' }}>Size</p>
 							<Flex gap={12}>
 								<Radio.Group options={
 									attributes?.sizes?.map(size => ({
@@ -288,7 +310,7 @@ const ProductDetailPage = () => {
 							</Flex>
 						</Flex>
 						<Flex gap={40} className={styles["size-box"]}>
-							<p style={{textTransform: 'capitalize', fontWeight: 'bold'}}>Màu sắc</p>
+							<p style={{ textTransform: 'capitalize', fontWeight: 'bold' }}>Màu sắc</p>
 							<Flex gap={12}>
 								<Radio.Group options={
 									attributes?.colors?.map(color => ({
@@ -302,7 +324,7 @@ const ProductDetailPage = () => {
 							</Flex>
 						</Flex>
 						<Flex gap={40} className={styles["size-box"]} style={{ border: "none", alignItems: 'center' }}>
-							<p style={{textTransform: 'capitalize', fontWeight: 'bold'}}>Số lượng</p>
+							<p style={{ textTransform: 'capitalize', fontWeight: 'bold' }}>Số lượng</p>
 							<InputNumber min={1} max={variant.quantity} defaultValue={1}
 								disabled={variant.id && variant.quantity > 0 ? false : true}
 								onChange={(number) => {
@@ -351,8 +373,8 @@ const ProductDetailPage = () => {
 			{/* <Description />
 			<SimilarProduct />
 			<Tips /> */}
-			<h2 style={{ margin:'40px auto', }}>Sản Phẩm Đang Kinh Doanh!</h2>
-			<ProductList pagination={false} data={productList} setProductPage={()=>{}}/>
+			<h2 style={{ margin: '40px auto', }}>Các sản phẩm khác</h2>
+			<ProductList pagination={false} data={productList} setProductPage={() => { }} />
 
 		</div>
 };

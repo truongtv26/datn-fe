@@ -21,7 +21,7 @@ const CartTable = ({ data }) => {
                title: 'Tên sản phẩm',
                dataIndex: 'name',
                key: 'name',
-               render: (_, record) => <Link to={`/product/${record.link}`}>{record.name}</Link>,
+               render: (_, record) => <Link to={`/product/${record.link}`}>{record.name} [{record.color} - {record.size}]</Link>,
           },
           {
                title: 'Giá',
@@ -48,6 +48,8 @@ const CartTable = ({ data }) => {
                name: cartItem.product.name,
                link: cartItem.product.slug,
                price: cartItem.price,
+               color: cartItem.color.name,
+               size: cartItem.size.name,
           }
      })
 

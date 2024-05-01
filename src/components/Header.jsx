@@ -28,7 +28,7 @@ const onSearch = (value, _e, info) => console.log(info?.source, value);
 
 
 const HeaderSection = () => {
-	const { user, setUser, cartItemAction } = useAppContext()
+	const { user, setUser, cartItemAction, wishlistAction } = useAppContext()
 
 	const [cart, setCart] = useState([]);
 
@@ -102,8 +102,7 @@ const HeaderSection = () => {
 				setUser({});
 				localStorage.removeItem('authToken');
 			}
-		}).finally(() => {
-			window.location.reload();
+			window.location.href = "/"
 		})
 	}
 
@@ -115,6 +114,21 @@ const HeaderSection = () => {
 			setCart(data)
 		})
 	}, [cartItemAction])
+
+	const [wishlist, setWishlist] = useState([])
+
+	useEffect(() => {
+		instance.get("wishlist", {
+               params: {
+                    user_id: user.id
+               }
+          })
+          .then((res) => {
+               if (res.status === 200) {
+                    setWishlist(res.data)
+               }
+          })
+	}, [wishlistAction])
 
 	return (
 		<>
@@ -166,22 +180,26 @@ const HeaderSection = () => {
 					<div>
 						<ul>
 							<li style={{ textAlign: 'end' }}>{checkUser(user)}</li>
-							{/* <li>
-								<Badge count={10} color='var(--primary-color)' size="small">
-									<HeartOutlined style={{ fontSize: '24px' }} />
-								</Badge>
-							</li> */}
+							<li style={{ cursor: "pointer" }}>
+								<Link to={'/wishlist'}>
+									<Badge count={wishlist.length ?? null} color='var(--primary-color)' size="small">
+										<HeartOutlined style={{ fontSize: '24px' }} />
+									</Badge>
+								</Link>
+							</li>
 							<li style={{ marginRight: '20px', cursor: 'pointer' }}>
-								<Badge
-									count={Array.isArray((JSON.parse(localStorage.getItem('cart'))))
-										? (JSON.parse(localStorage.getItem('cart'))).length
-										: 0}
-									color='var(--primary-color)'
-									size="small">
-									<Popover placement="bottom" title={"Giỏ hàng"} content={<CartTable data={cart} />}>
-										<ShoppingCartOutlined style={{ fontSize: '24px', color: 'var(--primary-color)' }} />
-									</Popover>
-								</Badge>
+								<Link to={'/cart'}>
+									<Badge
+										count={Array.isArray((JSON.parse(localStorage.getItem('cart'))))
+											? (JSON.parse(localStorage.getItem('cart'))).length
+											: 0}
+										color='var(--primary-color)'
+										size="small">
+										<Popover placement="bottom" title={"Giỏ hàng"} content={<CartTable data={cart} />}>
+											<ShoppingCartOutlined style={{ fontSize: '24px', color: 'var(--primary-color)' }} />
+										</Popover>
+									</Badge>
+								</Link>
 							</li>
 						</ul>
 					</div>
@@ -196,10 +214,10 @@ const HeaderSection = () => {
 									items,
 								}}
 							> */}
-								{/* <Space> */}
-									Shop
-									{/* <DownOutlined /> */}
-								{/* </Space> */}
+							{/* <Space> */}
+							Shop
+							{/* <DownOutlined /> */}
+							{/* </Space> */}
 							{/* </Dropdown> */}
 						</Link></li>
 						{/* <li><Link to={'/blog'}>
@@ -221,9 +239,9 @@ const HeaderSection = () => {
 								}}
 							>
 								<Space> */}
-									Giảm giá tốt nhất
-									{/* <DownOutlined /> */}
-								{/* </Space> */}
+							Giảm giá tốt nhất
+							{/* <DownOutlined /> */}
+							{/* </Space> */}
 							{/* </Dropdown> */}
 						</Link></li>
 					</ul>
