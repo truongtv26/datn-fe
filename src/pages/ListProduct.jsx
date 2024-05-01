@@ -125,16 +125,16 @@ const ListProduct = () => {
 	}, [])
 
 	const [sizes, setSizes] = useState([])
-	useEffect(() =>{
+	useEffect(() => {
 		instance.get("/sizes").then((res) => {
 			if (res.status === 200) {
 				setSizes(res.data)
 			}
 		})
 	}, [])
-	
-	const colorOptions = colors.map((color) => ({label: color.name, value: color.id}))
-	const sizesOptions = sizes.map((size) => ({label: size.name, value: size.id}))
+
+	const colorOptions = colors.map((color) => ({ label: color.name, value: color.id }))
+	const sizesOptions = sizes.map((size) => ({ label: size.name, value: size.id }))
 
 	const onColorsSelected = (value) => {
 		setColorsSelected(value)
@@ -182,9 +182,9 @@ const ListProduct = () => {
 
 					<hr style={{ margin: "20px 0" }} />
 					<h3>Lọc theo thuộc tính</h3>
-					<h4 style={{marginTop: 5}}>Màu sắc</h4>
+					<h4 style={{ marginTop: 5 }}>Màu sắc</h4>
 					<Checkbox.Group options={colorOptions} onChange={onColorsSelected} />
-					<h4 style={{marginTop: 5}}>Kích cỡ</h4>
+					<h4 style={{ marginTop: 5 }}>Kích cỡ</h4>
 					<Checkbox.Group options={sizesOptions} onChange={onSizesSelected} />
 				</Sider>
 
