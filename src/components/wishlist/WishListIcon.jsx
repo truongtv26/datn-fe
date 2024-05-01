@@ -6,7 +6,7 @@ import instance from '../../core/api';
 
 const WishListIcon = ({ product_id = null }) => {
 
-     const { user } = useAppContext();
+     const { user, wishlistAction, setWishlistAction } = useAppContext();
 
      const handleAddWishList = () => {
           if (Object.keys(user).length <= 0) {
@@ -15,6 +15,7 @@ const WishListIcon = ({ product_id = null }) => {
                if (product_id) {
                     instance.post("/wishlist", { product_id, user_id: user.id })
                     .then((res) => {
+                         setWishlistAction(!wishlistAction)
                          toast.success("Thêm thành công!", { position: toast.POSITION.TOP_CENTER});
                     })
                     .catch((err) => {

@@ -51,8 +51,8 @@ const WishList = ({ data = [] }) => {
                                         <EyeOutlined style={{ color: "var(--primary-color)", cursor: 'pointer' }} />
                                    </Button>
                               </Link>
-                              <Button>
-                                   <DeleteOutlined style={{ color: "red", cursor: 'pointer' }} onClick={() => handleDelete(record.key)}/>
+                              <Button onClick={() => handleDelete(record.key)}>
+                                   <DeleteOutlined style={{ color: "red", cursor: 'pointer' }}/>
                               </Button>
                          </Flex>
 
